@@ -20,6 +20,40 @@ export const waitingRouteComponent = (Component) => () => (
     </Suspense>
 );
 
+export const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+/**
+ * 取一逆序列數和為 0 的一維陣列
+ * e.g. [1, 2, 3, 4, 5]
+ *
+ * @param total
+ * @returns {number[]}
+ */
+export const getTiles = (total) => {
+    return Array(total).fill(0).map((value, index) => index + 1);
+};
+
+/**
+ * 將數列隨機打散後，並檢查其是否可用(可解)
+ *
+ * @param tiles
+ * @param columns
+ * @returns {*}
+ */
+export const getAcceptableTiles = (tiles, columns) => {
+    let resolvable = false;
+
+    while (!resolvable) {
+        tiles.sort(function () {
+            return Math.random() > 0.5 ? -1 : 1;
+        });
+
+        resolvable = checkResolvable(tiles, columns);
+    }
+
+    return tiles;
+};
+
 /**
  * 檢查數列是否有解，條件 e.g.
  * 1. 拼圖列數為奇數時，逆序列數和應為偶數
@@ -61,18 +95,16 @@ export const checkResolvable = (grids, columns) => {
     return columns % 2 ? count % 2 === 0 : count % 2 + spaceX % 2 === 0;
 };
 
-export const getGrids = (columns, rows) => {
-    let tiles = getTiles(columns * rows);
-    let resolvable = false;
-
-    while (!resolvable) {
-        tiles.sort(function () {
-            return Math.random() > 0.5 ? -1 : 1;
-        });
-
-        resolvable = checkResolvable(tiles, columns);
-    }
-
+/**
+ * 根據行列數轉換為二維陣列
+ * e.g. [1,2,3,4,5,6,7,8,9] => [[1,2,3], [4,5,6], [7,8,9]]
+ *
+ * @param tiles
+ * @param columns
+ * @param rows
+ * @returns {Array}
+ */
+export const convertToGrids = (tiles, columns, rows) => {
     let grids = [];
     while (grids.length < columns) {
         let row = [];
@@ -86,8 +118,4 @@ export const getGrids = (columns, rows) => {
     }
 
     return grids;
-};
-
-export const getTiles = (total) => {
-    return Array(total).fill(0).map((value, index) => index + 1);
 };
