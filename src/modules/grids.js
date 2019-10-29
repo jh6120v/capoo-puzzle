@@ -3,10 +3,9 @@ import { createReducer } from '../store/reducers';
 
 // Actions
 const actionCreator = createActionCreator('@@GRIDS');
-const previewGridsSet = actionCreator('PREVIEW_GRIDS_SET');
 const gridsSet = actionCreator('GRIDS_SET');
 
-export { previewGridsSet, gridsSet };
+export { gridsSet };
 
 
 // Reducers
@@ -16,10 +15,6 @@ const initialState = {
 };
 
 const handlers = {
-    [previewGridsSet.type]: (state, { payload: { grids } }) => ({
-        ...state,
-        previewGrids: grids
-    }),
     [gridsSet.type]: (state, { payload: { grids } }) => ({
         ...state,
         grids

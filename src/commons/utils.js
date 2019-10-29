@@ -119,3 +119,10 @@ export const convertToGrids = (tiles, columns, rows) => {
 
     return grids;
 };
+
+export const getGrids = (columns, rows) => {
+    const tiles = getTiles(columns * rows);
+    const acceptableTiles = getAcceptableTiles(tiles, columns);
+
+    return convertToGrids(acceptableTiles, columns, rows);
+};

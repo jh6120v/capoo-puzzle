@@ -5,6 +5,6 @@ export const FUNC_SETTING = 'SETTING';
 export const PERSONAL_DEFAULT_SETTING = {
     columns: 3,
     rows: 3,
-    img: '1.gif',
+    img: 'puzzle-bg-1.jpg',
     keepScreenOn: false
 };
