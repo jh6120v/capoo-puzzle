@@ -40,6 +40,8 @@ const Grid = styled.div`
   align-items: center;
   width: ${(props) => props.size ? props.size + 'px' : '20px'};
   height: ${(props) => props.size ? props.size + 'px' : '20px'};
+  z-index: 1;
+  background-color: #fff;
 `;
 
 const GridInner = styled.div`
@@ -53,7 +55,7 @@ const GridEmpty = styled.div`
   position:absolute;
   width: 100%;
   height: 100%;
-  b
+  z-index: 0;
 `;
 
 const GridInnerText = styled.div`

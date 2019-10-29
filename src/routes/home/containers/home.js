@@ -33,6 +33,7 @@ const Home = () => {
 
     //
     const { grids } = useSelector(state => state.grids);
+    // const [grids, setGrids] = useState([]);
 
     const node = useRef();
     useEffect(() => {
@@ -51,10 +52,11 @@ const Home = () => {
         // const tiles = getTiles(columns * rows);
         // const grids = convertToGrids(tiles, columns, rows);
 
-        const grids = getGrids(columns, rows);
+        const newGrids = getGrids(columns, rows);
 
+        // setGrids(newGrids);
         dispatch(gridsSet({
-            grids: grids
+            grids: newGrids
         }));
 
         setPreparation(false);
@@ -63,6 +65,7 @@ const Home = () => {
     const reset = useCallback(() => {
         setPreparation(true);
 
+        // setGrids([]);
         dispatch(gridsSet({
             grids: []
         }));
@@ -75,10 +78,45 @@ const Home = () => {
             columnPos = columns;
         }
 
-        console.log(label, columnPos, rowPos, { x: columnPos - 1, y: rowPos - 1 });
+        // console.log(label, columnPos, rowPos, { x: columnPos - 1, y: rowPos - 1 });
 
         return { x: columnPos - 1, y: rowPos - 1 };
     }, []);
+
+    // 移動
+    const moveHandler = (label, x, y) => {
+        if (label === columns * rows) return false;
+
+        console.log(x, y);
+        const empty = spacePos();
+        console.log(empty);
+
+        if ((x === empty.x && Math.abs(y - empty.y) === 1) ||
+            (y === empty.y && Math.abs(x - empty.x) === 1)) {
+            console.log('can move');
+            console.log(grids[empty.x][empty.y], grids[x][y]);
+
+            grids[empty.y][empty.x].label = grids[y][x].label;
+            grids[y][x].label = columns * rows;
+
+            // setGrids(grids);
+            dispatch(gridsSet({
+                grids: grids
+            }));
+        }
+    };
+
+    // 即時找出空白磚位置
+    const spacePos = () => {
+        let x, y;
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
+                grids[i][j].label === columns * rows ? [x, y] = [j, i] : x = x
+            }
+        }
+
+        return { x, y }
+    };
 
     return (
         <ContainerInner>
@@ -98,6 +136,7 @@ const Home = () => {
                                             size={puzzleSize / columns}
                                             cols={columns}
                                             pos={{ x: columnIdx, y: rowIdx }}
+                                            onClick={() => moveHandler(column.label, columnIdx, rowIdx)}
                                         >
                                             {
                                                 parseInt(column.label) === columns * rows ? null : (

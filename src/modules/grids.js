@@ -10,7 +10,6 @@ export { gridsSet };
 
 // Reducers
 const initialState = {
-    previewGrids: [],
     grids: []
 };
 
