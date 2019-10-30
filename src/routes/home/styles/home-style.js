@@ -13,18 +13,6 @@ const PuzzleContainer = styled.div`
   margin: 0 auto;
 `;
 
-const PreviewWrap = styled.div`
-  width: 100%;
-  background-image: url(${bg_1});
-  background-size: contain;
-  background-repeat: no-repeat;
-  &:after {
-    content: '';
-    display: block;
-    padding-bottom: 100%;
-  }
-`;
-
 const GridWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -34,9 +22,9 @@ const GridWrap = styled.div`
 `;
 
 const Grid = styled.div`
-  //position: absolute;
+  position: absolute;
   cursor: pointer;
-  transition: all .3s ease-in;
+  transition: all .1s linear;
   left: ${(props) => (props.pos.x / props.cols) * 100 + '%'};
   top: ${(props) => (props.pos.y / props.cols) * 100 + '%'};
   display: flex;
@@ -44,7 +32,7 @@ const Grid = styled.div`
   align-items: center;
   width: ${(props) => props.size ? props.size + 'px' : '20px'};
   height: ${(props) => props.size ? props.size + 'px' : '20px'};
-  z-index: 1;
+  z-index: ${(props) => props.isSpace ? '0' : '1'};
   user-select: none;
 `;
 
@@ -53,13 +41,6 @@ const GridInner = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
-`;
-
-const GridEmpty = styled.div`
-  position:absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
 `;
 
 const GridInnerText = styled.div`
@@ -82,7 +63,7 @@ const GridInnerImg = styled.div`
   background-image: url(${bg_1});
   background-size: contain;
   background-repeat: no-repeat;
-  z-index: 1;
+  z-index: 3;
 `;
 
 const Functions = styled.div`
@@ -94,7 +75,6 @@ const Functions = styled.div`
 export {
     Points,
     PuzzleContainer,
-    PreviewWrap,
     GridWrap,
     Grid,
     GridInner,

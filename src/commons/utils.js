@@ -27,20 +27,20 @@ export const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1
  * e.g. [1, 2, 3, 4, 5]
  *
  * @param total
- * @returns {number[]}
+ * @returns {{label: number}[]}
  */
 export const getTiles = (total) => {
-    return Array(total).fill(0).map((value, index) => index + 1);
+    return Array(total).fill(0).map((value, index) => ({ label: index + 1 }));
 };
 
 /**
  * 將數列隨機打散後，並檢查其是否可用(可解)
  *
  * @param tiles
- * @param columns
+ * @param size
  * @returns {*}
  */
-export const getAcceptableTiles = (tiles, columns) => {
+export const getAcceptableTiles = (tiles, size) => {
     let resolvable = false;
 
     while (!resolvable) {
@@ -48,7 +48,7 @@ export const getAcceptableTiles = (tiles, columns) => {
             return Math.random() > 0.5 ? -1 : 1;
         });
 
-        resolvable = checkResolvable(tiles, columns);
+        resolvable = checkResolvable(tiles, size);
     }
 
     return tiles;
@@ -60,10 +60,10 @@ export const getAcceptableTiles = (tiles, columns) => {
  * 2. 拼圖列數為偶數時，逆序列數和的奇偶性與空白磚所在列數的奇偶性守恆
  *
  * @param grids
- * @param columns
+ * @param size
  * @returns {boolean}
  */
-export const checkResolvable = (grids, columns) => {
+export const checkResolvable = (grids, size) => {
     // 逆序列數和
     let count = 0;
 
@@ -73,7 +73,7 @@ export const checkResolvable = (grids, columns) => {
     // 找出空白磚列數，並從 grids 中移除
     grids = grids.filter((item, idx) => {
         if (item === grids.length) {
-            spaceX = idx % columns + 1;
+            spaceX = idx % size + 1;
         }
 
         // 把空白從數列中去除(即數列中最後一數字)
@@ -92,43 +92,26 @@ export const checkResolvable = (grids, columns) => {
         }
     });
 
-    return columns % 2 ? count % 2 === 0 : count % 2 + spaceX % 2 === 0;
+    return size % 2 ? count % 2 === 0 : count % 2 + spaceX % 2 === 0;
 };
 
 /**
- * 根據行列數轉換為二維陣列
- * e.g. [1,2,3,4,5,6,7,8,9] => [[1,2,3], [4,5,6], [7,8,9]]
  *
- * @param tiles
- * @param columns
- * @param rows
- * @returns {Array}
+ * @param size
+ * @returns {{label: number}[]}
  */
-export const convertToGrids = (tiles, columns, rows) => {
-    let grids = [];
-    while (grids.length < columns) {
-        let row = [];
-        while (row.length < rows) {
-            row.push({
-                label: tiles[grids.length * rows + row.length]
-            });
-        }
-
-        grids.push(row);
-    }
-
-    return grids;
-};
-
-export function getInOrderGrids(columns, rows) {
-    const tiles = getTiles(columns * rows);
-
-    return convertToGrids(tiles, columns, rows);
+export function getInOrderGrids(size) {
+    return getTiles(size * size);
 }
 
-export const getGrids = (columns, rows, originTiles = null) => {
-    const tiles = originTiles ? originTiles : getTiles(columns * rows);
-    const acceptableTiles = getAcceptableTiles(tiles, columns);
+/**
+ *
+ * @param size
+ * @param originTiles
+ * @returns {*}
+ */
+export const getGrids = (size, originTiles = null) => {
+    const tiles = originTiles ? originTiles : getTiles(size * size);
 
-    return convertToGrids(acceptableTiles, columns, rows);
+    return getAcceptableTiles(tiles, size);
 };
