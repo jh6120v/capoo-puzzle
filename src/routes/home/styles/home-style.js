@@ -26,13 +26,17 @@ const PreviewWrap = styled.div`
 `;
 
 const GridWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   position: relative;
   width: ${(props) => props.size ? props.size + 'px' : '288px'};
   height: ${(props) => props.size ? props.size + 'px' : '288px'};
 `;
 
 const Grid = styled.div`
-  position: absolute;
+  //position: absolute;
+  cursor: pointer;
+  transition: all .3s ease-in;
   left: ${(props) => (props.pos.x / props.cols) * 100 + '%'};
   top: ${(props) => (props.pos.y / props.cols) * 100 + '%'};
   display: flex;
@@ -41,7 +45,7 @@ const Grid = styled.div`
   width: ${(props) => props.size ? props.size + 'px' : '20px'};
   height: ${(props) => props.size ? props.size + 'px' : '20px'};
   z-index: 1;
-  background-color: #fff;
+  user-select: none;
 `;
 
 const GridInner = styled.div`
@@ -74,6 +78,7 @@ const GridInnerImg = styled.div`
   top: -${(props) => (props.pos.y / props.cols) * props.size + 'px'};
   width: ${(props) => props.size + 'px'};
   height: ${(props) => props.size + 'px'};
+  opacity: ${(props) => (props.isSpace ? '.2' : '1')};
   background-image: url(${bg_1});
   background-size: contain;
   background-repeat: no-repeat;

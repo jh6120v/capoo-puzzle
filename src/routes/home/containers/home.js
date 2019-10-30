@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ContainerInner } from '../../../styles/layout-style';
-import { convertToGrids, getGrids, getTiles } from '../../../commons/utils';
+import { convertToGrids, getGrids, getTiles, getInOrderGrids } from '../../../commons/utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { gridsSet } from "../../../modules/grids";
+import { tilesSet, gridsSet, preparedOn, preparedOff } from "../../../modules/grids";
 import {
     PuzzleContainer,
     GridWrap,
     Grid,
-    PreviewWrap,
     Points,
     Functions,
     GridInner,
@@ -22,53 +21,42 @@ const Home = () => {
     // 花費時間
     const [times, setTimes] = useState(0);
 
-    // 是否為預備中
-    const [preparation, setPreparation] = useState(true);
-
     // 拼圖大小
     const [puzzleSize, setPuzzleSize] = useState(0);
 
     // 取個人設定值
-    const { columns, rows, img } = useSelector((state) => state.personal);
+    const { columns, rows } = useSelector((state) => state.personal);
 
     //
-    const { grids } = useSelector(state => state.grids);
-    // const [grids, setGrids] = useState([]);
+    const { prepared, grids } = useSelector(state => state.grids);
 
     const node = useRef();
     useEffect(() => {
         setPuzzleSize(node.current.clientWidth);
     }, []);
 
-    // useEffect(() => {
-    //     const grids = getGrids(columns, rows);
-    //
-    //     dispatch(gridsSet({
-    //         grids: grids
-    //     }));
-    // }, [dispatch, columns, rows, img]);
+    // get in order grids
+    useEffect(() => {
+        dispatch(gridsSet({
+            grids: getInOrderGrids(columns, rows)
+        }));
+    }, [dispatch, columns, rows]);
 
     const start = useCallback(() => {
-        // const tiles = getTiles(columns * rows);
-        // const grids = convertToGrids(tiles, columns, rows);
-
         const newGrids = getGrids(columns, rows);
 
-        // setGrids(newGrids);
         dispatch(gridsSet({
             grids: newGrids
         }));
 
-        setPreparation(false);
+        dispatch(preparedOff());
     }, []);
 
     const reset = useCallback(() => {
-        setPreparation(true);
-
-        // setGrids([]);
         dispatch(gridsSet({
-            grids: []
+            grids: getInOrderGrids(columns, rows)
         }));
+        dispatch(preparedOn());
     }, []);
 
     const getPosition = useCallback((label) => {
@@ -85,7 +73,7 @@ const Home = () => {
 
     // 移動
     const moveHandler = (label, x, y) => {
-        if (label === columns * rows) return false;
+        if (prepared || label === columns * rows) return false;
 
         console.log(x, y);
         const empty = spacePos();
@@ -122,42 +110,31 @@ const Home = () => {
         <ContainerInner>
             <Points>{move}</Points>
             <PuzzleContainer ref={node}>
-                {
-                    preparation ?
-                        (
-                            <PreviewWrap />
-                        ) :
-                        (
-                            <GridWrap size={puzzleSize}>
-                                {
-                                    grids.map((row, rowIdx) => row.map((column, columnIdx) => (
-                                        <Grid
-                                            key={column.label}
-                                            size={puzzleSize / columns}
-                                            cols={columns}
-                                            pos={{ x: columnIdx, y: rowIdx }}
-                                            onClick={() => moveHandler(column.label, columnIdx, rowIdx)}
-                                        >
-                                            {
-                                                parseInt(column.label) === columns * rows ? null : (
-                                                    <GridInner>
-                                                        <GridInnerText>{column.label}</GridInnerText>
-                                                        <GridInnerImg
-                                                            size={puzzleSize}
-                                                            cols={columns}
-                                                            label={column.label}
-                                                            pos={getPosition(column.label)}
-                                                        />
-                                                    </GridInner>
-                                                )
-                                            }
-
-                                        </Grid>
-                                    )))
-                                }
-                            </GridWrap>
-                        )
-                }
+                <GridWrap size={puzzleSize}>
+                    {
+                        grids.map((row, rowIdx) => row.map((column, columnIdx) => (
+                            <Grid
+                                key={column.label}
+                                size={puzzleSize / columns}
+                                cols={columns}
+                                pos={{ x: columnIdx, y: rowIdx }}
+                                onClick={() => moveHandler(column.label, columnIdx, rowIdx)}
+                                style={{transform: `translate3d(${(columnIdx / columns) * puzzleSize}px,${(rowIdx / columns) * puzzleSize}px, 0)`}}
+                            >
+                                <GridInner>
+                                    <GridInnerText>{column.label}</GridInnerText>
+                                    <GridInnerImg
+                                        size={puzzleSize}
+                                        cols={columns}
+                                        label={column.label}
+                                        pos={getPosition(column.label)}
+                                        isSpace={parseInt(column.label) === columns * rows && prepared === false}
+                                    />
+                                </GridInner>
+                            </Grid>
+                        )))
+                    }
+                </GridWrap>
             </PuzzleContainer>
             <Functions>
                 <button onClick={start}>start</button>

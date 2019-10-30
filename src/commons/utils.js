@@ -120,8 +120,14 @@ export const convertToGrids = (tiles, columns, rows) => {
     return grids;
 };
 
-export const getGrids = (columns, rows) => {
+export function getInOrderGrids(columns, rows) {
     const tiles = getTiles(columns * rows);
+
+    return convertToGrids(tiles, columns, rows);
+}
+
+export const getGrids = (columns, rows, originTiles = null) => {
+    const tiles = originTiles ? originTiles : getTiles(columns * rows);
     const acceptableTiles = getAcceptableTiles(tiles, columns);
 
     return convertToGrids(acceptableTiles, columns, rows);
