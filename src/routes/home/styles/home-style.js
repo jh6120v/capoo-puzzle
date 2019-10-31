@@ -24,16 +24,13 @@ const GridWrap = styled.div`
 const Grid = styled.div`
   position: absolute;
   cursor: pointer;
-  transition: all .1s linear;
-  left: ${(props) => (props.pos.x / props.cols) * 100 + '%'};
-  top: ${(props) => (props.pos.y / props.cols) * 100 + '%'};
+  transition: all 1s;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${(props) => props.size ? props.size + 'px' : '20px'};
-  height: ${(props) => props.size ? props.size + 'px' : '20px'};
+  width: ${(props) => props.size ? props.size + 'px' : '96px'};
+  height: ${(props) => props.size ? props.size + 'px' : '96px'};
   z-index: ${(props) => props.isSpace ? '0' : '1'};
-  user-select: none;
 `;
 
 const GridInner = styled.div`
@@ -55,8 +52,8 @@ const GridInnerText = styled.div`
 
 const GridInnerImg = styled.div`
   position: absolute;
-  left: -${(props) => (props.pos.x / props.cols) * props.size + 'px'};
-  top: -${(props) => (props.pos.y / props.cols) * props.size + 'px'};
+  left: -${(props) => props.pos[0]  + 'px'};
+  top: -${(props) => props.pos[1] + 'px'};
   width: ${(props) => props.size + 'px'};
   height: ${(props) => props.size + 'px'};
   opacity: ${(props) => (props.isSpace ? '.2' : '1')};

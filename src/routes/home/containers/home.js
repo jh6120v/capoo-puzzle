@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ContainerInner } from '../../../styles/layout-style';
-import { getGrids, getInOrderGrids } from '../../../commons/utils';
+import { getGrids, getInOrderGrids, layoutPosition } from '../../../commons/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { gridsSet, preparedOn, preparedOff } from "../../../modules/grids";
 import {
@@ -42,8 +42,10 @@ const Home = () => {
         }));
     }, []);
 
+
     const start = useCallback(() => {
         const newGrids = getGrids(size);
+        console.log(newGrids);
 
         dispatch(gridsSet({
             grids: newGrids
@@ -61,25 +63,29 @@ const Home = () => {
     }, []);
 
     const getPosition = useCallback((label) => {
-        const rowPos = Math.ceil(label / size);
-        let columnPos = label % size;
-        if (columnPos === 0) {
-            columnPos = size;
-        }
+        const row = Math.floor(label / 3);
+        const col = label % 3;
+
+        // const rowPos = Math.ceil(label / size);
+        // let columnPos = label % size;
+        // if (columnPos === 0) {
+        //     columnPos = size;
+        // }
 
         // console.log(label, columnPos, rowPos, { x: columnPos - 1, y: rowPos - 1 });
 
-        return { x: columnPos - 1, y: rowPos - 1 };
+        return { x: col, y: row };
     }, []);
 
     // 移動
     const moveHandler = (label, idx) => {
-        if (prepared || label === size * size) return false;
+        console.log(label, idx);
+        if (prepared || label === 8) return false;
 
         // console.log(x, y);
-        const elemPos = getPosition(idx + 1);
+        const elemPos = getPosition(idx);
         const spacePos = getSpacePosition();
-        // console.log(spacePos);
+        console.log(elemPos, spacePos);
 
         if (
             (elemPos.x === spacePos.x && Math.abs(elemPos.y - spacePos.y) === 1) ||
@@ -87,8 +93,8 @@ const Home = () => {
         ) {
             console.log('can move');
 
-            grids[spacePos.idx].label = grids[idx].label;
-            grids[idx].label = size * size;
+            grids[spacePos.idx].position = grids[idx].position;
+            grids[idx].position = 8;
 
             dispatch(gridsSet({
                 grids: grids
@@ -101,8 +107,8 @@ const Home = () => {
         let output = {};
 
         grids.every((item, idx) => {
-            if (item.label === size * size) {
-                output = { ...getPosition(idx + 1), idx: idx };
+            if (item.label === 8) {
+                output = { ...getPosition(idx), idx: idx };
 
                 return false;
             }
@@ -120,24 +126,23 @@ const Home = () => {
                 <GridWrap size={puzzleSize}>
                     {
                         grids.map((item, idx) => {
-                            let isSpace = parseInt(item.label) === size * size && prepared === false;
+                            let isSpace = parseInt(item.label) === 8 && prepared === false;
+                            const [x, y] = layoutPosition(9)[item.position];
+                            console.log(x, y);
 
                             return (
                                 <Grid
                                     key={item.label}
+                                    onClick={() => moveHandler(item.label, item.position)}
                                     size={puzzleSize / size}
-                                    cols={size}
-                                    pos={getPosition(idx + 1)}
-                                    onClick={() => moveHandler(item.label, idx)}
                                     isSpace={isSpace}
+                                    style={{ transform: `translate3d(${x}px,${y}px,0)` }}
                                 >
                                     <GridInner>
                                         {/*<GridInnerText>{item.label}</GridInnerText>*/}
                                         <GridInnerImg
                                             size={puzzleSize}
-                                            cols={size}
-                                            label={item.label}
-                                            pos={getPosition(item.label)}
+                                            pos={layoutPosition(9)[item.label]}
                                             isSpace={isSpace}
                                         />
                                     </GridInner>

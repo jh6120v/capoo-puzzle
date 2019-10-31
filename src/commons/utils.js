@@ -24,13 +24,21 @@ export const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1
 
 /**
  * 取一逆序列數和為 0 的一維陣列
- * e.g. [1, 2, 3, 4, 5]
+ * e.g. [0, 1, 2, 3, 4, 5]
  *
  * @param total
  * @returns {{label: number}[]}
  */
 export const getTiles = (total) => {
-    return Array(total).fill(0).map((value, index) => ({ label: index + 1 }));
+    return Array(total).fill(0).map((value, index) => ({ label: index, position: index }));
+};
+
+export const layoutPosition = (total) => {
+    return Array(total).fill(0).map((value, index) => index).map(n => {
+        const row = Math.floor(n / 3);
+        const col = n % 3;
+        return [96 * col, 96 * row];
+    });
 };
 
 /**
@@ -107,11 +115,10 @@ export function getInOrderGrids(size) {
 /**
  *
  * @param size
- * @param originTiles
  * @returns {*}
  */
-export const getGrids = (size, originTiles = null) => {
-    const tiles = originTiles ? originTiles : getTiles(size * size);
+export const getGrids = (size) => {
+    const tiles = getTiles(size * size);
 
     return getAcceptableTiles(tiles, size);
 };
