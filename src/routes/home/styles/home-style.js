@@ -24,7 +24,7 @@ const GridWrap = styled.div`
 const Grid = styled.div`
   position: absolute;
   cursor: pointer;
-  transition: all 1s;
+  transition: all .2s ease-in-out;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +47,7 @@ const GridInnerText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2;
+  z-index: 4;
 `;
 
 const GridInnerImg = styled.div`
@@ -56,7 +56,7 @@ const GridInnerImg = styled.div`
   top: -${(props) => props.pos[1] + 'px'};
   width: ${(props) => props.size + 'px'};
   height: ${(props) => props.size + 'px'};
-  opacity: ${(props) => (props.isSpace ? '.2' : '1')};
+  opacity: ${(props) => (props.isSpace ? '.1' : '1')};
   background-image: url(${bg_1});
   background-size: contain;
   background-repeat: no-repeat;

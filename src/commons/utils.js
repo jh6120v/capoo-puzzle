@@ -24,7 +24,6 @@ export const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1
 
 /**
  * 取一逆序列數和為 0 的一維陣列
- * e.g. [0, 1, 2, 3, 4, 5]
  *
  * @param total
  * @returns {{label: number}[]}
@@ -33,11 +32,18 @@ export const getTiles = (total) => {
     return Array(total).fill(0).map((value, index) => ({ label: index, position: index }));
 };
 
-export const layoutPosition = (total) => {
-    return Array(total).fill(0).map((value, index) => index).map(n => {
-        const row = Math.floor(n / 3);
-        const col = n % 3;
-        return [96 * col, 96 * row];
+/**
+ *
+ * @param width
+ * @param size
+ * @returns {number[][]}
+ */
+export const layoutPosition = (width, size) => {
+    return Array(size * size).fill(0).map((value, index) => index).map(n => {
+        const row = Math.floor(n / size);
+        const col = n % size;
+
+        return [width * col, width * row];
     });
 };
 
@@ -80,25 +86,29 @@ export const checkResolvable = (grids, size) => {
 
     // 找出空白磚列數，並從 grids 中移除
     grids = grids.filter((item, idx) => {
-        if (item === grids.length) {
+        if (item.label === grids.length - 1) {
             spaceX = idx % size + 1;
         }
 
         // 把空白從數列中去除(即數列中最後一數字)
-        return item !== grids.length;
+        return item.label !== grids.length - 1;
     });
+
+    console.log(grids);
 
     // 計算逆序列數和
     grids.forEach((item, idx, grids) => {
-        let j = idx + 1;
-        while (j < grids.length) {
-            if (item > grids[j]) {
+        let j = idx;
+        while (j < grids.length - 1) {
+            if (item.label > grids[j + 1].label) {
                 count++;
             }
 
             j++;
         }
     });
+
+    console.log(spaceX, count);
 
     return size % 2 ? count % 2 === 0 : count % 2 + spaceX % 2 === 0;
 };
@@ -119,6 +129,14 @@ export function getInOrderGrids(size) {
  */
 export const getGrids = (size) => {
     const tiles = getTiles(size * size);
+    const grids = getAcceptableTiles(tiles, size);
 
-    return getAcceptableTiles(tiles, size);
+    return grids.reduce((data, item, idx) => {
+        data.push({
+            ...item,
+            position: idx
+        });
+
+        return data;
+    }, []);
 };
