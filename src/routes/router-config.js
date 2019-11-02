@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { waitingRouteComponent } from '../commons/utils';
 
-const Home = lazy(() => import('./home'));
+const Puzzle = lazy(() => import('./puzzle'));
 
 const DEFAULT_SCENE_CONFIG = {
     enter: 'page-fade-in',
@@ -11,7 +11,7 @@ const DEFAULT_SCENE_CONFIG = {
 export const RouterConfig = [
     {
         path: '/',
-        component: waitingRouteComponent(Home),
+        component: waitingRouteComponent(Puzzle),
         exact: true
     }
 ];

@@ -33,17 +33,21 @@ export const getTiles = (total) => {
 };
 
 /**
+ * 拼圖各方塊絕對定位
  *
- * @param width
- * @param size
- * @returns {number[][]}
+ * @param puzzleWidth
+ * @param col
+ * @returns {{x: number, y: number}[]}
  */
-export const layoutPosition = (width, size) => {
-    return Array(size * size).fill(0).map((value, index) => index).map(n => {
-        const row = Math.floor(n / size);
-        const col = n % size;
+export const layoutPosition = (puzzleWidth, col) => {
+    const totalCols = col * col;
+    const singleWidth = puzzleWidth / col;
 
-        return [width * col, width * row];
+    return Array(totalCols).fill(0).map((value, index) => index).map(n => {
+        const y = Math.floor(n / col);
+        const x = n % col;
+
+        return { x: singleWidth * x, y: singleWidth * y };
     });
 };
 

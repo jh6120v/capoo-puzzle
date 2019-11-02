@@ -1,5 +1,5 @@
-import { createActionCreator } from '../commons/utils';
-import { createReducer } from '../store/reducers';
+import { createActionCreator } from '../../../commons/utils';
+import { createReducer } from '../../../store/reducers';
 
 // Actions
 const actionCreator = createActionCreator('@@GRIDS');

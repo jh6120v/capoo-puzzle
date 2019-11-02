@@ -1,6 +1,6 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import rootSaga from '../sagas';
 import { store, history, sagaMiddleware } from '../store';

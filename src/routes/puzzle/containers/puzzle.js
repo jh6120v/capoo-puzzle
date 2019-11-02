@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ContainerInner } from '../../../styles/layout-style';
 import { getGrids, getInOrderGrids, layoutPosition } from '../../../commons/utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { gridsSet, preparedOn, preparedOff } from "../../../modules/grids";
+import { gridsSet, preparedOn, preparedOff } from "../modules/grids";
 import {
     PuzzleContainer,
     GridWrap,
@@ -11,74 +11,85 @@ import {
     Functions,
     GridInner,
     GridInnerImg, GridInnerText
-} from "../styles/home-style";
+} from "../styles/puzzle-style";
 
-const Home = () => {
+const Puzzle = () => {
     const dispatch = useDispatch();
+
+    // 取個人設定值
+    const { col } = useSelector((state) => state.personal);
+
+    // 拼圖完整資料
+    const { prepared, grids } = useSelector(state => state.grids);
+
+    // 拼圖各方塊絕對定位
+    const [layout, setLayout] = useState([]);
+
+    // 拼圖實際寬度(正方形)
+    const [puzzleWidth, setPuzzleWidth] = useState(0);
+
+    // 總拼圖格數
+    const [total, setTotal] = useState(0);
+
     // 移動次數
     const [move, setMove] = useState(0);
 
     // 花費時間
     const [times, setTimes] = useState(0);
 
-    // 拼圖大小
-    const [puzzleSize, setPuzzleSize] = useState(0);
-
-    // 各方塊定位
-    const [layout, setLayout] = useState([]);
-
-    // 取個人設定值
-    const { size } = useSelector((state) => state.personal);
-
-    //
-    const { prepared, grids } = useSelector(state => state.grids);
-
-    const node = useRef();
+    const container = useRef();
     useEffect(() => {
-        setPuzzleSize(node.current.clientWidth);
-        setLayout(layoutPosition(node.current.clientWidth / size, size));
+        // 設定 puzzle 總寬度
+        setPuzzleWidth(container.current.clientWidth);
+
+        // 設定拼圖總格數
+        setTotal(col * col);
+
+        // 設定拼圖各方塊絕對定位
+        setLayout(layoutPosition(container.current.clientWidth, col));
     }, []);
 
     // get in order grids
     useEffect(() => {
-
-
+        // 初始化
         dispatch(gridsSet({
-            grids: getInOrderGrids(size)
+            grids: getInOrderGrids(col)
         }));
     }, []);
 
-
-    const start = useCallback(() => {
-        const newGrids = getGrids(size);
-        // console.log(newGrids);
-
+    const play = useCallback(() => {
+        //
         dispatch(gridsSet({
-            grids: newGrids
+            grids: getGrids(col)
         }));
 
         dispatch(preparedOff());
+
+        setMove(0);
     }, []);
 
     const reset = useCallback(() => {
         dispatch(gridsSet({
-            grids: getInOrderGrids(size)
+            grids: getInOrderGrids(col)
         }));
 
         dispatch(preparedOn());
+
+        setMove(0);
     }, []);
 
+    // 轉換為 x, y 座標
     const getPosition = useCallback((position) => {
-        const row = Math.floor(position / size);
-        const col = position % size;
-
-        return { x: col, y: row };
+        return {
+            x: position % col,
+            y: Math.floor(position / col)
+        };
     }, []);
 
     // 移動
     const moveHandler = (idx, item) => {
         // console.log(idx, item);
-        if (prepared || item.label === (size * size) - 1) return false;
+        if (prepared || item.label === total - 1) return false;
 
         // 取欲移動磚塊的 x, y 座標
         const elemPos = getPosition(item.position);
@@ -101,6 +112,8 @@ const Home = () => {
             dispatch(gridsSet({
                 grids: grids
             }));
+
+            setMove(move + 1);
         }
     };
 
@@ -109,7 +122,7 @@ const Home = () => {
         let output = {};
 
         grids.every((item, idx) => {
-            if (item.label === (size * size) - 1) {
+            if (item.label === total - 1) {
                 output = {
                     ...getPosition(item.position),
                     idx: idx,
@@ -125,32 +138,29 @@ const Home = () => {
         return output;
     };
 
+    // 計算逆序列
+
     return (
         <ContainerInner>
             <Points>{move}</Points>
-            <PuzzleContainer ref={node}>
-                <GridWrap size={puzzleSize}>
+            <PuzzleContainer ref={container}>
+                <GridWrap width={puzzleWidth}>
                     {
                         grids.map((item, idx) => {
-                            let isSpace = parseInt(item.label) === (size * size) - 1 && prepared === false;
-                            const [x, y] = layout[item.position];
+                            let isSpace = parseInt(item.label) === total - 1 && prepared === false;
+                            const { x, y } = layout[item.position];
 
                             return (
                                 <Grid
                                     key={item.label}
-                                    onClick={() => moveHandler(idx, item)}
-                                    size={puzzleSize / size}
+                                    totalWidth={puzzleWidth}
+                                    width={puzzleWidth / col}
+                                    position={layout[item.label]}
                                     isSpace={isSpace}
+                                    onClick={() => moveHandler(idx, item)}
                                     style={{ transform: `translate3d(${x}px,${y}px,0)` }}
                                 >
-                                    <GridInner>
-                                        {/*<GridInnerText>{item.label}</GridInnerText>*/}
-                                        <GridInnerImg
-                                            size={puzzleSize}
-                                            pos={layout[item.label]}
-                                            isSpace={isSpace}
-                                        />
-                                    </GridInner>
+                                    {item.label}
                                 </Grid>
                             )
                         })
@@ -158,11 +168,11 @@ const Home = () => {
                 </GridWrap>
             </PuzzleContainer>
             <Functions>
-                <button onClick={start}>start</button>
-                <button onClick={reset}>reset</button>
+                <button onClick={play}>Play</button>
+                <button onClick={reset}>Reset</button>
             </Functions>
         </ContainerInner>
     );
 };
 
-export default Home;
+export default Puzzle;
