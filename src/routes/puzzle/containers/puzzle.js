@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { all } from 'ramda';
 import { ContainerInner } from '../../../styles/layout-style';
 import { getGrids, getInOrderGrids, layoutPosition } from '../../../commons/utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,10 +9,11 @@ import {
     GridWrap,
     Grid,
     Points,
-    Functions,
-    GridInner,
-    GridInnerImg, GridInnerText
+    Functions
 } from "../styles/puzzle-style";
+import { useModel, useTimer } from "../../../commons/hooks";
+import Model from "../../../components/model";
+import Clock from "../components/clock";
 
 const Puzzle = () => {
     const dispatch = useDispatch();
@@ -66,9 +68,11 @@ const Puzzle = () => {
         dispatch(preparedOff());
 
         setMove(0);
+
+        setTimerState('started');
     }, []);
 
-    const reset = useCallback(() => {
+    const retry = useCallback(() => {
         dispatch(gridsSet({
             grids: getInOrderGrids(col)
         }));
@@ -76,6 +80,8 @@ const Puzzle = () => {
         dispatch(preparedOn());
 
         setMove(0);
+
+        setTimerState('reset');
     }, []);
 
     // 轉換為 x, y 座標
@@ -114,6 +120,12 @@ const Puzzle = () => {
             }));
 
             setMove(move + 1);
+
+            if (isWin()) {
+                setTimerState('stopped');
+                console.log('success!');
+                // 跳出 model 告知成功並記錄時間
+            }
         }
     };
 
@@ -138,11 +150,24 @@ const Puzzle = () => {
         return output;
     };
 
-    // 計算逆序列
+    // 檢查成功的條件
+    const isWin = () => {
+        return all((x) => x.label === x.position)(grids);
+    };
+
+    const {
+        ModelBox, isShown, showModal, hideModal
+    } = useModel('TimeOut!', useCallback(() => {
+        retry();
+        hideModal();
+    }, []));
+
+    const { timerState, setTimerState, seconds } = useTimer();
 
     return (
         <ContainerInner>
-            <Points>{move}</Points>
+            <Points>{move} moves</Points>
+            <Clock seconds={seconds} />
             <PuzzleContainer ref={container}>
                 <GridWrap width={puzzleWidth}>
                     {
@@ -168,9 +193,15 @@ const Puzzle = () => {
                 </GridWrap>
             </PuzzleContainer>
             <Functions>
-                <button onClick={play}>Play</button>
-                <button onClick={reset}>Reset</button>
+                {
+                    timerState === 'started' ?
+                        (<button onClick={retry}>Retry</button>) :
+                        (<button onClick={play}>Play</button>)
+                }
             </Functions>
+            <Model isShow={isShown}>
+                <ModelBox />
+            </Model>
         </ContainerInner>
     );
 };

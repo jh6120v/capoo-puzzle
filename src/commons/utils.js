@@ -44,10 +44,10 @@ export const layoutPosition = (puzzleWidth, col) => {
     const singleWidth = puzzleWidth / col;
 
     return Array(totalCols).fill(0).map((value, index) => index).map(n => {
-        const y = Math.floor(n / col);
-        const x = n % col;
+        const x1 = n % col;
+        const y1 = Math.floor(n / col);
 
-        return { x: singleWidth * x, y: singleWidth * y };
+        return { x: singleWidth * x1, y: singleWidth * y1 };
     });
 };
 

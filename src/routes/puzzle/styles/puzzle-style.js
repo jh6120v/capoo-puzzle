@@ -8,6 +8,8 @@ const Points = styled.div`
   margin: 15px 0;
 `;
 
+const Times = styled(Points)``;
+
 const PuzzleContainer = styled.div`
   width: 288px;
   margin: 0 auto;
@@ -81,7 +83,7 @@ const Functions = styled.div`
 `;
 
 export {
-    Points,
+    Points, Times,
     PuzzleContainer,
     GridWrap,
     Grid,

@@ -18,7 +18,7 @@ injectReducer(history, store, [
     { key: 'personal', reducer: personalSettingReducer },
     { key: 'spinner', reducer: spinnerReducer },
     { key: 'header', reducer: headerTitleReducer },
-    { key: 'model', reducer: modelReducer }
+    { key: 'model', reducer: modelReducer },
 ]);
 
 const App = () => {
