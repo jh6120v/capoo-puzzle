@@ -36,9 +36,6 @@ const Puzzle = () => {
     // 移動次數
     const [move, setMove] = useState(0);
 
-    // 花費時間
-    const [times, setTimes] = useState(0);
-
     const container = useRef();
     useEffect(() => {
         // 設定 puzzle 總寬度
