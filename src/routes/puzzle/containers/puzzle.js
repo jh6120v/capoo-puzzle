@@ -79,6 +79,8 @@ const Puzzle = () => {
         setMove(0);
 
         setTimerState('reset');
+
+        countDownTimer.setTimerState('reset');
     }, []);
 
     // 轉換為 x, y 座標
@@ -161,9 +163,19 @@ const Puzzle = () => {
 
     const { timerState, setTimerState, seconds } = useTimer();
 
+    const countDownTimer = useTimer(3, 'backward', () => {
+        play();
+        countDownTimer.setTimerState('reset');
+    });
+
     return (
         <ContainerInner>
             <Points>{move} moves</Points>
+            <Points>
+                {
+                    countDownTimer.timerState === 'started' ? countDownTimer.seconds : null
+                }
+            </Points>
             <Clock seconds={seconds} />
             <PuzzleContainer ref={container}>
                 <GridWrap width={puzzleWidth}>
@@ -193,7 +205,7 @@ const Puzzle = () => {
                 {
                     timerState === 'started' ?
                         (<button onClick={retry}>Retry</button>) :
-                        (<button onClick={play}>Play</button>)
+                        (<button onClick={() => countDownTimer.setTimerState('started')}>Play</button>)
                 }
             </Functions>
             <Model isShow={isShown}>
