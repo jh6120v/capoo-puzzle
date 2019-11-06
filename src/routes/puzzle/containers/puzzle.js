@@ -1,7 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { all } from 'ramda';
+import React, { useCallback, useEffect } from 'react';
 import { ContainerInner } from '../../../styles/layout-style';
-import { getGrids, getInOrderGrids, layoutPosition } from '../../../commons/utils';
+import {
+    getGrids,
+    getInOrderGrids,
+    getPosition,
+    getSpacePosition,
+    isWin
+} from '../../../commons/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { gridsSet, preparedOn, preparedOff } from "../modules/grids";
 import {
@@ -11,7 +16,7 @@ import {
     Points,
     Functions
 } from "../styles/puzzle-style";
-import { useModel, useTimer } from "../../../commons/hooks";
+import { useModel, usePuzzle, useTimer } from "../../../commons/hooks";
 import Model from "../../../components/model";
 import Clock from "../components/clock";
 
@@ -24,29 +29,8 @@ const Puzzle = () => {
     // 拼圖完整資料
     const { prepared, grids } = useSelector(state => state.grids);
 
-    // 拼圖各方塊絕對定位
-    const [layout, setLayout] = useState([]);
-
-    // 拼圖實際寬度(正方形)
-    const [puzzleWidth, setPuzzleWidth] = useState(0);
-
-    // 總拼圖格數
-    const [total, setTotal] = useState(0);
-
-    // 移動次數
-    const [move, setMove] = useState(0);
-
-    const container = useRef();
-    useEffect(() => {
-        // 設定 puzzle 總寬度
-        setPuzzleWidth(container.current.clientWidth);
-
-        // 設定拼圖總格數
-        setTotal(col * col);
-
-        // 設定拼圖各方塊絕對定位
-        setLayout(layoutPosition(container.current.clientWidth, col));
-    }, []);
+    // 自定義 hook
+    const { puzzleContainer, total, puzzleWidth, layout, moves: [move, setMove] } = usePuzzle(grids, col);
 
     // get in order grids
     useEffect(() => {
@@ -56,6 +40,7 @@ const Puzzle = () => {
         }));
     }, []);
 
+    // 開始遊戲
     const play = useCallback(() => {
         //
         dispatch(gridsSet({
@@ -69,6 +54,7 @@ const Puzzle = () => {
         setTimerState('started');
     }, []);
 
+    // 重新遊戲
     const retry = useCallback(() => {
         dispatch(gridsSet({
             grids: getInOrderGrids(col)
@@ -83,24 +69,16 @@ const Puzzle = () => {
         countDownTimer.setTimerState('reset');
     }, []);
 
-    // 轉換為 x, y 座標
-    const getPosition = useCallback((position) => {
-        return {
-            x: position % col,
-            y: Math.floor(position / col)
-        };
-    }, []);
-
-    // 移動
+    // 移動磚塊
     const moveHandler = (idx, item) => {
         // console.log(idx, item);
         if (prepared || item.label === total - 1) return false;
 
         // 取欲移動磚塊的 x, y 座標
-        const elemPos = getPosition(item.position);
+        const elemPos = getPosition(item.position, col);
 
         // 取空白磚塊的 x, y 座標
-        const spacePos = getSpacePosition();
+        const spacePos = getSpacePosition(grids, col);
         // console.log(elemPos, spacePos);
 
         // 檢查是否為相鄰方塊
@@ -120,7 +98,7 @@ const Puzzle = () => {
 
             setMove(move + 1);
 
-            if (isWin()) {
+            if (isWin(grids)) {
                 setTimerState('stopped');
                 console.log('success!');
                 // 跳出 model 告知成功並記錄時間
@@ -128,32 +106,7 @@ const Puzzle = () => {
         }
     };
 
-    // 即時找出空白磚位置
-    const getSpacePosition = () => {
-        let output = {};
-
-        grids.every((item, idx) => {
-            if (item.label === total - 1) {
-                output = {
-                    ...getPosition(item.position),
-                    idx: idx,
-                    position: item.position
-                };
-
-                return false;
-            }
-
-            return true;
-        });
-
-        return output;
-    };
-
-    // 檢查成功的條件
-    const isWin = () => {
-        return all((x) => x.label === x.position)(grids);
-    };
-
+    // model
     const {
         ModelBox, isShown, showModal, hideModal
     } = useModel('TimeOut!', useCallback(() => {
@@ -161,8 +114,10 @@ const Puzzle = () => {
         hideModal();
     }, []));
 
+    // 計時器
     const { timerState, setTimerState, seconds } = useTimer();
 
+    // 倒數計時器
     const countDownTimer = useTimer(3, 'backward', () => {
         play();
         countDownTimer.setTimerState('reset');
@@ -177,7 +132,7 @@ const Puzzle = () => {
                 }
             </Points>
             <Clock seconds={seconds} />
-            <PuzzleContainer ref={container}>
+            <PuzzleContainer ref={puzzleContainer}>
                 <GridWrap width={puzzleWidth}>
                     {
                         grids.map((item, idx) => {

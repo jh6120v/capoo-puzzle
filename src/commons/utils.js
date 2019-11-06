@@ -1,5 +1,6 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useCallback } from 'react';
 import { LazyLoad } from '../styles/common-style';
+import { all } from "ramda";
 
 export const createActionCreator = (namespace) => (actionType) => {
     const type = `${namespace}/${actionType}`;
@@ -143,4 +144,38 @@ export const getGrids = (size) => {
 
         return data;
     }, []);
+};
+
+// 檢查成功的條件
+export const isWin = (grids) => {
+    return all((x) => x.label === x.position)(grids);
+};
+
+// 轉換為 x, y 座標
+export const getPosition = (position, col) => {
+    return {
+        x: position % col,
+        y: Math.floor(position / col)
+    };
+};
+
+// 即時找出空白磚位置
+export const getSpacePosition = (grids, col) => {
+    let output = {};
+
+    grids.every((item, idx) => {
+        if (item.label === col * col - 1) {
+            output = {
+                ...getPosition(item.position, col),
+                idx: idx,
+                position: item.position
+            };
+
+            return false;
+        }
+
+        return true;
+    });
+
+    return output;
 };

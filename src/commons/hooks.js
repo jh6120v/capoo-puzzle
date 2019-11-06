@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
     ConfirmButton, ModelContent, ModelFooter, ModelShadow, ModelWrap
 } from '../styles/model-style';
@@ -19,6 +19,7 @@ import {
     takeWhile
 } from "rxjs/operators";
 import { of, animationFrameScheduler } from "rxjs";
+import { layoutPosition } from "./utils";
 
 const useModel = (message, confirm) => {
     const [isShown, setShown] = useState(false);
@@ -97,7 +98,36 @@ const useTimer = (initialTime = 0, direction = 'forward' , onSuccess) => {
     };
 };
 
+const usePuzzle = (grids, col) => {
+    // 拼圖各方塊絕對定位
+    const [layout, setLayout] = useState([]);
+
+    // 拼圖實際寬度(正方形)
+    const [puzzleWidth, setPuzzleWidth] = useState(0);
+
+    // 移動次數
+    const [move, setMove] = useState(0);
+
+    const puzzleContainer = useRef();
+    useEffect(() => {
+        // 設定 puzzle 總寬度
+        setPuzzleWidth(puzzleContainer.current.clientWidth);
+
+        // 設定拼圖各方塊絕對定位
+        setLayout(layoutPosition(puzzleContainer.current.clientWidth, col));
+    }, []);
+
+    return {
+        puzzleContainer,
+        total: col * col,
+        puzzleWidth,
+        layout,
+        moves: [move, setMove]
+    }
+};
+
 export {
+    usePuzzle,
     useModel,
     useTimer
 };
