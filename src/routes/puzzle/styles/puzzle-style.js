@@ -19,7 +19,7 @@ const GridWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  width: ${(props) => props.width ? props.width + 'px' : '288px'};
+  width: 100%;
   &:after {
     content: '';
     padding-bottom: 100%;

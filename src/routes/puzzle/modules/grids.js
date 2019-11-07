@@ -6,14 +6,16 @@ const actionCreator = createActionCreator('@@GRIDS');
 const preparedOn = actionCreator('PREPARED_ON');
 const preparedOff = actionCreator('PREPARED_OFF');
 const gridsSet = actionCreator('GRIDS_SET');
+const totalWithSet = actionCreator('TOTAL_WIDTH_SET');
 
-export { preparedOn, preparedOff, gridsSet };
+export { preparedOn, preparedOff, gridsSet, totalWithSet };
 
 
 // Reducers
 const initialState = {
     prepared: true,
-    grids: []
+    grids: [],
+    width: 288
 };
 
 const handlers = {
@@ -28,6 +30,10 @@ const handlers = {
     [gridsSet.type]: (state, { payload: { grids } }) => ({
         ...state,
         grids
+    }),
+    [totalWithSet.type]: (state, {payload}) => ({
+        ...state,
+        width: payload
     })
 };
 

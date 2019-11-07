@@ -7,9 +7,10 @@ const actionCreator = createActionCreator('@@PERSONAL_SETTING');
 const personalSettingSet = actionCreator('SETTING_SET');
 const personalSettingReset = actionCreator('SETTING_RESET');
 const personalSettingGridsSet = actionCreator('SETTING_GRIDS_SET');
+const personalSettingDarkModeChange = actionCreator('SETTING_DARK_MODE_CHANGE');
 
 export {
-    personalSettingSet, personalSettingReset, personalSettingGridsSet
+    personalSettingSet, personalSettingReset, personalSettingGridsSet, personalSettingDarkModeChange
 };
 
 
@@ -28,6 +29,10 @@ const handlers = {
     [personalSettingGridsSet.type]: (state, { payload }) => ({
         ...state,
         grids: payload.grids
+    }),
+    [personalSettingDarkModeChange.type]: (state) => ({
+        ...state,
+        darkMode: !state.darkMode
     })
 };
 

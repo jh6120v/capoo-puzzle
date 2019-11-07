@@ -37,16 +37,16 @@ export const getTiles = (total) => {
  * 拼圖各方塊絕對定位
  *
  * @param puzzleWidth
- * @param col
+ * @param cols
  * @returns {{x: number, y: number}[]}
  */
-export const layoutPosition = (puzzleWidth, col) => {
-    const totalCols = col * col;
-    const singleWidth = puzzleWidth / col;
+export const layoutPosition = (puzzleWidth, cols) => {
+    const totalCols = cols * cols;
+    const singleWidth = puzzleWidth / cols;
 
     return Array(totalCols).fill(0).map((value, index) => index).map(n => {
-        const x1 = n % col;
-        const y1 = Math.floor(n / col);
+        const x1 = n % cols;
+        const y1 = Math.floor(n / cols);
 
         return { x: singleWidth * x1, y: singleWidth * y1 };
     });
@@ -56,10 +56,10 @@ export const layoutPosition = (puzzleWidth, col) => {
  * 將數列隨機打散後，並檢查其是否可用(可解)
  *
  * @param tiles
- * @param size
+ * @param cols
  * @returns {*}
  */
-export const getAcceptableTiles = (tiles, size) => {
+export const getAcceptableTiles = (tiles, cols) => {
     let resolvable = false;
 
     while (!resolvable) {
@@ -67,7 +67,7 @@ export const getAcceptableTiles = (tiles, size) => {
             return Math.random() > 0.5 ? -1 : 1;
         });
 
-        resolvable = checkResolvable(tiles, size);
+        resolvable = checkResolvable(tiles, cols);
     }
 
     return tiles;
@@ -79,10 +79,10 @@ export const getAcceptableTiles = (tiles, size) => {
  * 2. 拼圖列數為偶數時，逆序列數和的奇偶性與空白磚所在列數的奇偶性守恆
  *
  * @param grids
- * @param size
+ * @param cols
  * @returns {boolean}
  */
-export const checkResolvable = (grids, size) => {
+export const checkResolvable = (grids, cols) => {
     // 逆序列數和
     let count = 0;
 
@@ -92,7 +92,7 @@ export const checkResolvable = (grids, size) => {
     // 找出空白磚列數，並從 grids 中移除
     grids = grids.filter((item, idx) => {
         if (item.label === grids.length - 1) {
-            spaceX = idx % size + 1;
+            spaceX = idx % cols + 1;
         }
 
         // 把空白從數列中去除(即數列中最後一數字)
@@ -115,26 +115,26 @@ export const checkResolvable = (grids, size) => {
 
     console.log(spaceX, count);
 
-    return size % 2 ? count % 2 === 0 : count % 2 + spaceX % 2 === 0;
+    return cols % 2 ? count % 2 === 0 : count % 2 + spaceX % 2 === 0;
 };
 
 /**
  *
- * @param size
+ * @param cols
  * @returns {{label: number}[]}
  */
-export function getInOrderGrids(size) {
-    return getTiles(size * size);
+export function getInOrderGrids(cols) {
+    return getTiles(cols * cols);
 }
 
 /**
  *
- * @param size
+ * @param cols
  * @returns {*}
  */
-export const getGrids = (size) => {
-    const tiles = getTiles(size * size);
-    const grids = getAcceptableTiles(tiles, size);
+export const getGrids = (cols) => {
+    const tiles = getTiles(cols * cols);
+    const grids = getAcceptableTiles(tiles, cols);
 
     return grids.reduce((data, item, idx) => {
         data.push({

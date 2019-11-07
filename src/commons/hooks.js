@@ -47,8 +47,7 @@ const useModel = (message, confirm) => {
 };
 
 const useTimer = (initialTime = 0, direction = 'forward' , onSuccess) => {
-    const [timerState, setTimerState] = React.useState('reset');
-    const initialAccumulationValue = direction === 'forward' ? -1 : initialTime + 1;
+    const [timerState, setTimerState] = useState('reset');
 
     const timerState$ = useObservable(pluckFirst, [timerState]);
     const countDown$ = useObservable(() =>
@@ -56,7 +55,7 @@ const useTimer = (initialTime = 0, direction = 'forward' , onSuccess) => {
             map(state => state === "reset"),
             distinctUntilChanged(),
             switchMap(isReset => {
-                console.log("isReset", isReset);
+                // console.log("isReset", isReset);
 
                 return isReset
                     ? of(initialTime)
@@ -69,21 +68,29 @@ const useTimer = (initialTime = 0, direction = 'forward' , onSuccess) => {
                         distinctUntilChanged(),
                         withLatestFrom(timerState$),
                         filter(([, state]) => state === "started"),
-                        takeWhile(([val,]) => {
-                            // console.log(val, direction, initialTime);
-                            return direction === 'forward' || (direction === 'backward' && val <= initialTime);
-                        }),
                         tap(([val,]) => {
-                            // console.log(val);
-                            if (direction === 'backward' && val === initialTime) {
+                            // console.log(`tab::${val}`);
+
+                            if (direction === 'backward' && val > initialTime) {
                                 onSuccess();
                             }
                         }),
+                        takeWhile(([val,]) => {
+                            // console.log(val, direction, initialTime);
+
+                            return direction === 'forward' || (direction === 'backward' && val <= initialTime);
+                        }),
                         // count how many second left
-                        scan(timeLeft => {
-                            // console.log(timeLeft);
+                        scan((timeLeft, [val,]) => {
+                            // console.log(timeLeft, val);
+
+                            // 當時間尚未經過1秒時，先不進行時間增減
+                            if (val === 0) {
+                                return timeLeft;
+                            }
+
                             return direction === 'backward' ? timeLeft - 1 : timeLeft + 1;
-                        }, initialAccumulationValue)
+                        }, initialTime)
                     );
             })
         )
@@ -98,7 +105,7 @@ const useTimer = (initialTime = 0, direction = 'forward' , onSuccess) => {
     };
 };
 
-const usePuzzle = (grids, col) => {
+const usePuzzle = (cols, width) => {
     // 拼圖各方塊絕對定位
     const [layout, setLayout] = useState([]);
 
@@ -108,18 +115,21 @@ const usePuzzle = (grids, col) => {
     // 移動次數
     const [move, setMove] = useState(0);
 
-    const puzzleContainer = useRef();
+    const puzzleContainerNode = useRef();
     useEffect(() => {
-        // 設定 puzzle 總寬度
-        setPuzzleWidth(puzzleContainer.current.clientWidth);
+        console.log('component did mount.');
 
-        // 設定拼圖各方塊絕對定位
-        setLayout(layoutPosition(puzzleContainer.current.clientWidth, col));
+        // 設定 puzzle 總寬度
+        setPuzzleWidth(puzzleContainerNode.current.clientWidth);
+
+        return () => {
+            console.log('component did unmount.');
+        };
     }, []);
 
     return {
-        puzzleContainer,
-        total: col * col,
+        puzzleContainerNode,
+        totalCols: cols * cols,
         puzzleWidth,
         layout,
         moves: [move, setMove]
