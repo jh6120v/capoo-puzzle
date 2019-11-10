@@ -19,7 +19,7 @@ import {
     takeWhile
 } from "rxjs/operators";
 import { of, animationFrameScheduler } from "rxjs";
-import { layoutPosition } from "./utils";
+import { getLayoutPositionList } from "./utils";
 
 const useModel = (message, confirm) => {
     const [isShown, setShown] = useState(false);

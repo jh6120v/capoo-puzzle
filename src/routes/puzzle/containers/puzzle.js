@@ -5,10 +5,10 @@ import {
     getInOrderGrids,
     getPosition,
     getSpacePosition,
-    isWin, layoutPosition
+    isWin, getLayoutPositionList
 } from '../../../commons/utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { gridsSet, preparedOn, preparedOff } from "../modules/grids";
+import { gridsSet, preparedOn, preparedOff, layoutPositionListSet, totalWithSet } from "../modules/puzzle";
 import {
     PuzzleContainer,
     GridWrap,
@@ -16,7 +16,7 @@ import {
     Points,
     Functions
 } from "../styles/puzzle-style";
-import { useModel, usePuzzle, useTimer } from "../../../commons/hooks";
+import { useModel, useTimer } from "../../../commons/hooks";
 import Model from "../../../components/model";
 import Clock from "../components/clock";
 import { headerTitleDefault, nextLinkActSetting } from '../../../modules/header';
@@ -28,20 +28,35 @@ const Puzzle = () => {
     const { cols } = useSelector((state) => state.personal);
 
     // 拼圖完整資料
-    const { prepared, grids } = useSelector(state => state.grids);
+    const { prepared, grids, width, layoutPositionList } = useSelector(state => state.puzzle);
 
-    // 自定義 hook
-    const { puzzleContainerNode, totalCols, puzzleWidth, moves: [move, setMove] } = usePuzzle(cols);
+    // 移動次數
+    const [move, setMove] = useState(0);
 
-    // get in order grids
+    //
+    const puzzleContainerNode = useRef();
+
+    // set default setting
     useEffect(() => {
+        // set default header
         dispatch(headerTitleDefault());
+
+        // set link
         dispatch(nextLinkActSetting());
 
-        // 初始化
+        // set puzzle total width
+        dispatch(totalWithSet(puzzleContainerNode.current.clientWidth));
+
+        // set layout position list
+        dispatch(layoutPositionListSet(getLayoutPositionList(width, cols)));
+
+        // init
         dispatch(gridsSet({
             grids: getInOrderGrids(cols)
         }));
+
+        //
+        dispatch(preparedOn());
     }, []);
 
     // model
@@ -93,7 +108,7 @@ const Puzzle = () => {
     // 移動磚塊
     const moveHandler = (idx, item) => {
         // console.log(idx, item);
-        if (prepared || item.label === totalCols - 1) return false;
+        if (prepared || item.label === cols * cols - 1) return false;
 
         // 取欲移動磚塊的 x, y 座標
         const elemPos = getPosition(item.position, cols);
@@ -144,15 +159,15 @@ const Puzzle = () => {
                 <GridWrap>
                     {
                         grids.map((item, idx) => {
-                            let isSpace = parseInt(item.label) === totalCols - 1 && prepared === false;
-                            const { x, y } = layoutPosition(puzzleWidth, cols)[item.position];
+                            let isSpace = parseInt(item.label) === cols * cols - 1 && prepared === false;
+                            const { x, y } = layoutPositionList[item.position];
 
                             return (
                                 <Grid
                                     key={item.label}
-                                    totalWidth={puzzleWidth}
-                                    width={puzzleWidth / cols}
-                                    position={layoutPosition(puzzleWidth, cols)[item.label]}
+                                    totalWidth={width}
+                                    width={width / cols}
+                                    position={layoutPositionList[item.label]}
                                     isSpace={isSpace}
                                     onClick={() => moveHandler(idx, item)}
                                     style={{ transform: `translate3d(${x}px,${y}px,0)` }}

@@ -40,15 +40,14 @@ export const getTiles = (total) => {
  * @param cols
  * @returns {{x: number, y: number}[]}
  */
-export const layoutPosition = (puzzleWidth, cols) => {
+export const getLayoutPositionList = (puzzleWidth, cols) => {
     const totalCols = cols * cols;
     const singleWidth = puzzleWidth / cols;
 
     return Array(totalCols).fill(0).map((value, index) => index).map(n => {
-        const x1 = n % cols;
-        const y1 = Math.floor(n / cols);
+        const p = getPosition(n, cols);
 
-        return { x: singleWidth * x1, y: singleWidth * y1 };
+        return { x: singleWidth * p.x, y: singleWidth * p.y };
     });
 };
 
