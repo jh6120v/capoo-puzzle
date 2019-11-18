@@ -1,18 +1,21 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import rootSaga from '../sagas';
 import { store, history, sagaMiddleware } from '../store';
 import Routes from '../routes';
 import Spinner from '../components/spinner';
 import { injectReducer } from '../store/reducers';
-import personalSettingReducer from '../modules/personal-setting';
+import personalSettingReducer, { personalSettingFetch } from '../modules/personal-setting';
 import spinnerReducer from '../modules/spinner';
 import headerTitleReducer from '../modules/header';
 import modelReducer from '../modules/model';
 import { Container, Wrapper } from '../styles/layout-style';
 import Header from '../components/header';
+import ResetStyle from '../styles/reset-style';
+import GlobalStyle from '../styles/global-style';
+import { ThemeProvider } from 'styled-components';
 
 injectReducer(history, store, [
     { key: 'personal', reducer: personalSettingReducer },
@@ -22,27 +25,38 @@ injectReducer(history, store, [
 ]);
 
 const App = () => {
+    const dispatch = useDispatch();
     const { isShow } = useSelector((state) => state.spinner);
     const header = useSelector((state) => state.header);
 
+    const theme = {
+        main: "mediumseagreen"
+    };
+
     useEffect(() => {
+        dispatch(personalSettingFetch());
+
         // 為了讓 :active 在 ios 生效
         document.addEventListener('touchstart', () => {
         }, false);
     }, []);
 
     return (
-        <>
-            <Spinner show={isShow} />
-            <ConnectedRouter history={history}>
-                <Wrapper>
-                    <Header {...header} />
-                    <Container>
-                        <Routes />
-                    </Container>
-                </Wrapper>
-            </ConnectedRouter>
-        </>
+        <ThemeProvider theme={theme}>
+            <>
+                <ResetStyle />
+                <GlobalStyle />
+                <Spinner show={isShow} />
+                <ConnectedRouter history={history}>
+                    <Wrapper>
+                        <Header {...header} />
+                        <Container>
+                            <Routes />
+                        </Container>
+                    </Wrapper>
+                </ConnectedRouter>
+            </>
+        </ThemeProvider>
     );
 };
 

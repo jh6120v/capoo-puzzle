@@ -105,39 +105,26 @@ const useTimer = (initialTime = 0, direction = 'forward' , onSuccess) => {
     };
 };
 
-const usePuzzle = (cols, width) => {
-    // 拼圖各方塊絕對定位
-    const [layout, setLayout] = useState([]);
+// React hook for JS media queries
+const useMediaQuery = query => {
+    if (typeof window !== `undefined`) {
+        query = window.matchMedia(query)
 
-    // 拼圖實際寬度(正方形)
-    const [puzzleWidth, setPuzzleWidth] = useState(0);
+        const [match, setMatch] = useState(query.matches)
 
-    // 移動次數
-    const [move, setMove] = useState(0);
+        useEffect(() => {
+            const handleMatch = q => setMatch(q.matches)
+            query.addListener(handleMatch)
 
-    const puzzleContainerNode = useRef();
-    useEffect(() => {
-        console.log('component did mount.');
+            return () => query.removeListener(handleMatch)
+        }, [query])
 
-        // 設定 puzzle 總寬度
-        setPuzzleWidth(puzzleContainerNode.current.clientWidth);
-
-        return () => {
-            console.log('component did unmount.');
-        };
-    }, []);
-
-    return {
-        puzzleContainerNode,
-        totalCols: cols * cols,
-        puzzleWidth,
-        layout,
-        moves: [move, setMove]
+        return match
     }
-};
+}
 
 export {
-    usePuzzle,
+    useMediaQuery,
     useModel,
     useTimer
 };

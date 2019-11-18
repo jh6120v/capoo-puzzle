@@ -4,13 +4,18 @@ import { PERSONAL_DEFAULT_SETTING } from '../constants';
 
 // Actions
 const actionCreator = createActionCreator('@@PERSONAL_SETTING');
+const personalSettingFetch = actionCreator('SETTING_FETCH');
 const personalSettingSet = actionCreator('SETTING_SET');
 const personalSettingReset = actionCreator('SETTING_RESET');
 const personalSettingGridsSet = actionCreator('SETTING_GRIDS_SET');
 const personalSettingDarkModeChange = actionCreator('SETTING_DARK_MODE_CHANGE');
 
 export {
-    personalSettingSet, personalSettingReset, personalSettingGridsSet, personalSettingDarkModeChange
+    personalSettingFetch,
+    personalSettingSet,
+    personalSettingReset,
+    personalSettingGridsSet,
+    personalSettingDarkModeChange
 };
 
 
