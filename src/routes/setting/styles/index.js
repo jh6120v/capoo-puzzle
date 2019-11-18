@@ -1,26 +1,26 @@
 import styled, { keyframes, css } from 'styled-components';
 
-const backgroundshow = keyframes`
+const itemBackgroundShow = (props) => keyframes`
   from {
-    background-color: rgba(170,223,240, 1);
+    background-color: ${props.theme.settingItemBg};
   }
   to {
-    background-color: rgba(159,209,224, 1);
+    background-color: ${props.theme.settingItemInActiveBg};
   }
 `;
 
 const SettingWrap = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #9fd4e5;
+  background-color: ${props => props.theme.settingBg};
   padding-top: 44px;
 `;
 
 const SettingItem = styled.div`
   display: flex;
   width: 100%;
-  border-bottom: 1px solid #6cb8cf;
-  color: #4f6571;
+  border-bottom: 1px solid ${(props) => props.theme.settingItemBorderColor};
+  color: ${(props) => props.theme.settingItemTextColor};
   line-height: 1.5rem;
   padding: 10px 15px;
   font-family: Arial, serif;
@@ -28,11 +28,13 @@ const SettingItem = styled.div`
   text-transform: capitalize;
   cursor: pointer;
   flex-wrap: wrap;
+  & path {
+    fill: ${props => props.theme.settingItemIconColor};
+  }
   ${(props) => (props.alignItemsCenter ? css`align-items: center;` : '')}
   ${(props) => {
         if (props.isTitle) {
             return css`
-              background-color: #9fd4e5;
               padding-top: 20px;
               padding-bottom: 5px;
               font-size: .8rem;
@@ -47,11 +49,11 @@ const SettingItem = styled.div`
         }
 
         return css`
-          background-color: #aadff0;
+          background-color: ${(props) => props.theme.settingItemBg};
           justify-content: ${props.justifyContentSpaceAround ? 'space-around' : 'space-between'};
           ${!props.noActive ? css`
               &:active {
-                animation: ${backgroundshow} .1s ease-in;
+                animation: ${(props) => itemBackgroundShow(props)} .1s ease-in;
                 animation-iteration-count: 1;
                 animation-fill-mode: forwards;
               }
@@ -64,7 +66,7 @@ const Version = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  color: #4f6571;
+  color: ${(props) => props.theme.versionTextColor};
   font-family: Arial, serif;
   font-size: .8rem;
   padding: 20px 0;

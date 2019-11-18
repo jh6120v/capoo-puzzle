@@ -178,3 +178,45 @@ export const getSpacePosition = (grids, col) => {
 
     return output;
 };
+
+export const theme = (darkMode) => {
+    const lightTheme = {
+        background: '#6cb8cf',
+        textColor: '#1d1d1f',
+
+        headerBg: '#6cb8cf',
+        headerTextColor: '#ffffff',
+
+        containerBg: '#aadff0',
+
+        settingBg: '#9fd4e5',
+        settingItemBg: '#AADFF0',
+        settingItemTextColor: '#4f6571',
+        settingItemBorderColor: '#6cb8cf',
+        settingItemIconColor: '#4f6571',
+        settingItemInActiveBg: '#9FD1E0',
+
+        versionTextColor: '#4f6571'
+    };
+
+    const darkTheme = {
+        background: '#121212',
+        textColor: '#ffffff',
+
+        headerBg: '#262626',
+        headerTextColor: '#ffffff',
+
+        containerBg: '#121212',
+
+        settingBg: '#191919',
+        settingItemBg: '#121212',
+        settingItemTextColor: '#d7d7d7',
+        settingItemBorderColor: '#191919',
+        settingItemIconColor: '#d7d7d7',
+        settingItemInActiveBg: '#444444',
+
+        versionTextColor: '#d7d7d7'
+    };
+
+    return darkMode ? darkTheme : lightTheme;
+};

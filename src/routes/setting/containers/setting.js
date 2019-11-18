@@ -5,7 +5,11 @@ import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
 import { history } from '../../../store';
 import { headerTitleSet, prevLinkActGoBack } from '../../../modules/header';
 import { SettingWrap, SettingItem, Version } from '../styles';
-import { personalSettingDarkModeChange, personalSettingReset } from '../../../modules/personal-setting';
+import {
+    personalSettingDarkModeChange,
+    personalSettingReset,
+    personalSettingTipsChange
+} from '../../../modules/personal-setting';
 import { useModel } from '../../../commons/hooks';
 import Model from '../../../components/model';
 
@@ -19,10 +23,11 @@ const Setting = () => {
         }));
 
         dispatch(prevLinkActGoBack());
-    }, [dispatch]);
+    }, []);
 
     const linkTo = useCallback((url) => history.push(url), []);
-    const darkModeChange = useCallback(() => dispatch(personalSettingDarkModeChange()), [dispatch]);
+    const darkModeChange = useCallback(() => dispatch(personalSettingDarkModeChange()), []);
+    const tipsChange = useCallback(() => dispatch(personalSettingTipsChange()), []);
 
     const share = useCallback(() => {
         if (navigator.share) {
@@ -41,7 +46,7 @@ const Setting = () => {
     } = useModel('Are you sure to reset?', useCallback(() => {
         hideModal();
         dispatch(personalSettingReset());
-    }, [dispatch]));
+    }, []));
 
     return (
         <>
@@ -49,27 +54,27 @@ const Setting = () => {
                 <SettingItem isTitle>GAME SETTINGS</SettingItem>
                 <SettingItem onClick={() => linkTo('/setting/game-level')}>
                     Game level
-                    <IosArrowForward color="#4f6571" />
+                    <IosArrowForward />
                 </SettingItem>
                 <SettingItem onClick={() => linkTo('/setting/puzzle-picture')}>
                     Puzzle picture
-                    <IosArrowForward color="#4f6571" />
+                    <IosArrowForward />
                 </SettingItem>
-                <SettingItem onClick={darkModeChange}>
+                <SettingItem onClick={tipsChange}>
                     Tips
-                    {personal.tips ? <MdCheckmark color="#4f6571" /> : null}
+                    {personal.tips ? <MdCheckmark /> : null}
                 </SettingItem>
                 <SettingItem isTitle>GENERAL SETTINGS</SettingItem>
                 <SettingItem onClick={darkModeChange}>
-                    Enabled dark Mode
-                    {personal.darkMode ? <MdCheckmark color="#4f6571" /> : null}
+                    Enable dark mode by system
+                    {personal.darkMode ? <MdCheckmark /> : null}
                 </SettingItem>
                 <SettingItem isSpace />
                 <SettingItem onClick={showModal}>Reset</SettingItem>
                 <SettingItem onClick={share}>Share</SettingItem>
                 <SettingItem onClick={() => linkTo('/setting/about')}>
                     About
-                    <IosArrowForward color="#4f6571" />
+                    <IosArrowForward />
                 </SettingItem>
                 <Version>Version 1.0.0</Version>
             </SettingWrap>

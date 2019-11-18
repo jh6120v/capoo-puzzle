@@ -1,8 +1,8 @@
-import { lazy } from 'react';
-import { waitingRouteComponent } from '../commons/utils';
+import Puzzle from './puzzle';
+import Setting from './setting';
 
-const Puzzle = lazy(() => import('./puzzle'));
-const Setting = lazy(() => import('./setting'));
+// const Puzzle = lazy(() => import('./puzzle'));
+// const Setting = lazy(() => import('./setting'));
 
 const DEFAULT_SCENE_CONFIG = {
     enter: 'page-fade-in',
@@ -12,12 +12,12 @@ const DEFAULT_SCENE_CONFIG = {
 export const RouterConfig = [
     {
         path: '/',
-        component: waitingRouteComponent(Puzzle),
+        component: Puzzle,
         exact: true
     },
     {
         path: '/setting',
-        component: waitingRouteComponent(Setting),
+        component: Setting,
         exact: true,
         sceneConfig: {
             enter: 'page-right-forward',

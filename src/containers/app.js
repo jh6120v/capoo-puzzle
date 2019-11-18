@@ -16,6 +16,8 @@ import Header from '../components/header';
 import ResetStyle from '../styles/reset-style';
 import GlobalStyle from '../styles/global-style';
 import { ThemeProvider } from 'styled-components';
+import { useDarkMode } from "../commons/hooks";
+import { theme } from '../commons/utils';
 
 injectReducer(history, store, [
     { key: 'personal', reducer: personalSettingReducer },
@@ -28,10 +30,9 @@ const App = () => {
     const dispatch = useDispatch();
     const { isShow } = useSelector((state) => state.spinner);
     const header = useSelector((state) => state.header);
+    const { darkMode } = useSelector((state) => state.personal);
 
-    const theme = {
-        main: "mediumseagreen"
-    };
+    const darkModeEnabled = useDarkMode(darkMode);
 
     useEffect(() => {
         dispatch(personalSettingFetch());
@@ -42,7 +43,7 @@ const App = () => {
     }, []);
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme(darkModeEnabled)}>
             <>
                 <ResetStyle />
                 <GlobalStyle />

@@ -19,7 +19,6 @@ import {
     takeWhile
 } from "rxjs/operators";
 import { of, animationFrameScheduler } from "rxjs";
-import { getLayoutPositionList } from "./utils";
 
 const useModel = (message, confirm) => {
     const [isShown, setShown] = useState(false);
@@ -105,25 +104,35 @@ const useTimer = (initialTime = 0, direction = 'forward' , onSuccess) => {
     };
 };
 
-// React hook for JS media queries
-const useMediaQuery = query => {
-    if (typeof window !== `undefined`) {
-        query = window.matchMedia(query)
+const useDarkMode = (enabled = false) => {
+    // Check if the user has an OS preference for dark mode.
+    const prefersDarkMode = useMediaQuery(`(prefers-color-scheme: dark)`);
 
-        const [match, setMatch] = useState(query.matches)
+    // Dark mode is enabled if either the color scheme was set to dark
+    // by the user or the media query `prefers-color-scheme: dark` is true.
+    return enabled && prefersDarkMode;
+};
+
+// React hook for JS media queries
+const useMediaQuery = (query) => {
+    if (typeof window !== `undefined`) {
+        query = window.matchMedia(query);
+
+        const [match, setMatch] = useState(query.matches);
 
         useEffect(() => {
-            const handleMatch = q => setMatch(q.matches)
-            query.addListener(handleMatch)
+            const handleMatch = q => setMatch(q.matches);
+            query.addListener(handleMatch);
 
             return () => query.removeListener(handleMatch)
-        }, [query])
+        }, [query]);
 
         return match
     }
-}
+};
 
 export {
+    useDarkMode,
     useMediaQuery,
     useModel,
     useTimer

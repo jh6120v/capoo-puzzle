@@ -59,3 +59,35 @@ export function* resetPersonalSetting() {
         console.log(e);
     }
 }
+
+export function* changePersonalTips() {
+    try {
+        const personal = yield call(get, PERSONAL_SETTING);
+
+        yield put(IDBSet({
+            key: PERSONAL_SETTING,
+            value: {
+                ...personal,
+                tips: !personal.tips
+            }
+        }));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export function* changePersonalEnableDarkMode() {
+    try {
+        const personal = yield call(get, PERSONAL_SETTING);
+
+        yield put(IDBSet({
+            key: PERSONAL_SETTING,
+            value: {
+                ...personal,
+                darkMode: !personal.darkMode
+            }
+        }));
+    } catch (e) {
+        console.log(e);
+    }
+}

@@ -11,8 +11,8 @@ const GlobalStyle = createGlobalStyle`
     height: auto;
     font-display: optional;
     font-size: 16px;
-    color: #1d1d1f;
-    background-color: #6cb8cf;
+    color: ${props => props.theme.textColor};
+    background-color: ${props => props.theme.background};
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     -webkit-user-select: none;

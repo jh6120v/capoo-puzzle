@@ -9,13 +9,15 @@ const personalSettingSet = actionCreator('SETTING_SET');
 const personalSettingReset = actionCreator('SETTING_RESET');
 const personalSettingGridsSet = actionCreator('SETTING_GRIDS_SET');
 const personalSettingDarkModeChange = actionCreator('SETTING_DARK_MODE_CHANGE');
+const personalSettingTipsChange = actionCreator('SETTING_TIPS_CHANGE');
 
 export {
     personalSettingFetch,
     personalSettingSet,
     personalSettingReset,
     personalSettingGridsSet,
-    personalSettingDarkModeChange
+    personalSettingDarkModeChange,
+    personalSettingTipsChange
 };
 
 
@@ -38,6 +40,10 @@ const handlers = {
     [personalSettingDarkModeChange.type]: (state) => ({
         ...state,
         darkMode: !state.darkMode
+    }),
+    [personalSettingTipsChange.type]: (state) => ({
+        ...state,
+        tips: !state.tips
     })
 };
 

@@ -22,11 +22,10 @@ const HeaderStyle = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
-  //margin-top: env(safe-area-inset-top);
+  color: ${props => props.theme.headerTextColor};
   padding: env(safe-area-inset-top) 5px 0 5px;
   overflow: hidden;
-  background-color: #6cb8cf;
+  background-color: ${props => props.theme.headerBg};
   z-index: 3;
   ${respondTo.xs`
     left: 50%;
@@ -58,7 +57,7 @@ const Container = styled.div`
 const ContainerInner = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #aadff0;
+  background-color: ${props => props.theme.containerBg};
   padding-top: 44px;
 `;
 
