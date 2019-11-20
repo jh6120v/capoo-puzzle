@@ -2,11 +2,12 @@ import { takeEvery, all } from 'redux-saga/effects';
 import { indexDBDel, indexDBSet } from './indexed-db';
 import { IDBDelete, IDBSet } from '../modules/indexed-db';
 import {
-    personalSettingFetch,
+    personalSettingFetch, personalSettingImageSet,
     personalSettingReset,
     personalSettingSet, personalSettingTipsChange
 } from '../modules/personal-setting';
 import {
+    changePersonalImage,
     changePersonalTips,
     fetchPersonalSetting,
     resetPersonalSetting,
@@ -33,6 +34,10 @@ function* watchPersonalSettingReset() {
     yield takeEvery(personalSettingReset.type, resetPersonalSetting);
 }
 
+function* watchPersonalImage() {
+    yield takeEvery(personalSettingImageSet.type, changePersonalImage);
+}
+
 function* watchPersonalTips() {
     yield takeEvery(personalSettingTipsChange.type, changePersonalTips);
 }
@@ -44,6 +49,7 @@ export default function* rootSaga() {
         watchPersonalSettingFetch(),
         watchPersonalSettingSet(),
         watchPersonalSettingReset(),
+        watchPersonalImage(),
         watchPersonalTips()
     ]);
 }

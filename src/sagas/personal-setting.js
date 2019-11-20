@@ -60,6 +60,22 @@ export function* resetPersonalSetting() {
     }
 }
 
+export function* changePersonalImage({ payload }) {
+    try {
+        const personal = yield call(get, PERSONAL_SETTING);
+
+        yield put(IDBSet({
+            key: PERSONAL_SETTING,
+            value: {
+                ...personal,
+                image: payload.image
+            }
+        }));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export function* changePersonalTips() {
     try {
         const personal = yield call(get, PERSONAL_SETTING);

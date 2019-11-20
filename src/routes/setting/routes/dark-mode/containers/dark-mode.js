@@ -28,7 +28,7 @@ const DarkMode = () => {
     return (
         <SettingWrap>
             <SettingItem onClick={() => darkModeChange('system')}>
-                Default
+                System Default
                 {colorMode === 'system' ? <MdCheckmark /> : null}
             </SettingItem>
             <SettingItem onClick={() => darkModeChange('dark')}>

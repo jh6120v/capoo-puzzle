@@ -43,17 +43,19 @@ const Setting = () => {
 
     const {
         ModelBox, isShown, showModal, hideModal
-    } = useModel('Are you sure to reset?', useCallback(() => {
+    } = useModel('', 'Are you sure to reset?', useCallback(() => {
         hideModal();
 
         dispatch(personalSettingReset());
 
-        toggle('light');
+        toggle('system');
 
         dispatch(colorModeSet({
-            colorMode: 'light'
+            colorMode: 'system'
         }));
-    }, [toggle]));
+    }, [toggle]), 'Confirm', useCallback(() => {
+        hideModal();
+    }, []), 'Cancel');
 
     return (
         <>

@@ -1,6 +1,14 @@
 import styled, { css } from 'styled-components';
 import puzzle_1 from '../../../assets/images/puzzle-1.jpg';
 import puzzle_2 from '../../../assets/images/puzzle-2.jpg';
+import puzzle_3 from '../../../assets/images/puzzle-3.jpg';
+import puzzle_4 from '../../../assets/images/puzzle-4.jpg';
+import puzzle_5 from '../../../assets/images/puzzle-5.jpg';
+import puzzle_6 from '../../../assets/images/puzzle-6.jpg';
+import puzzle_7 from '../../../assets/images/puzzle-7.jpg';
+import puzzle_8 from '../../../assets/images/puzzle-8.jpg';
+import puzzle_9 from '../../../assets/images/puzzle-9.jpg';
+import puzzle_10 from '../../../assets/images/puzzle-10.jpg';
 
 const Points = styled.div`
   display: flex;
@@ -62,6 +70,30 @@ const Grid = styled.div`
   }
   &.puzzle-2 {
     background-image: url(${puzzle_2});
+  }
+  &.puzzle-3 {
+    background-image: url(${puzzle_3});
+  }
+  &.puzzle-4 {
+    background-image: url(${puzzle_4});
+  }
+  &.puzzle-5 {
+    background-image: url(${puzzle_5});
+  }
+  &.puzzle-6 {
+    background-image: url(${puzzle_6});
+  }
+  &.puzzle-7 {
+    background-image: url(${puzzle_7});
+  }
+  &.puzzle-8 {
+    background-image: url(${puzzle_8});
+  }
+  &.puzzle-9 {
+    background-image: url(${puzzle_9});
+  }
+  &.puzzle-10 {
+    background-image: url(${puzzle_10});
   }
   &:after {
     content: '';

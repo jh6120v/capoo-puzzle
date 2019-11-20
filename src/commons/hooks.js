@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import {
-    ConfirmButton, ModelContent, ModelFooter, ModelShadow, ModelWrap
+    Button,
+    ConfirmButton, ModelContent, ModelFooter, ModelShadow, ModelTitle, ModelWrap
 } from '../styles/model-style';
 import {
     useObservable,
@@ -20,7 +21,7 @@ import {
 } from "rxjs/operators";
 import { of, animationFrameScheduler } from "rxjs";
 
-const useModel = (message, confirm) => {
+const useModel = (title, message = null, confirm = null, confirmText = 'Confirm', cancel = null, cancelText = 'Cancel') => {
     const [isShown, setShown] = useState(false);
     const showModal = useCallback(() => setShown(true), []);
     const hideModal = useCallback(() => setShown(false), []);
@@ -28,12 +29,18 @@ const useModel = (message, confirm) => {
     const ModelBox = () => (
         <div>
             <ModelWrap>
+                <ModelTitle>{title}</ModelTitle>
                 <ModelContent>{message}</ModelContent>
                 <ModelFooter>
-                    <ConfirmButton onClick={confirm}>Confirm</ConfirmButton>
+                    {
+                        cancel ? (<Button type="cancel" onClick={cancel}>{cancelText}</Button>) : null
+                    }
+                    {
+                        confirm ? (<Button type="confirm" onClick={confirm}>{confirmText}</Button>) : null
+                    }
                 </ModelFooter>
             </ModelWrap>
-            <ModelShadow onClick={hideModal} />
+            <ModelShadow />
         </div>
     );
 
@@ -104,7 +111,7 @@ const useTimer = (initialTime = 0, direction = 'forward', onSuccess) => {
     };
 };
 
-const useDarkMode = (initialValue = `light`) => {
+const useDarkMode = (initialValue = `system`) => {
     let darkModeEnabled = false;
 
     const [colorMode, setColorMode] = useLocalStorage(`colorMode`, initialValue);
