@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
     ConfirmButton, ModelContent, ModelFooter, ModelShadow, ModelWrap
 } from '../styles/model-style';
@@ -45,7 +45,7 @@ const useModel = (message, confirm) => {
     };
 };
 
-const useTimer = (initialTime = 0, direction = 'forward' , onSuccess) => {
+const useTimer = (initialTime = 0, direction = 'forward', onSuccess) => {
     const [timerState, setTimerState] = useState('reset');
 
     const timerState$ = useObservable(pluckFirst, [timerState]);
@@ -104,13 +104,67 @@ const useTimer = (initialTime = 0, direction = 'forward' , onSuccess) => {
     };
 };
 
-const useDarkMode = (enabled = false) => {
-    // Check if the user has an OS preference for dark mode.
-    const prefersDarkMode = useMediaQuery(`(prefers-color-scheme: dark)`);
+const useDarkMode = (initialValue = `light`) => {
+    let darkModeEnabled = false;
 
-    // Dark mode is enabled if either the color scheme was set to dark
-    // by the user or the media query `prefers-color-scheme: dark` is true.
-    return enabled && prefersDarkMode;
+    const [colorMode, setColorMode] = useLocalStorage(`colorMode`, initialValue);
+    const setter = value => {
+        document.body.style.transition = `color 0.5s, background 0.5s`;
+
+        setColorMode(value)
+    };
+
+    const prefersDarkMode = useMediaQuery(`(prefers-color-scheme: dark)`);
+    if (colorMode === 'system' && prefersDarkMode) {
+        darkModeEnabled = true;
+    }
+
+    if (colorMode === `dark`) {
+        darkModeEnabled = true;
+    }
+
+    return [darkModeEnabled, colorMode, setter];
+};
+
+const useLocalStorage = (key, initialValue, options = {}) => {
+    const { deleteKeyIfValueIs = null } = options;
+    const [storedValue, setStoredValue] = useState(() => {
+        if (typeof localStorage !== `undefined`) {
+            document.addEventListener(`localStorage:${key}Change`, event =>
+                setStoredValue(event.detail)
+            );
+
+            const item = localStorage[key];
+
+            if (!item) {
+                localStorage[key] = JSON.stringify(initialValue);
+            }
+
+            return item ? JSON.parse(item) : initialValue;
+        } else {
+            return initialValue;
+        }
+    });
+
+    const setValue = value => {
+        const valueToStore = value instanceof Function ? value(storedValue) : value;
+
+        setStoredValue(valueToStore);
+
+        const event = new CustomEvent(`localStorage:${key}Change`, {
+            detail: valueToStore
+        });
+
+        document.dispatchEvent(event);
+
+        if (value === deleteKeyIfValueIs) {
+            delete localStorage[key];
+        } else {
+            localStorage[key] = JSON.stringify(valueToStore);
+        }
+    };
+
+    return [storedValue, setValue];
 };
 
 // React hook for JS media queries

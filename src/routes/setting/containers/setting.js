@@ -6,16 +6,17 @@ import { history } from '../../../store';
 import { headerTitleSet, prevLinkActGoBack } from '../../../modules/header';
 import { SettingWrap, SettingItem, Version } from '../styles';
 import {
-    personalSettingDarkModeChange,
     personalSettingReset,
     personalSettingTipsChange
 } from '../../../modules/personal-setting';
 import { useModel } from '../../../commons/hooks';
 import Model from '../../../components/model';
+import { colorModeSet } from '../../../modules/theme';
 
 const Setting = () => {
     const dispatch = useDispatch();
     const personal = useSelector((state) => state.personal);
+    const { toggle } = useSelector((state) => state.theme);
 
     useEffect(() => {
         dispatch(headerTitleSet({
@@ -26,7 +27,6 @@ const Setting = () => {
     }, []);
 
     const linkTo = useCallback((url) => history.push(url), []);
-    const darkModeChange = useCallback(() => dispatch(personalSettingDarkModeChange()), []);
     const tipsChange = useCallback(() => dispatch(personalSettingTipsChange()), []);
 
     const share = useCallback(() => {
@@ -45,8 +45,15 @@ const Setting = () => {
         ModelBox, isShown, showModal, hideModal
     } = useModel('Are you sure to reset?', useCallback(() => {
         hideModal();
+
         dispatch(personalSettingReset());
-    }, []));
+
+        toggle('light');
+
+        dispatch(colorModeSet({
+            colorMode: 'light'
+        }));
+    }, [toggle]));
 
     return (
         <>
@@ -65,9 +72,9 @@ const Setting = () => {
                     {personal.tips ? <MdCheckmark /> : null}
                 </SettingItem>
                 <SettingItem isTitle>GENERAL SETTINGS</SettingItem>
-                <SettingItem onClick={darkModeChange}>
-                    Enable dark mode by system
-                    {personal.darkMode ? <MdCheckmark /> : null}
+                <SettingItem onClick={() => linkTo('/setting/dark-mode')}>
+                    Dark mode
+                    <IosArrowForward />
                 </SettingItem>
                 <SettingItem isSpace />
                 <SettingItem onClick={showModal}>Reset</SettingItem>

@@ -11,6 +11,7 @@ import personalSettingReducer, { personalSettingFetch } from '../modules/persona
 import spinnerReducer from '../modules/spinner';
 import headerTitleReducer from '../modules/header';
 import modelReducer from '../modules/model';
+import themeReducer, { colorModeSet, toggleSwitchSet } from '../modules/theme';
 import { Container, Wrapper } from '../styles/layout-style';
 import Header from '../components/header';
 import ResetStyle from '../styles/reset-style';
@@ -24,18 +25,26 @@ injectReducer(history, store, [
     { key: 'spinner', reducer: spinnerReducer },
     { key: 'header', reducer: headerTitleReducer },
     { key: 'model', reducer: modelReducer },
+    { key: 'theme', reducer: themeReducer }
 ]);
 
 const App = () => {
     const dispatch = useDispatch();
     const { isShow } = useSelector((state) => state.spinner);
     const header = useSelector((state) => state.header);
-    const { darkMode } = useSelector((state) => state.personal);
 
-    const darkModeEnabled = useDarkMode(darkMode);
+    const [darkModeEnabled, colorMode, setter] = useDarkMode() ;
 
     useEffect(() => {
         dispatch(personalSettingFetch());
+
+        dispatch(colorModeSet({
+            colorMode: colorMode
+        }));
+
+        dispatch(toggleSwitchSet({
+            toggle: setter
+        }));
 
         // 為了讓 :active 在 ios 生效
         document.addEventListener('touchstart', () => {

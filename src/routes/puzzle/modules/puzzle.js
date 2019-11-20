@@ -16,7 +16,7 @@ export { preparedOn, preparedOff, gridsSet, totalWithSet, layoutPositionListSet 
 const initialState = {
     prepared: true,
     grids: [],
-    width: 288,
+    width: 300,
     layoutPositionList: []
 };
 

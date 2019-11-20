@@ -75,19 +75,3 @@ export function* changePersonalTips() {
         console.log(e);
     }
 }
-
-export function* changePersonalEnableDarkMode() {
-    try {
-        const personal = yield call(get, PERSONAL_SETTING);
-
-        yield put(IDBSet({
-            key: PERSONAL_SETTING,
-            value: {
-                ...personal,
-                darkMode: !personal.darkMode
-            }
-        }));
-    } catch (e) {
-        console.log(e);
-    }
-}

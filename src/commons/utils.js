@@ -196,7 +196,12 @@ export const theme = (darkMode) => {
         settingItemIconColor: '#4f6571',
         settingItemInActiveBg: '#9FD1E0',
 
-        versionTextColor: '#4f6571'
+        versionTextColor: '#4f6571',
+
+        modelBg: '#ffffff',
+        modelTextColor: '#1d1d1f',
+        modelConfirmBtnBg: '#5AC9E8',
+        modelConfirmBtnTextColor: '#ffffff'
     };
 
     const darkTheme = {
@@ -215,7 +220,12 @@ export const theme = (darkMode) => {
         settingItemIconColor: '#d7d7d7',
         settingItemInActiveBg: '#444444',
 
-        versionTextColor: '#d7d7d7'
+        versionTextColor: '#d7d7d7',
+
+        modelBg: '#191919',
+        modelTextColor: '#d7d7d7',
+        modelConfirmBtnBg: '#121212',
+        modelConfirmBtnTextColor: '#ffffff'
     };
 
     return darkMode ? darkTheme : lightTheme;

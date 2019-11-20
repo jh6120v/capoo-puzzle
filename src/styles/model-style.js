@@ -16,7 +16,7 @@ const ModelWrap = styled.div`
   top: 50%;
   width: 250px;
   max-width: 90%;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.modelBg};
   z-index: 11;
   display: flex;
   flex-direction: column;
@@ -29,6 +29,7 @@ const ModelWrap = styled.div`
 const ModelContent = styled.div`
   width: 100%;
   padding: 0 0 20px 0;
+  color: ${(props) => props.theme.modelTextColor};
 `;
 
 const ModelFooter = styled.div`
@@ -41,8 +42,8 @@ const ModelFooter = styled.div`
 const ConfirmButton = styled.div`
   padding: 10px 15px;
   margin: 0 5px;
-  background-color: #5AC9E8;
-  color: #FFF;
+  background-color: ${(props) => props.theme.modelConfirmBtnBg};
+  color: ${(props) => props.theme.modelConfirmBtnTextColor};;
   font-size: .8rem;
   cursor: pointer;
   border-radius: 2px;

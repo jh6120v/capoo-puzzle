@@ -62,6 +62,14 @@ const SettingItem = styled.div`
     }}
 `;
 
+const SettingItemImage = styled.div`
+  width: 50px;
+  height: 50px;
+  background-image: url(${(props) => props.image});
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+
 const Version = styled.div`
   width: 100%;
   display: flex;
@@ -73,6 +81,6 @@ const Version = styled.div`
 `;
 
 export {
-    SettingWrap, SettingItem,
+    SettingWrap, SettingItem, SettingItemImage,
     Version
 };

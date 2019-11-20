@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
-import bg_1 from '../../../assets/images/puzzle-bg-1.jpg';
+import puzzle_1 from '../../../assets/images/puzzle-1.jpg';
+import puzzle_2 from '../../../assets/images/puzzle-2.jpg';
 
 const Points = styled.div`
   display: flex;
@@ -11,7 +12,7 @@ const Points = styled.div`
 const Times = styled(Points)``;
 
 const PuzzleContainer = styled.div`
-  width: 288px;
+  width: 300px;
   margin: 0 auto;
 `;
 
@@ -50,30 +51,22 @@ const Grid = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${(props) => props.width ? props.width + 'px' : '96px'};
-  background-image: url(${bg_1});
+  width: ${(props) => props.width ? props.width + 'px' : '100px'};
   background-size: ${(props) => css`${props.totalWidth}px ${props.totalWidth}px`};
   background-repeat: no-repeat;
   background-position: ${(props) => css`-${props.position.x}px -${props.position.y}px`};
   opacity: ${(props) => (props.isSpace ? '.1' : '1')};
   z-index: ${(props) => props.isSpace ? '0' : '1'};
+  &.puzzle-1 {
+    background-image: url(${puzzle_1});
+  }
+  &.puzzle-2 {
+    background-image: url(${puzzle_2});
+  }
   &:after {
     content: '';
     padding-top: 100%;
   }
-`;
-
-const GridInnerImg = styled.div`
-  position: absolute;
-  left: -${(props) => props.pos[0] + 'px'};
-  top: -${(props) => props.pos[1] + 'px'};
-  width: ${(props) => props.size + 'px'};
-  height: ${(props) => props.size + 'px'};
-  opacity: ${(props) => (props.isSpace ? '.1' : '1')};
-  background-image: url(${bg_1});
-  background-size: contain;
-  background-repeat: no-repeat;
-  z-index: 3;
 `;
 
 const Functions = styled.div`
@@ -89,6 +82,5 @@ export {
     Grid,
     GridInner,
     GridInnerText,
-    GridInnerImg,
     Functions
 };

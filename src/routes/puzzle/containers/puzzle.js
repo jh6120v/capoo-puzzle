@@ -25,7 +25,7 @@ const Puzzle = () => {
     const dispatch = useDispatch();
 
     // 取個人設定值
-    const { cols, tips } = useSelector((state) => state.personal);
+    const { cols, image, tips } = useSelector((state) => state.personal);
 
     // 拼圖完整資料
     const { prepared, grids, width, layoutPositionList } = useSelector(state => state.puzzle);
@@ -170,6 +170,7 @@ const Puzzle = () => {
                                     position={layoutPositionList[item.label]}
                                     isSpace={isSpace}
                                     onClick={() => moveHandler(idx, item)}
+                                    className={image.split('.')[0]}
                                     style={{ transform: `translate3d(${x}px,${y}px,0)` }}
                                 >
                                     { tips ? item.label : null}

@@ -2,13 +2,12 @@ import { takeEvery, all } from 'redux-saga/effects';
 import { indexDBDel, indexDBSet } from './indexed-db';
 import { IDBDelete, IDBSet } from '../modules/indexed-db';
 import {
-    personalSettingDarkModeChange,
     personalSettingFetch,
     personalSettingReset,
     personalSettingSet, personalSettingTipsChange
 } from '../modules/personal-setting';
 import {
-    changePersonalEnableDarkMode, changePersonalTips,
+    changePersonalTips,
     fetchPersonalSetting,
     resetPersonalSetting,
     setPersonalSetting
@@ -34,10 +33,6 @@ function* watchPersonalSettingReset() {
     yield takeEvery(personalSettingReset.type, resetPersonalSetting);
 }
 
-function* watchPersonalDarkMode() {
-    yield takeEvery(personalSettingDarkModeChange.type, changePersonalEnableDarkMode);
-}
-
 function* watchPersonalTips() {
     yield takeEvery(personalSettingTipsChange.type, changePersonalTips);
 }
@@ -49,7 +44,6 @@ export default function* rootSaga() {
         watchPersonalSettingFetch(),
         watchPersonalSettingSet(),
         watchPersonalSettingReset(),
-        watchPersonalDarkMode(),
         watchPersonalTips()
     ]);
 }
