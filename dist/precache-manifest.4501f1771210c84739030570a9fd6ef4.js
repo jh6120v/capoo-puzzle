@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/icons/android-chrome-512x512.png"
   },
   {
-    "revision": "2dcd170f690428dc9fedf947d275ed60",
+    "revision": "056320ba078e27635ec12b40a2e37aed",
     "url": "/assets/icons/apple-touch-icon.png"
   },
   {
