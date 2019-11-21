@@ -1,17 +1,18 @@
 import { createActionCreator } from '../commons/utils';
 import { createReducer } from '../store/reducers';
-import { FUNC_CLOSE, FUNC_GO_BACK, FUNC_SETTING } from '../constants';
+import { FUNC_CLOSE, FUNC_GO_BACK, FUNC_SETTING, USER_INFO } from '../constants';
 
 // Actions
 const actionCreator = createActionCreator('@@HEADER');
 const headerTitleDefault = actionCreator('TITLE_DEFAULT');
 const headerTitleSet = actionCreator('TITLE_SET');
+const prevLinkActSet = actionCreator('PREV_LINK_ACT_SET');
 const prevLinkActGoBack = actionCreator('PREV_LINK_ACT_GO_BACK');
 const prevLinkActClose = actionCreator('PREV_LINK_ACT_CLOSE');
 const nextLinkActSetting = actionCreator('NEXT_LINK_ACT_SETTING');
 
 export {
-    headerTitleDefault, headerTitleSet, prevLinkActGoBack, prevLinkActClose, nextLinkActSetting
+    headerTitleDefault, headerTitleSet, prevLinkActSet, prevLinkActGoBack, prevLinkActClose, nextLinkActSetting
 };
 
 
@@ -30,6 +31,10 @@ const handlers = {
     [headerTitleSet.type]: (state, { payload }) => ({
         ...state,
         title: payload.title
+    }),
+    [prevLinkActSet.type]: (state, { payload }) => ({
+        ...state,
+        ...payload
     }),
     [prevLinkActGoBack.type]: (state) => ({
         ...state,

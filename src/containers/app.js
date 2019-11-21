@@ -17,7 +17,7 @@ import Header from '../components/header';
 import ResetStyle from '../styles/reset-style';
 import GlobalStyle from '../styles/global-style';
 import { ThemeProvider } from 'styled-components';
-import { useDarkMode } from "../commons/hooks";
+import { useAuthentication, useDarkMode } from "../commons/hooks";
 import { theme } from '../commons/utils';
 
 injectReducer(history, store, [
@@ -32,6 +32,7 @@ const App = () => {
     const dispatch = useDispatch();
     const { isShow } = useSelector((state) => state.spinner);
     const header = useSelector((state) => state.header);
+    const auth = useAuthentication();
 
     const [darkModeEnabled, colorMode, setter] = useDarkMode() ;
 
@@ -59,7 +60,7 @@ const App = () => {
                 <Spinner show={isShow} />
                 <ConnectedRouter history={history}>
                     <Wrapper>
-                        <Header {...header} />
+                        <Header {...header} {...auth} />
                         <Container>
                             <Routes />
                         </Container>

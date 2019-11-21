@@ -3,15 +3,35 @@ import PropTypes from 'prop-types';
 import IosArrowBack from 'react-ionicons/lib/IosArrowBack';
 import { Link } from 'react-router-dom';
 import IosSettings from 'react-ionicons/lib/IosSettings';
-import { FUNC_GO_BACK, FUNC_SETTING } from '../constants';
+import { FUNC_GO_BACK, FUNC_SETTING, USER_INFO } from '../constants';
 import { history } from '../store';
 import {
     HeaderStyle, NextLink, PrevLink, Title
 } from '../styles/layout-style';
 import { Setting } from '../styles/common-style';
+import MdLogIn from "react-ionicons/lib/MdLogIn";
+import MdLogOut from "react-ionicons/lib/MdLogOut";
 
-const Header = ({ title, prev, next }) => {
+const Header = ({ title, prev, next, login, loggedIn, logout }) => {
     const renderPrev = (prevState) => {
+        if (prevState === USER_INFO) {
+            return (
+                <div>
+                    {loggedIn !== "loading" ? (
+                        <>
+                            {loggedIn ? (
+                                <MdLogOut fontSize="25px" color="#fff" onClick={logout} />
+                            ) : (
+                                <MdLogIn fontSize="25px" color="#fff" onClick={login} />
+                            )}
+                        </>
+                    ) : (
+                        "loading..."
+                    )}
+                </div>
+            );
+        }
+
         if (prevState === FUNC_GO_BACK) {
             return (
                 <a onClick={() => history.goBack()}>

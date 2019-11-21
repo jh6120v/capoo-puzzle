@@ -13,13 +13,13 @@ import {
     PuzzleContainer,
     GridWrap,
     Grid,
-    Points,
     Functions, RatingWrap, RatingItem, PuzzleFront, PuzzleBack, FunctionButton, CountDownTips
 } from "../styles/puzzle-style";
 import { useModel, useTimer } from "../../../commons/hooks";
 import Model from "../../../components/model";
 import Clock from "../components/clock";
-import { headerTitleDefault, nextLinkActSetting } from '../../../modules/header';
+import { headerTitleDefault, prevLinkActSet } from '../../../modules/header';
+import { FUNC_SETTING, USER_INFO } from "../../../constants";
 
 const Puzzle = () => {
     const dispatch = useDispatch();
@@ -44,7 +44,10 @@ const Puzzle = () => {
         dispatch(headerTitleDefault());
 
         // set link
-        dispatch(nextLinkActSetting());
+        dispatch(prevLinkActSet({
+            prev: USER_INFO,
+            next: FUNC_SETTING
+        }));
 
         // set layout position list
         dispatch(layoutPositionListSet(getLayoutPositionList(width, cols)));

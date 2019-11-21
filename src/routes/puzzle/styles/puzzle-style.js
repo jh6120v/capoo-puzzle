@@ -34,6 +34,7 @@ const CountDownTips = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #fff;
   background-color: rgba(0, 0, 0, .3);
   font-size: 10rem;
   z-index: 999;

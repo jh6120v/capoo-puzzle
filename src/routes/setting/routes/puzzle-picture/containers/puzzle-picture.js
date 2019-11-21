@@ -20,7 +20,7 @@ const PuzzlePicture = () => {
 
     const setPuzzlePicture = useCallback((image) => {
         dispatch(personalSettingImageSet({
-            image: image
+            image: image.toString()
         }));
     }, []);
 
@@ -33,7 +33,7 @@ const PuzzlePicture = () => {
                     return (
                         <SettingItem key={`P_${val}`} alignItemsCenter onClick={() => setPuzzlePicture(val)}>
                             <SettingItemImage image={val} />
-                            {image === val ? <MdCheckmark /> : null}
+                            {image === val.toString() ? <MdCheckmark /> : null}
                         </SettingItem>
                     )
                 })
