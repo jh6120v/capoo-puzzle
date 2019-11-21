@@ -189,6 +189,8 @@ export const theme = (darkMode) => {
 
         containerBg: '#aadff0',
 
+        ratingTextColor: '#4f6571',
+
         settingBg: '#9fd4e5',
         settingItemBg: '#AADFF0',
         settingItemTextColor: '#4f6571',
@@ -201,7 +203,9 @@ export const theme = (darkMode) => {
         modelBg: '#ffffff',
         modelTextColor: '#1d1d1f',
         modelConfirmBtnBg: '#5AC9E8',
-        modelConfirmBtnTextColor: '#ffffff'
+        modelConfirmBtnTextColor: '#ffffff',
+
+        functionBtnTextColor: '#4f6571'
     };
 
     const darkTheme = {
@@ -212,6 +216,8 @@ export const theme = (darkMode) => {
         headerTextColor: '#ffffff',
 
         containerBg: '#121212',
+
+        ratingTextColor: '#ffffff',
 
         settingBg: '#191919',
         settingItemBg: '#121212',
@@ -225,7 +231,9 @@ export const theme = (darkMode) => {
         modelBg: '#191919',
         modelTextColor: '#d7d7d7',
         modelConfirmBtnBg: '#121212',
-        modelConfirmBtnTextColor: '#ffffff'
+        modelConfirmBtnTextColor: '#ffffff',
+
+        functionBtnTextColor: '#ffffff'
     };
 
     return darkMode ? darkTheme : lightTheme;

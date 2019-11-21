@@ -28,43 +28,57 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/icons/safari-pinned-tab.svg"
   },
   {
-    "url": "/assets/images/i.06f2016304742e70616df6494f63559c.jpg"
+    "revision": "becc1171d040284f9ef52ff3c33b0fea",
+    "url": "/assets/images/picture/.DS_Store"
   },
   {
-    "url": "/assets/images/i.32a4db0238a6b561c44a00af2179b246.jpg"
+    "revision": "32a4db0238a6b561c44a00af2179b246",
+    "url": "/assets/images/picture/0.jpg"
   },
   {
-    "url": "/assets/images/i.418ab3f22c455882721086316c629e00.jpg"
+    "revision": "d72e71a57974c2c40d9874b47a9f4035",
+    "url": "/assets/images/picture/1.jpg"
   },
   {
-    "url": "/assets/images/i.55539df187ea9b79a18c21d884519215.jpg"
+    "revision": "936f69949d002627368d14bebf7cda24",
+    "url": "/assets/images/picture/2.jpg"
   },
   {
-    "url": "/assets/images/i.936f69949d002627368d14bebf7cda24.jpg"
+    "revision": "fb75520bbbf5427e41aeae8264461904",
+    "url": "/assets/images/picture/3.jpg"
   },
   {
-    "url": "/assets/images/i.94ddd5dce7ab5ff266ce1d4a38770d6f.jpg"
+    "revision": "06f2016304742e70616df6494f63559c",
+    "url": "/assets/images/picture/4.jpg"
   },
   {
-    "url": "/assets/images/i.ad51e8b21d5d9cad679dd728e1d8f4df.jpg"
+    "revision": "94ddd5dce7ab5ff266ce1d4a38770d6f",
+    "url": "/assets/images/picture/5.jpg"
   },
   {
-    "url": "/assets/images/i.ce18f36b59d517dc7fe585b4a7e7fa3b.jpg"
+    "revision": "55539df187ea9b79a18c21d884519215",
+    "url": "/assets/images/picture/6.jpg"
   },
   {
-    "url": "/assets/images/i.d72e71a57974c2c40d9874b47a9f4035.jpg"
+    "revision": "418ab3f22c455882721086316c629e00",
+    "url": "/assets/images/picture/7.jpg"
   },
   {
-    "url": "/assets/images/i.fb75520bbbf5427e41aeae8264461904.jpg"
+    "revision": "ce18f36b59d517dc7fe585b4a7e7fa3b",
+    "url": "/assets/images/picture/8.jpg"
   },
   {
-    "url": "/assets/js/1.bundle.3829186432a0503f7c45.js"
+    "revision": "ad51e8b21d5d9cad679dd728e1d8f4df",
+    "url": "/assets/images/picture/9.jpg"
   },
   {
-    "url": "/assets/js/2.bundle.3829186432a0503f7c45.js"
+    "url": "/assets/js/1.bundle.0dfc72946f94163f3de9.js"
   },
   {
-    "url": "/assets/js/bundle.3829186432a0503f7c45.js"
+    "url": "/assets/js/2.bundle.0dfc72946f94163f3de9.js"
+  },
+  {
+    "url": "/assets/js/bundle.0dfc72946f94163f3de9.js"
   },
   {
     "revision": "4e886489486e80519e564cf1429bc4f9",
@@ -107,7 +121,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/favicon.ico"
   },
   {
-    "revision": "51328c23b9a70afa640e118718d943db",
+    "revision": "fd9ce343a08d785d529db6f29166ad87",
     "url": "/index.html"
   },
   {

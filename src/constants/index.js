@@ -4,6 +4,6 @@ export const FUNC_CLOSE = 'CLOSE';
 export const FUNC_SETTING = 'SETTING';
 export const PERSONAL_DEFAULT_SETTING = {
     cols: 3,
-    image: 'puzzle-1.jpg',
+    image: '',
     tips: false
 };

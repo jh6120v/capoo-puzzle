@@ -2,13 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Times } from "../styles/puzzle-style";
 
-const Clock = ({ seconds }) => {
-    const restMinutes = ~~(seconds / 60) % 60;
-    const restSeconds = (seconds - restMinutes * 60) % 60;
+const Clock = ({ timer }) => {
+    if (timer.timerState === 'reset') {
+        return '-- : --';
+    }
 
-    return (
-        <Times>{~~(restMinutes / 10)}{restMinutes % 10} : {~~(restSeconds / 10)}{restSeconds % 10}</Times>
-    );
+    if (timer.seconds === 0) {
+        return '00 : 00';
+    }
+
+    const restMinutes = ~~(timer.seconds / 60) % 60;
+    const restSeconds = (timer.seconds - restMinutes * 60) % 60;
+
+    return (<Times>{~~(restMinutes / 10)}{restMinutes % 10} : {~~(restSeconds / 10)}{restSeconds % 10}</Times>);
 };
 
 Clock.propTypes = {

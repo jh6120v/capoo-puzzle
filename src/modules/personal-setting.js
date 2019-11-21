@@ -31,7 +31,8 @@ const handlers = {
     }),
     [personalSettingReset.type]: (state) => ({
         ...state,
-        ...PERSONAL_DEFAULT_SETTING
+        ...PERSONAL_DEFAULT_SETTING,
+        image: '0'
     }),
     [personalSettingGridsSet.type]: (state, { payload: { cols } }) => ({
         ...state,

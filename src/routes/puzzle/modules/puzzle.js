@@ -38,7 +38,7 @@ const handlers = {
         width: payload
     }),
     [layoutPositionListSet.type]: (state, {payload}) => {
-        console.log(payload);
+        // console.log(payload);
 
         return {
             ...state,

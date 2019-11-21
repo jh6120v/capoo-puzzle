@@ -25,7 +25,7 @@ export function* fetchPersonalSetting() {
         console.log(e);
 
         yield put(personalSettingSet({
-            PERSONAL_DEFAULT_SETTING
+            ...PERSONAL_DEFAULT_SETTING
         }));
 
         yield put(spinnerHide());
@@ -48,7 +48,8 @@ export function* setPersonalSetting({ payload }) {
 export function* resetPersonalSetting() {
     try {
         const defaultSetting = yield {
-            ...PERSONAL_DEFAULT_SETTING
+            ...PERSONAL_DEFAULT_SETTING,
+            image: '0'
         };
 
         yield put(IDBSet({

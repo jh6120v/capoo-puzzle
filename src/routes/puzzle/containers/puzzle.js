@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ContainerInner } from '../../../styles/layout-style';
 import {
     getGrids,
@@ -8,13 +8,13 @@ import {
     isWin, getLayoutPositionList
 } from '../../../commons/utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { gridsSet, preparedOn, preparedOff, layoutPositionListSet, totalWithSet } from "../modules/puzzle";
+import { gridsSet, preparedOn, preparedOff, layoutPositionListSet } from "../modules/puzzle";
 import {
     PuzzleContainer,
     GridWrap,
     Grid,
     Points,
-    Functions
+    Functions, RatingWrap, RatingItem, PuzzleFront, PuzzleBack, FunctionButton
 } from "../styles/puzzle-style";
 import { useModel, useTimer } from "../../../commons/hooks";
 import Model from "../../../components/model";
@@ -23,6 +23,8 @@ import { headerTitleDefault, nextLinkActSetting } from '../../../modules/header'
 
 const Puzzle = () => {
     const dispatch = useDispatch();
+
+    const [first, setFirst] = useState(true);
 
     // 取個人設定值
     const { cols, image, tips } = useSelector((state) => state.personal);
@@ -33,19 +35,16 @@ const Puzzle = () => {
     // 移動次數
     const [move, setMove] = useState(0);
 
-    //
-    const puzzleContainerNode = useRef();
-
     // set default setting
     useEffect(() => {
+        //
+        setFirst(true);
+
         // set default header
         dispatch(headerTitleDefault());
 
         // set link
         dispatch(nextLinkActSetting());
-
-        // set puzzle total width
-        dispatch(totalWithSet(puzzleContainerNode.current.clientWidth));
 
         // set layout position list
         dispatch(layoutPositionListSet(getLayoutPositionList(width, cols)));
@@ -59,14 +58,6 @@ const Puzzle = () => {
         dispatch(preparedOn());
     }, []);
 
-    // model
-    const {
-        ModelBox, isShown, showModal, hideModal
-    } = useModel('TimeOut!', useCallback(() => {
-        resume();
-        hideModal();
-    }, []));
-
     // 計時器
     const accumulateTimer = useTimer();
 
@@ -76,8 +67,18 @@ const Puzzle = () => {
         countDownTimer.setTimerState('reset');
     });
 
+    // model
+    const {
+        ModelBox, isShown, showModal, hideModal
+    } = useModel('Congratulations', `You spent a total of ${accumulateTimer.seconds} and ${move} moves.`, useCallback(() => {
+        resume();
+        hideModal();
+    }, []));
+
     // 開始遊戲
     const play = useCallback(() => {
+        setFirst(false);
+
         //
         dispatch(gridsSet({
             grids: getGrids(cols)
@@ -146,47 +147,53 @@ const Puzzle = () => {
 
     return (
         <ContainerInner>
-            <Points>{move} moves</Points>
-            <Points>
-                {
-                    countDownTimer.timerState === 'started' ?
-                        (countDownTimer.seconds === 0 ? 'Go' : countDownTimer.seconds) :
-                        null
-                }
-            </Points>
-            <Clock seconds={accumulateTimer.seconds} />
-            <PuzzleContainer ref={puzzleContainerNode}>
-                <GridWrap>
-                    {
-                        grids.map((item, idx) => {
-                            let isSpace = parseInt(item.label) === cols * cols - 1 && prepared === false;
-                            const { x, y } = layoutPositionList[item.position];
+            {
+                image ? (
+                    <>
+                        <RatingWrap>
+                            <RatingItem>
+                                <Clock timer={accumulateTimer} />
+                            </RatingItem>
+                            <RatingItem>{move === 0 && accumulateTimer.timerState === 'reset' ? '--' : move} moves</RatingItem>
+                        </RatingWrap>
+                        <PuzzleContainer active={accumulateTimer.timerState === 'started'} first={first} duration={400}>
+                            <PuzzleFront image={image} />
+                            <PuzzleBack>
+                                <GridWrap>
+                                    {
+                                        grids.map((item, idx) => {
+                                            let isSpace = parseInt(item.label) === cols * cols - 1 && prepared === false;
+                                            const { x, y } = layoutPositionList[item.position];
 
-                            return (
-                                <Grid
-                                    key={item.label}
-                                    totalWidth={width}
-                                    width={width / cols}
-                                    position={layoutPositionList[item.label]}
-                                    isSpace={isSpace}
-                                    onClick={() => moveHandler(idx, item)}
-                                    className={image.split('.')[0]}
-                                    style={{ transform: `translate3d(${x}px,${y}px,0)` }}
-                                >
-                                    { tips ? item.label : null}
-                                </Grid>
-                            )
-                        })
-                    }
-                </GridWrap>
-            </PuzzleContainer>
-            <Functions>
-                {
-                    accumulateTimer.timerState === 'started' ?
-                        (<button onClick={resume}>Resume</button>) :
-                        (<button onClick={() => countDownTimer.setTimerState('started')}>Play</button>)
-                }
-            </Functions>
+                                            return (
+                                                <Grid
+                                                    key={item.label}
+                                                    totalWidth={width}
+                                                    width={width / cols}
+                                                    position={layoutPositionList[item.label]}
+                                                    isSpace={isSpace}
+                                                    image={image}
+                                                    onClick={() => moveHandler(idx, item)}
+                                                    style={{ transform: `translate3d(${x}px,${y}px,0)` }}
+                                                >
+                                                    {tips ? item.label : null}
+                                                </Grid>
+                                            )
+                                        })
+                                    }
+                                </GridWrap>
+                            </PuzzleBack>
+                        </PuzzleContainer>
+                        <Functions>
+                            {
+                                accumulateTimer.timerState === 'started' ?
+                                    (<FunctionButton onClick={resume}>Resume</FunctionButton>) :
+                                    (<FunctionButton onClick={() => countDownTimer.setTimerState('started')}>Play</FunctionButton>)
+                            }
+                        </Functions>
+                    </>
+                ) : null
+            }
             <Model isShow={isShown}>
                 <ModelBox />
             </Model>

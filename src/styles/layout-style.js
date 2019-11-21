@@ -59,6 +59,9 @@ const ContainerInner = styled.div`
   height: 100%;
   background-color: ${props => props.theme.containerBg};
   padding-top: 44px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
 `;
 
 export {

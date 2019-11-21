@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
+    font-family: 'VT323', monospace;
   }
   #app {
     display: flex;

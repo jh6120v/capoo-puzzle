@@ -23,8 +23,7 @@ const SettingItem = styled.div`
   color: ${(props) => props.theme.settingItemTextColor};
   line-height: 1.5rem;
   padding: 10px 15px;
-  font-family: Arial, serif;
-  font-size: .9rem;
+  font-size: 1.2rem;
   text-transform: capitalize;
   cursor: pointer;
   flex-wrap: wrap;
@@ -37,7 +36,7 @@ const SettingItem = styled.div`
             return css`
               padding-top: 20px;
               padding-bottom: 5px;
-              font-size: .8rem;
+              font-size: 1rem;
               font-weight: bold;
             `;
         }
@@ -65,7 +64,7 @@ const SettingItem = styled.div`
 const SettingItemImage = styled.div`
   width: 50px;
   height: 50px;
-  background-image: url(${(props) => props.image});
+  background-image: ${(props) => `url(/assets/images/picture/${props.image}.jpg)`};
   background-repeat: no-repeat;
   background-size: cover;
 `;
@@ -75,8 +74,7 @@ const Version = styled.div`
   display: flex;
   justify-content: center;
   color: ${(props) => props.theme.versionTextColor};
-  font-family: Arial, serif;
-  font-size: .8rem;
+  font-size: .9rem;
   padding: 20px 0;
 `;
 
