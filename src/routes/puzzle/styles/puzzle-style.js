@@ -25,6 +25,20 @@ const Times = styled.div`
   width: 100%;
 `;
 
+const CountDownTips = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .3);
+  font-size: 10rem;
+  z-index: 999;
+`;
+
 const PuzzleContainer = styled(FlipCard)`
   width: 300px;
   height: 300px;
@@ -105,7 +119,7 @@ const FunctionButton = styled.div`
 
 export {
     RatingWrap, RatingItem,
-    Times,
+    Times, CountDownTips,
     PuzzleContainer, PuzzleFront, PuzzleBack,
     GridWrap,
     Grid,

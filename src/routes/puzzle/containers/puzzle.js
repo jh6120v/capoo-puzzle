@@ -14,7 +14,7 @@ import {
     GridWrap,
     Grid,
     Points,
-    Functions, RatingWrap, RatingItem, PuzzleFront, PuzzleBack, FunctionButton
+    Functions, RatingWrap, RatingItem, PuzzleFront, PuzzleBack, FunctionButton, CountDownTips
 } from "../styles/puzzle-style";
 import { useModel, useTimer } from "../../../commons/hooks";
 import Model from "../../../components/model";
@@ -146,58 +146,65 @@ const Puzzle = () => {
     };
 
     return (
-        <ContainerInner>
-            {
-                image ? (
-                    <>
-                        <RatingWrap>
-                            <RatingItem>
-                                <Clock timer={accumulateTimer} />
-                            </RatingItem>
-                            <RatingItem>{move === 0 && accumulateTimer.timerState === 'reset' ? '--' : move} moves</RatingItem>
-                        </RatingWrap>
-                        <PuzzleContainer active={accumulateTimer.timerState === 'started'} first={first} duration={400}>
-                            <PuzzleFront image={image} />
-                            <PuzzleBack>
-                                <GridWrap>
-                                    {
-                                        grids.map((item, idx) => {
-                                            let isSpace = parseInt(item.label) === cols * cols - 1 && prepared === false;
-                                            const { x, y } = layoutPositionList[item.position];
+        <>
+            <ContainerInner>
+                {
+                    image ? (
+                        <>
+                            <RatingWrap>
+                                <RatingItem>
+                                    <Clock timer={accumulateTimer} />
+                                </RatingItem>
+                                <RatingItem>{move === 0 && accumulateTimer.timerState === 'reset' ? '--' : move} moves</RatingItem>
+                            </RatingWrap>
+                            <PuzzleContainer active={accumulateTimer.timerState === 'started'} first={first}
+                                             duration={400}>
+                                <PuzzleFront image={image} />
+                                <PuzzleBack>
+                                    <GridWrap>
+                                        {
+                                            grids.map((item, idx) => {
+                                                let isSpace = parseInt(item.label) === cols * cols - 1 && prepared === false;
+                                                const { x, y } = layoutPositionList[item.position];
 
-                                            return (
-                                                <Grid
-                                                    key={item.label}
-                                                    totalWidth={width}
-                                                    width={width / cols}
-                                                    position={layoutPositionList[item.label]}
-                                                    isSpace={isSpace}
-                                                    image={image}
-                                                    onClick={() => moveHandler(idx, item)}
-                                                    style={{ transform: `translate3d(${x}px,${y}px,0)` }}
-                                                >
-                                                    {tips ? item.label : null}
-                                                </Grid>
-                                            )
-                                        })
-                                    }
-                                </GridWrap>
-                            </PuzzleBack>
-                        </PuzzleContainer>
-                        <Functions>
-                            {
-                                accumulateTimer.timerState === 'started' ?
-                                    (<FunctionButton onClick={resume}>Resume</FunctionButton>) :
-                                    (<FunctionButton onClick={() => countDownTimer.setTimerState('started')}>Play</FunctionButton>)
-                            }
-                        </Functions>
-                    </>
-                ) : null
+                                                return (
+                                                    <Grid
+                                                        key={item.label}
+                                                        totalWidth={width}
+                                                        width={width / cols}
+                                                        position={layoutPositionList[item.label]}
+                                                        isSpace={isSpace}
+                                                        image={image}
+                                                        onClick={() => moveHandler(idx, item)}
+                                                        style={{ transform: `translate3d(${x}px,${y}px,0)` }}
+                                                    >
+                                                        {tips ? item.label : null}
+                                                    </Grid>
+                                                )
+                                            })
+                                        }
+                                    </GridWrap>
+                                </PuzzleBack>
+                            </PuzzleContainer>
+                            <Functions>
+                                {
+                                    accumulateTimer.timerState === 'started' ?
+                                        (<FunctionButton onClick={resume}>Resume</FunctionButton>) :
+                                        (<FunctionButton
+                                            onClick={() => countDownTimer.setTimerState('started')}>Play</FunctionButton>)
+                                }
+                            </Functions>
+                        </>
+                    ) : null
+                }
+                <Model isShow={isShown}>
+                    <ModelBox />
+                </Model>
+            </ContainerInner>
+            {
+                countDownTimer.timerState === 'started' ? <CountDownTips>{countDownTimer.seconds === 0 ? 'Go' : countDownTimer.seconds}</CountDownTips> : null
             }
-            <Model isShow={isShown}>
-                <ModelBox />
-            </Model>
-        </ContainerInner>
+        </>
     );
 };
 
