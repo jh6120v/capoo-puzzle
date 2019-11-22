@@ -4,6 +4,7 @@ import GameLevel from './setting/routes/game-level';
 import PuzzlePicture from './setting/routes/puzzle-picture';
 import DarkMode from './setting/routes/dark-mode';
 import About from './setting/routes/about';
+import Ranking from './ranking';
 
 // const Puzzle = lazy(() => import('./puzzle'));
 // const Setting = lazy(() => import('./setting'));
@@ -63,6 +64,11 @@ export const RouterConfig = [
             enter: 'page-right-forward',
             exit: 'page-right-back'
         }
+    },
+    {
+        path: '/ranking',
+        component: Ranking,
+        exact: true
     }
 ];
 

@@ -1,5 +1,12 @@
 import styled, { css } from 'styled-components';
 import { FlipCard, FlipCardBack, FlipCardFront } from '../../../styles/flip-card';
+import { ContainerInner } from '../../../styles/layout-style';
+
+const PuzzleInner = styled(ContainerInner)`
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+`;
 
 const RatingWrap = styled.div`
   display: flex;
@@ -113,12 +120,13 @@ const Functions = styled.div`
 `;
 
 const FunctionButton = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   padding: 10px 20px;
   color: ${(props) => props.theme.functionBtnTextColor};
 `;
 
 export {
+    PuzzleInner,
     RatingWrap, RatingItem,
     Times, CountDownTips,
     PuzzleContainer, PuzzleFront, PuzzleBack,

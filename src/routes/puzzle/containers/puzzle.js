@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ContainerInner } from '../../../styles/layout-style';
 import {
     getGrids,
     getInOrderGrids,
@@ -13,13 +12,14 @@ import {
     PuzzleContainer,
     GridWrap,
     Grid,
-    Functions, RatingWrap, RatingItem, PuzzleFront, PuzzleBack, FunctionButton, CountDownTips
+    Functions, RatingWrap, RatingItem, PuzzleFront, PuzzleBack, FunctionButton, CountDownTips, PuzzleInner
 } from "../styles/puzzle-style";
-import { useModel, useTimer } from "../../../commons/hooks";
 import Model from "../../../components/model";
 import Clock from "../components/clock";
 import { headerTitleDefault, prevLinkActSet } from '../../../modules/header';
-import { FUNC_SETTING, USER_INFO } from "../../../constants";
+import { FUNC_SETTING, RANKING_INFO } from "../../../constants";
+import useTimer from '../../../commons/hooks/useTimer';
+import useModel from '../../../commons/hooks/useModel';
 
 const Puzzle = () => {
     const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const Puzzle = () => {
 
         // set link
         dispatch(prevLinkActSet({
-            prev: USER_INFO,
+            prev: RANKING_INFO,
             next: FUNC_SETTING
         }));
 
@@ -150,7 +150,7 @@ const Puzzle = () => {
 
     return (
         <>
-            <ContainerInner>
+            <PuzzleInner>
                 {
                     image ? (
                         <>
@@ -160,8 +160,7 @@ const Puzzle = () => {
                                 </RatingItem>
                                 <RatingItem>{move === 0 && accumulateTimer.timerState === 'reset' ? '--' : move} moves</RatingItem>
                             </RatingWrap>
-                            <PuzzleContainer active={accumulateTimer.timerState === 'started'} first={first}
-                                             duration={400}>
+                            <PuzzleContainer active={accumulateTimer.timerState === 'started'} first={first} duration={400}>
                                 <PuzzleFront image={image} />
                                 <PuzzleBack>
                                     <GridWrap>
@@ -203,7 +202,7 @@ const Puzzle = () => {
                 <Model isShow={isShown}>
                     <ModelBox />
                 </Model>
-            </ContainerInner>
+            </PuzzleInner>
             {
                 countDownTimer.timerState === 'started' ? <CountDownTips>{countDownTimer.seconds === 0 ? 'Go' : countDownTimer.seconds}</CountDownTips> : null
             }

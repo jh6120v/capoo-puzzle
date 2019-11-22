@@ -69,6 +69,10 @@ const SettingItemImage = styled.div`
   background-size: cover;
 `;
 
+const UserInfo = styled.div`
+
+`;
+
 const Version = styled.div`
   width: 100%;
   display: flex;

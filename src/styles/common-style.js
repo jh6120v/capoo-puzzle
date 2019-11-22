@@ -65,22 +65,9 @@ const LazyLoad = styled.div`
   background-color: #aadff0;
 `;
 
-const Setting = styled.div`
-  z-index: 3;
-  transition: all 0.2s ease-in;
-  padding-right: 3px;
-  a {
-    color: #fff;
-    font-size: 1.2rem;
-    font-family: 'Orbitron', sans-serif;
-    cursor: pointer;
-  }
-`;
-
 export {
     SpinnerWrap,
     BallScaleMultiple,
     BallScaleMultipleInner,
-    LazyLoad,
-    Setting
+    LazyLoad
 };

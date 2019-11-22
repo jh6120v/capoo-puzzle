@@ -4,7 +4,6 @@ import { SettingItem, SettingWrap } from '../../../styles';
 import { headerTitleSet, prevLinkActGoBack } from '../../../../../modules/header';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
 import { personalSettingGridsSet } from '../../../../../modules/personal-setting';
-import { history } from '../../../../../store';
 
 const GameLevel = () => {
     const dispatch = useDispatch();

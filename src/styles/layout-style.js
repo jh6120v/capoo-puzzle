@@ -46,6 +46,28 @@ const PrevLink = styled.div`
 
 const NextLink = styled(PrevLink)``;
 
+const CloseButton = styled.div`
+  z-index: 3;
+  color: #fff;
+  font-size: 25px;
+  font-family: 'Orbitron', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  padding-left: 3px;
+`;
+
+const Setting = styled.div`
+  z-index: 3;
+  transition: all 0.2s ease-in;
+  padding-right: 3px;
+  a {
+    color: #fff;
+    font-size: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+  }
+`;
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -59,9 +81,6 @@ const ContainerInner = styled.div`
   height: 100%;
   background-color: ${props => props.theme.containerBg};
   padding-top: 44px;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
 `;
 
 export {
@@ -69,7 +88,8 @@ export {
     HeaderStyle,
     Title,
     PrevLink,
-    NextLink,
+    NextLink, Setting,
+    CloseButton,
     Container,
     ContainerInner
 };

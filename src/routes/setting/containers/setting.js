@@ -9,9 +9,9 @@ import {
     personalSettingReset,
     personalSettingTipsChange
 } from '../../../modules/personal-setting';
-import { useModel } from '../../../commons/hooks';
 import Model from '../../../components/model';
 import { colorModeSet } from '../../../modules/theme';
+import useModel from '../../../commons/hooks/useModel';
 
 const Setting = () => {
     const dispatch = useDispatch();
