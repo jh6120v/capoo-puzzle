@@ -28,7 +28,19 @@ const Setting = () => {
     }, []);
 
     const linkTo = useCallback((url) => history.push(url), []);
-    const tipsChange = useCallback(() => dispatch(personalSettingTipsChange()), []);
+    const tipsChange = () => {
+        if (auth.loggedIn) {
+            const setting = firebase.database().ref('/users/' + auth.loggedIn.uid);
+            setting.set({
+                ...personal,
+                tips: !personal.tips
+            });
+
+            return true;
+        }
+
+        dispatch(personalSettingTipsChange());
+    };
 
     const share = useCallback(() => {
         if (navigator.share) {
@@ -65,8 +77,8 @@ const Setting = () => {
                     auth.loggedIn && auth.loggedIn !== 'loading' ? (
                         <SettingItem>
                             <UserInfo>
-                                <UserInfoAvatar avatar={auth.userInfo.photoURL} />
-                                <UserName>{auth.userInfo.displayName}</UserName>
+                                <UserInfoAvatar avatar={auth.loggedIn.photoURL} />
+                                <UserName>{auth.loggedIn.displayName}</UserName>
                             </UserInfo>
                         </SettingItem>
                     ) : null

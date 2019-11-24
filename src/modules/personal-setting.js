@@ -4,7 +4,8 @@ import { PERSONAL_DEFAULT_SETTING } from '../constants';
 
 // Actions
 const actionCreator = createActionCreator('@@PERSONAL_SETTING');
-const personalSettingFetch = actionCreator('SETTING_FETCH');
+const personalSettingFetchFromLocal = actionCreator('SETTING_FETCH_FROM_LOCAL');
+const personalSettingFetchFromFirebase = actionCreator('SETTING_FETCH_FROM_FIREBASE');
 const personalSettingSet = actionCreator('SETTING_SET');
 const personalSettingReset = actionCreator('SETTING_RESET');
 const personalSettingGridsSet = actionCreator('SETTING_GRIDS_SET');
@@ -12,7 +13,8 @@ const personalSettingImageSet = actionCreator('SETTING_IMAGE_SET');
 const personalSettingTipsChange = actionCreator('SETTING_TIPS_CHANGE');
 
 export {
-    personalSettingFetch,
+    personalSettingFetchFromLocal,
+    personalSettingFetchFromFirebase,
     personalSettingSet,
     personalSettingReset,
     personalSettingGridsSet,

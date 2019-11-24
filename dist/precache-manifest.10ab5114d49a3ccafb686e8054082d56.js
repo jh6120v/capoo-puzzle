@@ -68,13 +68,13 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/images/picture/9.jpg"
   },
   {
-    "url": "/assets/js/1.bundle.19152e10b2fd6afbb9cb.js"
+    "url": "/assets/js/1.bundle.d26beb816352e9cdcbdb.js"
   },
   {
-    "url": "/assets/js/2.bundle.19152e10b2fd6afbb9cb.js"
+    "url": "/assets/js/2.bundle.d26beb816352e9cdcbdb.js"
   },
   {
-    "url": "/assets/js/bundle.19152e10b2fd6afbb9cb.js"
+    "url": "/assets/js/bundle.d26beb816352e9cdcbdb.js"
   },
   {
     "revision": "4e886489486e80519e564cf1429bc4f9",
@@ -117,7 +117,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/favicon.ico"
   },
   {
-    "revision": "cb9464909b066b249a1e9d14afb99559",
+    "revision": "ad65e9fc50963d53553717eee23e47f4",
     "url": "/index.html"
   },
   {

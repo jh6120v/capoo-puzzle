@@ -3,11 +3,17 @@ import { createReducer } from '../store/reducers';
 
 // Actions
 const actionCreator = createActionCreator('@@PERSONAL_RECORD');
-const personalRecordFetch = actionCreator('RECORD_FETCH');
+const personalRecordFetchFromLocal = actionCreator('RECORD_FETCH_FROM_LOCAL');
+const personalRecordFetchFromFirebase = actionCreator('RECORD_FETCH_FROM_FIREBASE');
 const personalRecordAllSet = actionCreator('RECORD_ALL_SET');
 const personalRecordSet = actionCreator('RECORD_SET');
 
-export { personalRecordFetch, personalRecordAllSet, personalRecordSet }
+export {
+    personalRecordFetchFromLocal,
+    personalRecordFetchFromFirebase,
+    personalRecordAllSet,
+    personalRecordSet
+}
 
 
 // Reducers

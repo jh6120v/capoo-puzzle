@@ -5,13 +5,21 @@ import { PERSONAL_RECORD } from "../constants";
 import { personalRecordAllSet } from "../modules/personal-record";
 import { IDBSet } from "../modules/indexed-db";
 
-export function* fetchPersonalRecord() {
+export function* fetchFirebasePersonalRecord({ payload: { userInfo } }) {
+    console.log('fetch firebase personal record.');
     try {
         yield put(spinnerShow());
 
-        // 優先於 firebase 取資料
+        yield put(spinnerHide());
+    } catch (e) {
+        yield put(spinnerHide());
+    }
+}
 
-        // 再於 indexedDB 取資料
+export function* fetchLocalPersonalRecord() {
+    try {
+        yield put(spinnerShow());
+
         const record = yield call(get, PERSONAL_RECORD);
         if (typeof record !== 'undefined') {
             yield put(personalRecordAllSet({
@@ -36,7 +44,7 @@ export function* setPersonalRecord({ payload }) {
                 key: PERSONAL_RECORD,
                 value: {
                     ...record,
-                    [payload.level] : {
+                    [payload.level]: {
                         secs: payload.secs,
                         moves: payload.moves
                     }
@@ -46,7 +54,7 @@ export function* setPersonalRecord({ payload }) {
             yield put(IDBSet({
                 key: PERSONAL_RECORD,
                 value: {
-                    [payload.level] : {
+                    [payload.level]: {
                         secs: payload.secs,
                         moves: payload.moves
                     }

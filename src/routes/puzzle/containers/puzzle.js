@@ -153,7 +153,7 @@ const Puzzle = () => {
                 grids: grids
             }));
 
-            if (isWin(grids) || accumulateTimer.seconds > 5) {
+            if (isWin(grids)) {
                 accumulateTimer.setTimerState('stopped');
 
                 console.log('success!');

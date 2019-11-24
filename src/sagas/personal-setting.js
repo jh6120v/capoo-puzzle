@@ -5,7 +5,37 @@ import { PERSONAL_DEFAULT_SETTING, PERSONAL_SETTING } from '../constants';
 import { personalSettingReset, personalSettingSet } from '../modules/personal-setting';
 import { spinnerHide, spinnerShow } from '../modules/spinner';
 
-export function* fetchPersonalSetting() {
+export function* fetchFirebasePersonalSetting({ payload: { userInfo } }) {
+    console.log('fetch firebase personal setting.');
+    try {
+        yield put(spinnerShow());
+
+        // 檢查 firebase 是否有資料
+        const setting = yield firebase.database().ref('/users/' + userInfo.uid);
+        yield setting.on('value', function(snapshot) {
+            const val = snapshot.val();
+
+            if (val !== null) {
+                console.log(val);
+
+                put(personalSettingSet({
+                    ...val
+                }));
+            } else {
+                setting.set({
+                    ...PERSONAL_DEFAULT_SETTING,
+                    image: '0'
+                });
+            }
+        });
+
+        yield put(spinnerHide());
+    } catch (e) {
+        yield put(spinnerHide());
+    }
+}
+
+export function* fetchLocalPersonalSetting() {
     try {
         yield put(spinnerShow());
 

@@ -12,8 +12,7 @@ export { authInfoSet }
 const initialState = {
     login: () => {},
     logout: () => {},
-    loggedIn: false,
-    userInfo: null
+    loggedIn: 'loading'
 };
 
 const handlers = {

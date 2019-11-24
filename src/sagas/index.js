@@ -2,20 +2,25 @@ import { takeEvery, all } from 'redux-saga/effects';
 import { indexDBDel, indexDBSet } from './indexed-db';
 import { IDBDelete, IDBSet } from '../modules/indexed-db';
 import {
-    personalSettingFetch, personalSettingGridsSet, personalSettingImageSet,
+    personalSettingFetchFromFirebase,
+    personalSettingFetchFromLocal, personalSettingGridsSet, personalSettingImageSet,
     personalSettingReset,
     personalSettingSet, personalSettingTipsChange
 } from '../modules/personal-setting';
 import {
     changePersonalGrids,
     changePersonalImage,
-    changePersonalTips,
-    fetchPersonalSetting,
+    changePersonalTips, fetchFirebasePersonalSetting,
+    fetchLocalPersonalSetting,
     resetPersonalSetting,
     setPersonalSetting
 } from './personal-setting';
-import { personalRecordFetch, personalRecordSet } from "../modules/personal-record";
-import { fetchPersonalRecord, setPersonalRecord } from "./personal-record";
+import {
+    personalRecordFetchFromFirebase,
+    personalRecordFetchFromLocal,
+    personalRecordSet
+} from "../modules/personal-record";
+import { fetchFirebasePersonalRecord, fetchLocalPersonalRecord, setPersonalRecord } from "./personal-record";
 
 function* watchIndexDBSet() {
     yield takeEvery(IDBSet.type, indexDBSet);
@@ -25,8 +30,12 @@ function* watchIndexDBDel() {
     yield takeEvery(IDBDelete.type, indexDBDel);
 }
 
-function* watchPersonalSettingFetch() {
-    yield takeEvery(personalSettingFetch.type, fetchPersonalSetting)
+function* watchPersonalSettingFetchFromFirebase() {
+    yield takeEvery(personalSettingFetchFromFirebase.type, fetchFirebasePersonalSetting)
+}
+
+function* watchPersonalSettingFetchFromLocal() {
+    yield takeEvery(personalSettingFetchFromLocal.type, fetchLocalPersonalSetting)
 }
 
 function* watchPersonalSettingSet() {
@@ -37,8 +46,12 @@ function* watchPersonalSettingReset() {
     yield takeEvery(personalSettingReset.type, resetPersonalSetting);
 }
 
-function* watchPersonalRecordFetch() {
-    yield takeEvery(personalRecordFetch.type, fetchPersonalRecord);
+function* watchPersonalRecordFetchFromFirebase() {
+    yield takeEvery(personalRecordFetchFromFirebase.type, fetchFirebasePersonalRecord);
+}
+
+function* watchPersonalRecordFetchFromLocal() {
+    yield takeEvery(personalRecordFetchFromLocal.type, fetchLocalPersonalRecord);
 }
 
 function* watchPersonalRecordSet() {
@@ -61,10 +74,12 @@ export default function* rootSaga() {
     yield all([
         watchIndexDBSet(),
         watchIndexDBDel(),
-        watchPersonalSettingFetch(),
+        watchPersonalSettingFetchFromFirebase(),
+        watchPersonalSettingFetchFromLocal(),
         watchPersonalSettingSet(),
         watchPersonalSettingReset(),
-        watchPersonalRecordFetch(),
+        watchPersonalRecordFetchFromFirebase(),
+        watchPersonalRecordFetchFromLocal(),
         watchPersonalRecordSet(),
         watchPersonalGrids(),
         watchPersonalImage(),

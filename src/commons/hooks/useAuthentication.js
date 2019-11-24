@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 
-const auth = window.firebase.auth();
-const provider = new window.firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
 
 const useAuthentication = () => {
     const [authenticated, setAuthenticated] = useState('loading');
-    const [userInfo, setUserInfo] = useState(null);
 
     function login() {
         auth.signInWithPopup(provider);
@@ -23,22 +22,18 @@ const useAuthentication = () => {
     }
 
     useEffect(() => {
-        auth.onAuthStateChanged(function (user) {
-            console.log(user);
-
-            if (user) {
-                setAuthenticated(true);
-                setUserInfo(user);
+        auth.onAuthStateChanged(function (userData) {
+            if (userData) {
+                setAuthenticated(userData);
             } else {
-                setAuthenticated(false);
-                setUserInfo(null);
+                setAuthenticated(null);
             }
         }, function (error) {
             console.log(error);
         });
     }, []);
 
-    return { login, logout, loggedIn: authenticated, userInfo: userInfo };
+    return { login, logout, loggedIn: authenticated };
 };
 
 export default useAuthentication;
