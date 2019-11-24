@@ -46,7 +46,7 @@ const PrevLink = styled.div`
 
 const NextLink = styled(PrevLink)``;
 
-const CloseButton = styled.div`
+const PrevLinkItem = styled.div`
   z-index: 3;
   color: #fff;
   font-size: 25px;
@@ -56,14 +56,13 @@ const CloseButton = styled.div`
   padding-left: 3px;
 `;
 
-const Setting = styled.div`
+const NextLinkItem = styled.div`
   z-index: 3;
   transition: all 0.2s ease-in;
   padding-right: 3px;
   a {
     color: #fff;
     font-size: 1.2rem;
-    font-family: 'Orbitron', sans-serif;
     cursor: pointer;
   }
 `;
@@ -87,9 +86,8 @@ export {
     Wrapper,
     HeaderStyle,
     Title,
-    PrevLink,
-    NextLink, Setting,
-    CloseButton,
+    PrevLink, PrevLinkItem,
+    NextLink, NextLinkItem,
     Container,
     ContainerInner
 };

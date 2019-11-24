@@ -3,8 +3,7 @@ import styled from 'styled-components';
 const AboutContent = styled.div`
   width: 100%;
   padding: 20px;
-  font-family: Arial, serif;
-  font-size: .8rem;
+  font-size: 1rem;
   line-height: 1.2rem;
 `;
 

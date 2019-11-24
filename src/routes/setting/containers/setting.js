@@ -4,7 +4,7 @@ import IosArrowForward from 'react-ionicons/lib/IosArrowForward';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
 import { history } from '../../../store';
 import { headerTitleSet, prevLinkActGoBack } from '../../../modules/header';
-import { SettingWrap, SettingItem, Version } from '../styles';
+import { SettingWrap, SettingItem, Version, UserInfo, UserInfoAvatar, UserName } from '../styles';
 import {
     personalSettingReset,
     personalSettingTipsChange
@@ -16,6 +16,7 @@ import useModel from '../../../commons/hooks/useModel';
 const Setting = () => {
     const dispatch = useDispatch();
     const personal = useSelector((state) => state.personal);
+    const auth = useSelector((state) => state.auth);
     const { toggle } = useSelector((state) => state.theme);
 
     useEffect(() => {
@@ -60,6 +61,16 @@ const Setting = () => {
     return (
         <>
             <SettingWrap>
+                {
+                    auth.loggedIn && auth.loggedIn !== 'loading' ? (
+                        <SettingItem>
+                            <UserInfo>
+                                <UserInfoAvatar avatar={auth.userInfo.photoURL} />
+                                <UserName>{auth.userInfo.displayName}</UserName>
+                            </UserInfo>
+                        </SettingItem>
+                    ) : null
+                }
                 <SettingItem isTitle>GAME SETTINGS</SettingItem>
                 <SettingItem onClick={() => linkTo('/setting/game-level')}>
                     Game level
@@ -84,6 +95,22 @@ const Setting = () => {
                 <SettingItem onClick={() => linkTo('/setting/about')}>
                     About
                     <IosArrowForward />
+                </SettingItem>
+                <SettingItem isSpace />
+                <SettingItem alignItemsCenter justifyContentSpaceAround>
+                    <div>
+                        {auth.loggedIn !== "loading" ? (
+                            <>
+                                {auth.loggedIn ? (
+                                    <div onClick={auth.logout}>Sign out</div>
+                                ) : (
+                                    <div onClick={auth.login}>Sign with Google</div>
+                                )}
+                            </>
+                        ) : (
+                            "loading..."
+                        )}
+                    </div>
                 </SettingItem>
                 <Version>Version 1.0.0</Version>
             </SettingWrap>

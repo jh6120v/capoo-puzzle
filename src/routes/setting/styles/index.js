@@ -70,7 +70,23 @@ const SettingItemImage = styled.div`
 `;
 
 const UserInfo = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
 
+const UserInfoAvatar = styled.div`
+  width: 50px;
+  height: 50px;
+  background-image: url(${(props) => props.avatar});
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  margin-right: 15px;
+`;
+
+const UserName = styled.div`
+  font-size: 1.2rem;
 `;
 
 const Version = styled.div`
@@ -84,5 +100,6 @@ const Version = styled.div`
 
 export {
     SettingWrap, SettingItem, SettingItemImage,
+    UserInfo, UserInfoAvatar, UserName,
     Version
 };

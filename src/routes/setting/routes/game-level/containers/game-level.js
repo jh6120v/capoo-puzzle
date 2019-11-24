@@ -30,7 +30,7 @@ const GameLevel = () => {
                 {cols === 3 ? <MdCheckmark /> : null}
             </SettingItem>
             <SettingItem onClick={() => setGameLevel(4)}>
-                Normal
+                Medium
                 {cols === 4 ? <MdCheckmark /> : null}
             </SettingItem>
             <SettingItem onClick={() => setGameLevel(5)}>

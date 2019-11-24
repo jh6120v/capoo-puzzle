@@ -1,0 +1,36 @@
+import { createActionCreator } from '../commons/utils';
+import { createReducer } from '../store/reducers';
+
+// Actions
+const actionCreator = createActionCreator('@@PERSONAL_RECORD');
+const personalRecordFetch = actionCreator('RECORD_FETCH');
+const personalRecordAllSet = actionCreator('RECORD_ALL_SET');
+const personalRecordSet = actionCreator('RECORD_SET');
+
+export { personalRecordFetch, personalRecordAllSet, personalRecordSet }
+
+
+// Reducers
+const initialState = {
+    3: null,
+    4: null,
+    5: null
+};
+
+const handlers = {
+    [personalRecordAllSet.type]: (state, { payload }) => ({
+        ...state,
+        ...payload
+    }),
+    [personalRecordSet.type]: (state, { payload: { level, secs, moves } }) => ({
+        ...state,
+        [level]: {
+            secs: secs,
+            moves: moves
+        }
+    })
+};
+
+// create and export as default
+const reducers = createReducer(initialState, handlers);
+export default reducers;

@@ -61,6 +61,22 @@ export function* resetPersonalSetting() {
     }
 }
 
+export function* changePersonalGrids({ payload }) {
+    try {
+        const personal = yield call(get, PERSONAL_SETTING);
+
+        yield put(IDBSet({
+            key: PERSONAL_SETTING,
+            value: {
+                ...personal,
+                cols: payload.cols
+            }
+        }));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export function* changePersonalImage({ payload }) {
     try {
         const personal = yield call(get, PERSONAL_SETTING);

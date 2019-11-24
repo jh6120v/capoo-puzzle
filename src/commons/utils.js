@@ -189,6 +189,10 @@ export const theme = (darkMode) => {
 
         containerBg: '#aadff0',
 
+        personalRecordItemTitleTextColor: '#4f6571',
+        personalRecordItemContentBg: '#6cb8cf',
+        personalRecordItemContentTextColor: '#ffffff',
+
         ratingTextColor: '#4f6571',
 
         settingBg: '#9fd4e5',
@@ -216,6 +220,10 @@ export const theme = (darkMode) => {
         headerTextColor: '#ffffff',
 
         containerBg: '#121212',
+
+        personalRecordItemTitleTextColor: '#ffffff',
+        personalRecordItemContentBg: '#ffffff',
+        personalRecordItemContentTextColor: '#121212',
 
         ratingTextColor: '#ffffff',
 

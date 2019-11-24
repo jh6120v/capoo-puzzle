@@ -3,63 +3,44 @@ import PropTypes from 'prop-types';
 import IosArrowBack from 'react-ionicons/lib/IosArrowBack';
 import { Link } from 'react-router-dom';
 import IosSettings from 'react-ionicons/lib/IosSettings';
-import { FUNC_CLOSE, FUNC_GO_BACK, FUNC_SETTING, RANKING_INFO, USER_INFO } from '../constants';
+import { FUNC_CLOSE, FUNC_GO_BACK, FUNC_SETTING, RANKING_INFO } from '../constants';
 import { history } from '../store';
 import {
-    CloseButton,
-    HeaderStyle, NextLink, PrevLink, Setting, Title
+    HeaderStyle, NextLink, NextLinkItem, PrevLink, PrevLinkItem, Title
 } from '../styles/layout-style';
-import MdLogIn from "react-ionicons/lib/MdLogIn";
-import MdLogOut from "react-ionicons/lib/MdLogOut";
 import IosStats from 'react-ionicons/lib/IosStats';
 import MdClose from 'react-ionicons/lib/MdClose';
 
-const Header = ({ title, prev, next, login, loggedIn, logout }) => {
+const Header = ({ title, prev, next }) => {
     const renderPrev = (prevState) => {
         switch (prevState) {
             case RANKING_INFO:
                 return (
-                    <div>
+                    <PrevLinkItem>
                         <Link to="/ranking">
                             <IosStats fontSize="25px" color="#fff" />
                         </Link>
-                    </div>
-                );
-
-                break;
-            case USER_INFO:
-                return (
-                    <div>
-                        {loggedIn !== "loading" ? (
-                            <>
-                                {loggedIn ? (
-                                    <MdLogOut fontSize="25px" color="#fff" onClick={logout} />
-                                ) : (
-                                    <MdLogIn fontSize="25px" color="#fff" onClick={login} />
-                                )}
-                            </>
-                        ) : (
-                            "loading..."
-                        )}
-                    </div>
+                    </PrevLinkItem>
                 );
 
                 break;
             case FUNC_GO_BACK:
                 return (
-                    <a onClick={() => history.goBack()}>
-                        <IosArrowBack fontSize="25px" color="#fff" />
-                    </a>
+                    <PrevLinkItem>
+                        <a onClick={() => history.goBack()}>
+                            <IosArrowBack fontSize="25px" color="#fff" />
+                        </a>
+                    </PrevLinkItem>
                 );
 
                 break;
             case FUNC_CLOSE:
                 return (
-                    <CloseButton>
+                    <PrevLinkItem>
                         <Link to="/">
                             <MdClose fontSize="25px" color="#fff" />
                         </Link>
-                    </CloseButton>
+                    </PrevLinkItem>
                 );
 
                 break;
@@ -74,11 +55,11 @@ const Header = ({ title, prev, next, login, loggedIn, logout }) => {
     const renderNext = (nextState) => {
         if (nextState === FUNC_SETTING) {
             return (
-                <Setting>
+                <NextLinkItem>
                     <Link to="/setting">
                         <IosSettings fontSize="25px" color="#fff" />
                     </Link>
-                </Setting>
+                </NextLinkItem>
             );
         }
 

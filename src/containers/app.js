@@ -12,6 +12,8 @@ import spinnerReducer from '../modules/spinner';
 import headerTitleReducer from '../modules/header';
 import modelReducer from '../modules/model';
 import themeReducer, { colorModeSet, toggleSwitchSet } from '../modules/theme';
+import authReducer, { authInfoSet } from '../modules/auth-info';
+import personalRecordReducer, { personalRecordFetch } from '../modules/personal-record';
 import { Container, Wrapper } from '../styles/layout-style';
 import Header from '../components/header';
 import ResetStyle from '../styles/reset-style';
@@ -26,7 +28,9 @@ injectReducer(history, store, [
     { key: 'spinner', reducer: spinnerReducer },
     { key: 'header', reducer: headerTitleReducer },
     { key: 'model', reducer: modelReducer },
-    { key: 'theme', reducer: themeReducer }
+    { key: 'theme', reducer: themeReducer },
+    { key: 'auth', reducer: authReducer },
+    { key: 'record', reducer: personalRecordReducer }
 ]);
 
 const App = () => {
@@ -35,10 +39,18 @@ const App = () => {
     const header = useSelector((state) => state.header);
     const auth = useAuthentication();
 
-    const [darkModeEnabled, colorMode, setter] = useDarkMode() ;
+    const [darkModeEnabled, colorMode, setter] = useDarkMode();
+
+    useEffect(() => {
+        dispatch(authInfoSet({
+            ...auth
+        }));
+    }, [auth.userInfo]);
 
     useEffect(() => {
         dispatch(personalSettingFetch());
+
+        dispatch(personalRecordFetch());
 
         dispatch(colorModeSet({
             colorMode: colorMode
@@ -62,7 +74,7 @@ const App = () => {
                 <Spinner show={isShow} />
                 <ConnectedRouter history={history}>
                     <Wrapper>
-                        <Header {...header} {...auth} />
+                        <Header {...header} />
                         <Container>
                             <Routes />
                         </Container>

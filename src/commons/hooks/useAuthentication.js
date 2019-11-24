@@ -5,6 +5,7 @@ const provider = new window.firebase.auth.GoogleAuthProvider();
 
 const useAuthentication = () => {
     const [authenticated, setAuthenticated] = useState('loading');
+    const [userInfo, setUserInfo] = useState(null);
 
     function login() {
         auth.signInWithPopup(provider);
@@ -24,17 +25,20 @@ const useAuthentication = () => {
     useEffect(() => {
         auth.onAuthStateChanged(function (user) {
             console.log(user);
+
             if (user) {
-                setAuthenticated(user);
+                setAuthenticated(true);
+                setUserInfo(user);
             } else {
-                setAuthenticated();
+                setAuthenticated(false);
+                setUserInfo(null);
             }
         }, function (error) {
             console.log(error);
         });
     }, []);
 
-    return { login, logout, loggedIn: authenticated };
+    return { login, logout, loggedIn: authenticated, userInfo: userInfo };
 };
 
 export default useAuthentication;

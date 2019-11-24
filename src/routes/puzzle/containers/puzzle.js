@@ -12,7 +12,14 @@ import {
     PuzzleContainer,
     GridWrap,
     Grid,
-    Functions, RatingWrap, RatingItem, PuzzleFront, PuzzleBack, FunctionButton, CountDownTips, PuzzleInner
+    Functions,
+    RatingWrap,
+    RatingItem,
+    PuzzleFront,
+    PuzzleBack,
+    FunctionButton,
+    CountDownTips,
+    PuzzleInner
 } from "../styles/puzzle-style";
 import Model from "../../../components/model";
 import Clock from "../components/clock";
@@ -20,6 +27,8 @@ import { headerTitleDefault, prevLinkActSet } from '../../../modules/header';
 import { FUNC_SETTING, RANKING_INFO } from "../../../constants";
 import useTimer from '../../../commons/hooks/useTimer';
 import useModel from '../../../commons/hooks/useModel';
+import PersonalRecord from "../components/personal-record";
+import { personalRecordSet } from "../../../modules/personal-record";
 
 const Puzzle = () => {
     const dispatch = useDispatch();
@@ -29,11 +38,14 @@ const Puzzle = () => {
     // 取個人設定值
     const { cols, image, tips } = useSelector((state) => state.personal);
 
+    // 取個人最佳成績
+    const record = useSelector((state) => state.record);
+
     // 拼圖完整資料
     const { prepared, grids, width, layoutPositionList } = useSelector(state => state.puzzle);
 
     // 移動次數
-    const [move, setMove] = useState(0);
+    let [move, setMove] = useState(0);
 
     // set default setting
     useEffect(() => {
@@ -49,6 +61,11 @@ const Puzzle = () => {
             next: FUNC_SETTING
         }));
 
+        //
+        dispatch(preparedOn());
+    }, []);
+
+    useEffect(() => {
         // set layout position list
         dispatch(layoutPositionListSet(getLayoutPositionList(width, cols)));
 
@@ -56,10 +73,7 @@ const Puzzle = () => {
         dispatch(gridsSet({
             grids: getInOrderGrids(cols)
         }));
-
-        //
-        dispatch(preparedOn());
-    }, []);
+    }, [cols]);
 
     // 計時器
     const accumulateTimer = useTimer();
@@ -73,7 +87,7 @@ const Puzzle = () => {
     // model
     const {
         ModelBox, isShown, showModal, hideModal
-    } = useModel('Congratulations', `You spent a total of ${accumulateTimer.seconds} and ${move} moves.`, useCallback(() => {
+    } = useModel('Congratulations', `You spent a total of ${accumulateTimer.seconds} secs and ${move} moves.`, useCallback(() => {
         resume();
         hideModal();
     }, []));
@@ -127,6 +141,9 @@ const Puzzle = () => {
             (elemPos.y === spacePos.y && Math.abs(elemPos.x - spacePos.x) === 1)
         ) {
             console.log('can move');
+            move++;
+
+            setMove(move);
 
             // 和空白磚塊交換 position
             grids[spacePos.idx].position = grids[idx].position;
@@ -136,14 +153,26 @@ const Puzzle = () => {
                 grids: grids
             }));
 
-            setMove(move + 1);
-
-            if (isWin(grids)) {
+            if (isWin(grids) || accumulateTimer.seconds > 5) {
                 accumulateTimer.setTimerState('stopped');
 
                 console.log('success!');
+
                 // 跳出 model 告知成功並記錄時間
                 showModal();
+
+                // 檢查是否為最佳紀錄
+                if (
+                    record[cols] === null ||
+                    accumulateTimer.seconds < record[cols].secs ||
+                    (accumulateTimer.seconds === record[cols].secs && move < record[cols].moves)
+                ) {
+                    dispatch(personalRecordSet({
+                        level: cols,
+                        secs: accumulateTimer.seconds,
+                        moves: move
+                    }));
+                }
             }
         }
     };
@@ -151,6 +180,7 @@ const Puzzle = () => {
     return (
         <>
             <PuzzleInner>
+                <PersonalRecord record={record} />
                 {
                     image ? (
                         <>
@@ -160,7 +190,11 @@ const Puzzle = () => {
                                 </RatingItem>
                                 <RatingItem>{move === 0 && accumulateTimer.timerState === 'reset' ? '--' : move} moves</RatingItem>
                             </RatingWrap>
-                            <PuzzleContainer active={accumulateTimer.timerState === 'started'} first={first} duration={400}>
+                            <PuzzleContainer
+                                active={accumulateTimer.timerState === 'started'}
+                                first={first}
+                                duration={400}
+                            >
                                 <PuzzleFront image={image} />
                                 <PuzzleBack>
                                     <GridWrap>
@@ -204,7 +238,8 @@ const Puzzle = () => {
                 </Model>
             </PuzzleInner>
             {
-                countDownTimer.timerState === 'started' ? <CountDownTips>{countDownTimer.seconds === 0 ? 'Go' : countDownTimer.seconds}</CountDownTips> : null
+                countDownTimer.timerState === 'started' ?
+                    <CountDownTips>{countDownTimer.seconds === 0 ? 'GO' : countDownTimer.seconds}</CountDownTips> : null
             }
         </>
     );

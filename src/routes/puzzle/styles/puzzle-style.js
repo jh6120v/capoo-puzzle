@@ -5,7 +5,59 @@ import { ContainerInner } from '../../../styles/layout-style';
 const PuzzleInner = styled(ContainerInner)`
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
+  align-content: flex-start;
+`;
+
+const PersonalRecordWrap = styled.div`
+  width: 300px;
+  margin: 20px auto 0 auto;
+  display: flex;
+  flex-wrap: nowrap;
+`;
+
+const PersonalRecordTitle = styled.div`
+  width: 23%;
+  align-self: flex-end;
+  font-size: 2rem;
+`;
+
+const PersonalRecordInner = styled.div`
+  width: 77%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PersonalRecordItem = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 30%;
+`;
+
+const PersonalRecordItemTitle = styled.div`
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+  text-align: center;
+  color: ${(props) => props.theme.personalRecordItemTitleTextColor};
+  text-transform: uppercase;
+`;
+
+const PersonalRecordItemContent = styled.div`
+  padding: 10px 8px;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.personalRecordItemContentBg};
+  color: ${(props) => props.theme.personalRecordItemContentTextColor};
+  font-size: .9rem;
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 const RatingWrap = styled.div`
@@ -58,10 +110,14 @@ const PuzzleFront = styled(FlipCardFront)`
   background-image: ${(props) => `url(/assets/images/picture/${props.image}.jpg)`};
   background-size: cover;
   background-repeat: no-repeat;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const PuzzleBack = styled(FlipCardBack)`
   z-index: 1;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const GridWrap = styled.div`
@@ -73,23 +129,6 @@ const GridWrap = styled.div`
     content: '';
     padding-bottom: 100%;
   }
-`;
-
-const GridInner = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-`;
-
-const GridInnerText = styled.div`
-  position:absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 4;
 `;
 
 const Grid = styled.div`
@@ -127,12 +166,11 @@ const FunctionButton = styled.div`
 
 export {
     PuzzleInner,
+    PersonalRecordWrap, PersonalRecordTitle, PersonalRecordInner, PersonalRecordItem, PersonalRecordItemTitle, PersonalRecordItemContent,
     RatingWrap, RatingItem,
     Times, CountDownTips,
     PuzzleContainer, PuzzleFront, PuzzleBack,
     GridWrap,
     Grid,
-    GridInner,
-    GridInnerText,
     Functions, FunctionButton
 };

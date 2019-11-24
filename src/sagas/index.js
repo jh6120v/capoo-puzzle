@@ -2,17 +2,20 @@ import { takeEvery, all } from 'redux-saga/effects';
 import { indexDBDel, indexDBSet } from './indexed-db';
 import { IDBDelete, IDBSet } from '../modules/indexed-db';
 import {
-    personalSettingFetch, personalSettingImageSet,
+    personalSettingFetch, personalSettingGridsSet, personalSettingImageSet,
     personalSettingReset,
     personalSettingSet, personalSettingTipsChange
 } from '../modules/personal-setting';
 import {
+    changePersonalGrids,
     changePersonalImage,
     changePersonalTips,
     fetchPersonalSetting,
     resetPersonalSetting,
     setPersonalSetting
 } from './personal-setting';
+import { personalRecordFetch, personalRecordSet } from "../modules/personal-record";
+import { fetchPersonalRecord, setPersonalRecord } from "./personal-record";
 
 function* watchIndexDBSet() {
     yield takeEvery(IDBSet.type, indexDBSet);
@@ -34,6 +37,18 @@ function* watchPersonalSettingReset() {
     yield takeEvery(personalSettingReset.type, resetPersonalSetting);
 }
 
+function* watchPersonalRecordFetch() {
+    yield takeEvery(personalRecordFetch.type, fetchPersonalRecord);
+}
+
+function* watchPersonalRecordSet() {
+    yield takeEvery(personalRecordSet.type, setPersonalRecord);
+}
+
+function* watchPersonalGrids() {
+    yield takeEvery(personalSettingGridsSet.type, changePersonalGrids);
+}
+
 function* watchPersonalImage() {
     yield takeEvery(personalSettingImageSet.type, changePersonalImage);
 }
@@ -49,6 +64,9 @@ export default function* rootSaga() {
         watchPersonalSettingFetch(),
         watchPersonalSettingSet(),
         watchPersonalSettingReset(),
+        watchPersonalRecordFetch(),
+        watchPersonalRecordSet(),
+        watchPersonalGrids(),
         watchPersonalImage(),
         watchPersonalTips()
     ]);
