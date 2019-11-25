@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SettingItem, SettingWrap } from '../../../styles';
 import { headerTitleSet, prevLinkActGoBack } from '../../../../../modules/header';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
-import { personalSettingGridsSet } from '../../../../../modules/personal-setting';
+import { personalSettingLevelSet } from '../../../../../modules/personal-setting';
 
 const GameLevel = () => {
     const dispatch = useDispatch();
     const { loggedIn } = useSelector((state) => state.auth);
-    const { cols } = useSelector((state) => state.personal);
+    const { level } = useSelector((state) => state.personal);
 
     useEffect(() => {
         dispatch(headerTitleSet({
@@ -18,32 +18,32 @@ const GameLevel = () => {
         dispatch(prevLinkActGoBack());
     }, []);
 
-    const setGameLevel = useCallback((nums) => {
+    const setGameLevel = useCallback((level) => {
         if (loggedIn) {
             const setting = firebase.database().ref('/users/' + loggedIn.uid);
-            setting.child('cols').set(nums);
+            setting.child('level').set(level);
 
             return true;
         }
 
-        dispatch(personalSettingGridsSet({
-            cols: nums
+        dispatch(personalSettingLevelSet({
+            level: level
         }));
     }, [loggedIn]);
 
     return (
         <SettingWrap>
-            <SettingItem onClick={() => setGameLevel(3)}>
+            <SettingItem onClick={() => setGameLevel('easy')}>
                 Easy
-                {cols === 3 ? <MdCheckmark /> : null}
+                {level === 'easy' ? <MdCheckmark /> : null}
             </SettingItem>
-            <SettingItem onClick={() => setGameLevel(4)}>
+            <SettingItem onClick={() => setGameLevel('medium')}>
                 Medium
-                {cols === 4 ? <MdCheckmark /> : null}
+                {level === 'medium' ? <MdCheckmark /> : null}
             </SettingItem>
-            <SettingItem onClick={() => setGameLevel(5)}>
+            <SettingItem onClick={() => setGameLevel('hard')}>
                 Hard
-                {cols === 5 ? <MdCheckmark /> : null}
+                {level === 'hard' ? <MdCheckmark /> : null}
             </SettingItem>
         </SettingWrap>
     );

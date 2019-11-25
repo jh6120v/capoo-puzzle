@@ -91,7 +91,7 @@ export function* resetPersonalSetting() {
     }
 }
 
-export function* changePersonalGrids({ payload }) {
+export function* changePersonalLevel({ payload }) {
     try {
         const personal = yield call(get, PERSONAL_SETTING);
 
@@ -99,7 +99,7 @@ export function* changePersonalGrids({ payload }) {
             key: PERSONAL_SETTING,
             value: {
                 ...personal,
-                cols: payload.cols
+                level: payload.level
             }
         }));
     } catch (e) {

@@ -18,9 +18,9 @@ export {
 
 // Reducers
 const initialState = {
-    3: null,
-    4: null,
-    5: null
+    easy: null,
+    medium: null,
+    hard: null
 };
 
 const handlers = {

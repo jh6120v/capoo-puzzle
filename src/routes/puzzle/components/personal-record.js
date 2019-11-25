@@ -6,7 +6,6 @@ import {
     PersonalRecordItemTitle,
     PersonalRecordTitle, PersonalRecordWrap
 } from "../styles/puzzle-style";
-import { LEVEL_MAP } from "../../../constants";
 
 const PersonalRecord = ({ record }) => {
     return (
@@ -17,7 +16,7 @@ const PersonalRecord = ({ record }) => {
                     Object.keys(record).map((val) => {
                         return (
                             <PersonalRecordItem key={val}>
-                                <PersonalRecordItemTitle>{LEVEL_MAP[val]}</PersonalRecordItemTitle>
+                                <PersonalRecordItemTitle>{val}</PersonalRecordItemTitle>
                                 <PersonalRecordItemContent>
                                     {
                                         record[val] ? (

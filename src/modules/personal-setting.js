@@ -8,7 +8,7 @@ const personalSettingFetchFromLocal = actionCreator('SETTING_FETCH_FROM_LOCAL');
 const personalSettingFetchFromFirebase = actionCreator('SETTING_FETCH_FROM_FIREBASE');
 const personalSettingSet = actionCreator('SETTING_SET');
 const personalSettingReset = actionCreator('SETTING_RESET');
-const personalSettingGridsSet = actionCreator('SETTING_GRIDS_SET');
+const personalSettingLevelSet = actionCreator('SETTING_LEVEL_SET');
 const personalSettingImageSet = actionCreator('SETTING_IMAGE_SET');
 const personalSettingTipsChange = actionCreator('SETTING_TIPS_CHANGE');
 
@@ -17,7 +17,7 @@ export {
     personalSettingFetchFromFirebase,
     personalSettingSet,
     personalSettingReset,
-    personalSettingGridsSet,
+    personalSettingLevelSet,
     personalSettingImageSet,
     personalSettingTipsChange
 };
@@ -36,9 +36,9 @@ const handlers = {
         ...PERSONAL_DEFAULT_SETTING,
         image: '0'
     }),
-    [personalSettingGridsSet.type]: (state, { payload: { cols } }) => ({
+    [personalSettingLevelSet.type]: (state, { payload: { level } }) => ({
         ...state,
-        cols: cols
+        level: level
     }),
     [personalSettingImageSet.type]: (state, { payload: { image } }) => ({
         ...state,

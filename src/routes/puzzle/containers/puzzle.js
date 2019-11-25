@@ -24,7 +24,7 @@ import {
 import Model from "../../../components/model";
 import Clock from "../components/clock";
 import { headerTitleDefault, prevLinkActSet } from '../../../modules/header';
-import { FUNC_SETTING, RANKING_INFO } from "../../../constants";
+import { FUNC_SETTING, LEVEL_MAP, RANKING_INFO } from "../../../constants";
 import useTimer from '../../../commons/hooks/useTimer';
 import useModel from '../../../commons/hooks/useModel';
 import PersonalRecord from "../components/personal-record";
@@ -35,8 +35,10 @@ const Puzzle = () => {
 
     const [first, setFirst] = useState(true);
 
+    const [cols, setCols] = useState(0);
+
     // 取個人設定值
-    const { cols, image, tips } = useSelector((state) => state.personal);
+    const { level, image, tips } = useSelector((state) => state.personal);
 
     const { loggedIn } = useSelector((state) => state.auth);
 
@@ -68,14 +70,18 @@ const Puzzle = () => {
     }, []);
 
     useEffect(() => {
+        const columns = LEVEL_MAP[level];
+
+        setCols(columns);
+
         // set layout position list
-        dispatch(layoutPositionListSet(getLayoutPositionList(width, cols)));
+        dispatch(layoutPositionListSet(getLayoutPositionList(width, columns)));
 
         // init
         dispatch(gridsSet({
-            grids: getInOrderGrids(cols)
+            grids: getInOrderGrids(columns)
         }));
-    }, [cols]);
+    }, [level]);
 
     // 計時器
     const accumulateTimer = useTimer();
@@ -83,6 +89,9 @@ const Puzzle = () => {
     // 倒數計時器
     const countDownTimer = useTimer(3, 'backward', () => {
         countDownTimer.setTimerState('reset');
+
+        setFirst(false);
+        accumulateTimer.setTimerState('started');
     });
 
     // model
@@ -96,9 +105,7 @@ const Puzzle = () => {
     // 開始遊戲
     const play = useCallback(() => {
         countDownTimer.setTimerState('started');
-        setFirst(false);
 
-        //
         dispatch(gridsSet({
             grids: getGrids(cols)
         }));
@@ -106,15 +113,13 @@ const Puzzle = () => {
         dispatch(preparedOff());
 
         setMove(0);
-
-        accumulateTimer.setTimerState('started');
     }, [cols]);
 
     // 重新遊戲
     const resume = useCallback(() => {
-        dispatch(gridsSet({
-            grids: getInOrderGrids(cols)
-        }));
+        // dispatch(gridsSet({
+        //     grids: getInOrderGrids(cols)
+        // }));
 
         dispatch(preparedOn());
 
@@ -165,21 +170,20 @@ const Puzzle = () => {
 
                 // 檢查是否為最佳紀錄
                 if (
-                    record[cols] === null ||
-                    accumulateTimer.seconds < record[cols].secs ||
-                    (accumulateTimer.seconds === record[cols].secs && move < record[cols].moves)
+                    record[level] === null ||
+                    accumulateTimer.seconds < record[level].secs ||
+                    (accumulateTimer.seconds === record[level].secs && move < record[level].moves)
                 ) {
                     if (loggedIn) {
                         const record = firebase.database().ref('/records/' + loggedIn.uid);
-                        record.child(cols).set({
-                            level: cols,
+                        record.child(level).set({
                             secs: accumulateTimer.seconds,
                             moves: move
                         });
                     }
 
                     dispatch(personalRecordSet({
-                        level: cols,
+                        level: level,
                         secs: accumulateTimer.seconds,
                         moves: move
                     }));

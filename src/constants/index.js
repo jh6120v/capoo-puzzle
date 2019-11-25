@@ -6,13 +6,13 @@ export const FUNC_GO_BACK = 'GO_BACK';
 export const FUNC_CLOSE = 'CLOSE';
 export const FUNC_SETTING = 'SETTING';
 export const PERSONAL_DEFAULT_SETTING = {
-    cols: 3,
+    level: 'easy',
     image: '',
     tips: false
 };
 
 export const LEVEL_MAP = {
-    3: 'easy',
-    4: 'medium',
-    5: 'hard'
+    easy: 3,
+    medium: 4,
+    hard: 5
 };

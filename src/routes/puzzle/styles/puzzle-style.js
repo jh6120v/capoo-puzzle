@@ -30,11 +30,11 @@ const PersonalRecordInner = styled.div`
 const PersonalRecordItem = styled.div`
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
   width: 30%;
 `;
 
 const PersonalRecordItemTitle = styled.div`
+  width: 100%;
   font-size: 1.2rem;
   margin-bottom: 2px;
   text-align: center;

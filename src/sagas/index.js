@@ -3,12 +3,12 @@ import { indexDBDel, indexDBSet } from './indexed-db';
 import { IDBDelete, IDBSet } from '../modules/indexed-db';
 import {
     personalSettingFetchFromFirebase,
-    personalSettingFetchFromLocal, personalSettingGridsSet, personalSettingImageSet,
+    personalSettingFetchFromLocal, personalSettingLevelSet, personalSettingImageSet,
     personalSettingReset,
     personalSettingSet, personalSettingTipsChange
 } from '../modules/personal-setting';
 import {
-    changePersonalGrids,
+    changePersonalLevel,
     changePersonalImage,
     changePersonalTips, fetchFirebasePersonalSetting,
     fetchLocalPersonalSetting,
@@ -68,8 +68,8 @@ function* watchPersonalRecordSet() {
     yield takeEvery(personalRecordSet.type, setPersonalRecord);
 }
 
-function* watchPersonalGrids() {
-    yield takeEvery(personalSettingGridsSet.type, changePersonalGrids);
+function* watchPersonalLevel() {
+    yield takeEvery(personalSettingLevelSet.type, changePersonalLevel);
 }
 
 function* watchPersonalImage() {
@@ -92,7 +92,7 @@ export default function* rootSaga() {
         watchPersonalRecordFetchFromLocal(),
         watchPersonalRecordAllSet(),
         watchPersonalRecordSet(),
-        watchPersonalGrids(),
+        watchPersonalLevel(),
         watchPersonalImage(),
         watchPersonalTips()
     ]);
