@@ -82,7 +82,6 @@ const Puzzle = () => {
 
     // 倒數計時器
     const countDownTimer = useTimer(3, 'backward', () => {
-        play();
         countDownTimer.setTimerState('reset');
     });
 
@@ -96,6 +95,7 @@ const Puzzle = () => {
 
     // 開始遊戲
     const play = useCallback(() => {
+        countDownTimer.setTimerState('started');
         setFirst(false);
 
         //
@@ -108,7 +108,7 @@ const Puzzle = () => {
         setMove(0);
 
         accumulateTimer.setTimerState('started');
-    }, []);
+    }, [cols]);
 
     // 重新遊戲
     const resume = useCallback(() => {
@@ -123,7 +123,7 @@ const Puzzle = () => {
         accumulateTimer.setTimerState('reset');
 
         countDownTimer.setTimerState('reset');
-    }, []);
+    }, [cols]);
 
     // 移動磚塊
     const moveHandler = (idx, item) => {
@@ -238,7 +238,7 @@ const Puzzle = () => {
                                     accumulateTimer.timerState === 'started' ?
                                         (<FunctionButton onClick={resume}>Resume</FunctionButton>) :
                                         (<FunctionButton
-                                            onClick={() => countDownTimer.setTimerState('started')}>Play</FunctionButton>)
+                                            onClick={play}>Play</FunctionButton>)
                                 }
                             </Functions>
                         </>
