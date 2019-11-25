@@ -15,8 +15,8 @@ import useModel from '../../../commons/hooks/useModel';
 
 const Setting = () => {
     const dispatch = useDispatch();
-    const personal = useSelector((state) => state.personal);
-    const auth = useSelector((state) => state.auth);
+    const { tips } = useSelector((state) => state.personal);
+    const { login, logout, loggedIn } = useSelector((state) => state.auth);
     const { toggle } = useSelector((state) => state.theme);
 
     useEffect(() => {
@@ -28,19 +28,16 @@ const Setting = () => {
     }, []);
 
     const linkTo = useCallback((url) => history.push(url), []);
-    const tipsChange = () => {
-        if (auth.loggedIn) {
-            const setting = firebase.database().ref('/users/' + auth.loggedIn.uid);
-            setting.set({
-                ...personal,
-                tips: !personal.tips
-            });
+    const tipsChange = useCallback((tips) => {
+        if (loggedIn) {
+            const setting = firebase.database().ref('/users/' + loggedIn.uid);
+            setting.child('tips').set(!tips);
 
             return true;
         }
 
         dispatch(personalSettingTipsChange());
-    };
+    }, [loggedIn]);
 
     const share = useCallback(() => {
         if (navigator.share) {
@@ -74,11 +71,11 @@ const Setting = () => {
         <>
             <SettingWrap>
                 {
-                    auth.loggedIn && auth.loggedIn !== 'loading' ? (
+                    loggedIn && loggedIn !== 'loading' ? (
                         <SettingItem>
                             <UserInfo>
-                                <UserInfoAvatar avatar={auth.loggedIn.photoURL} />
-                                <UserName>{auth.loggedIn.displayName}</UserName>
+                                <UserInfoAvatar avatar={loggedIn.photoURL} />
+                                <UserName>{loggedIn.displayName}</UserName>
                             </UserInfo>
                         </SettingItem>
                     ) : null
@@ -92,9 +89,9 @@ const Setting = () => {
                     Puzzle picture
                     <IosArrowForward />
                 </SettingItem>
-                <SettingItem onClick={tipsChange}>
+                <SettingItem onClick={() => tipsChange(tips)}>
                     Tips
-                    {personal.tips ? <MdCheckmark /> : null}
+                    {tips ? <MdCheckmark /> : null}
                 </SettingItem>
                 <SettingItem isTitle>GENERAL SETTINGS</SettingItem>
                 <SettingItem onClick={() => linkTo('/setting/dark-mode')}>
@@ -111,12 +108,12 @@ const Setting = () => {
                 <SettingItem isSpace />
                 <SettingItem alignItemsCenter justifyContentSpaceAround>
                     <div>
-                        {auth.loggedIn !== "loading" ? (
+                        {loggedIn !== "loading" ? (
                             <>
-                                {auth.loggedIn ? (
-                                    <div onClick={auth.logout}>Sign out</div>
+                                {loggedIn ? (
+                                    <div onClick={logout}>Sign out</div>
                                 ) : (
-                                    <div onClick={auth.login}>Sign with Google</div>
+                                    <div onClick={login}>Sign with Google</div>
                                 )}
                             </>
                         ) : (

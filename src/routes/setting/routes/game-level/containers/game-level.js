@@ -7,6 +7,7 @@ import { personalSettingGridsSet } from '../../../../../modules/personal-setting
 
 const GameLevel = () => {
     const dispatch = useDispatch();
+    const { loggedIn } = useSelector((state) => state.auth);
     const { cols } = useSelector((state) => state.personal);
 
     useEffect(() => {
@@ -18,10 +19,17 @@ const GameLevel = () => {
     }, []);
 
     const setGameLevel = useCallback((nums) => {
+        if (loggedIn) {
+            const setting = firebase.database().ref('/users/' + loggedIn.uid);
+            setting.child('cols').set(nums);
+
+            return true;
+        }
+
         dispatch(personalSettingGridsSet({
             cols: nums
         }));
-    }, []);
+    }, [loggedIn]);
 
     return (
         <SettingWrap>

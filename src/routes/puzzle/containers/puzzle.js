@@ -38,6 +38,8 @@ const Puzzle = () => {
     // 取個人設定值
     const { cols, image, tips } = useSelector((state) => state.personal);
 
+    const { loggedIn } = useSelector((state) => state.auth);
+
     // 取個人最佳成績
     const record = useSelector((state) => state.record);
 
@@ -167,6 +169,15 @@ const Puzzle = () => {
                     accumulateTimer.seconds < record[cols].secs ||
                     (accumulateTimer.seconds === record[cols].secs && move < record[cols].moves)
                 ) {
+                    if (loggedIn) {
+                        const record = firebase.database().ref('/records/' + loggedIn.uid);
+                        record.child(cols).set({
+                            level: cols,
+                            secs: accumulateTimer.seconds,
+                            moves: move
+                        });
+                    }
+
                     dispatch(personalRecordSet({
                         level: cols,
                         secs: accumulateTimer.seconds,

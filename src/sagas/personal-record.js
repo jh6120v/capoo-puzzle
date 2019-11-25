@@ -1,6 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import { spinnerHide, spinnerShow } from "../modules/spinner";
-import { get } from "idb-keyval";
+import { get, set } from "idb-keyval";
 import { PERSONAL_RECORD } from "../constants";
 import { personalRecordAllSet } from "../modules/personal-record";
 import { IDBSet } from "../modules/indexed-db";
@@ -32,6 +32,17 @@ export function* fetchLocalPersonalRecord() {
         yield put(spinnerHide());
     } catch (e) {
         yield put(spinnerHide());
+    }
+}
+
+export function* setAllPersonalRecord({ payload }) {
+    try {
+        yield put(IDBSet({
+            key: PERSONAL_RECORD,
+            value: payload
+        }))
+    } catch (e) {
+        console.log(e);
     }
 }
 

@@ -8,7 +8,8 @@ import { identity, times } from 'ramda';
 
 const PuzzlePicture = () => {
     const dispatch = useDispatch();
-    const { image } = useSelector((state) => state.personal);
+    const { loggedIn } = useSelector((state) => state.auth);
+    const personal = useSelector((state) => state.personal);
 
     useEffect(() => {
         dispatch(headerTitleSet({
@@ -19,24 +20,29 @@ const PuzzlePicture = () => {
     }, []);
 
     const setPuzzlePicture = useCallback((image) => {
+        if (loggedIn) {
+            const setting = firebase.database().ref('/users/' + loggedIn.uid);
+            setting.child('image').set(image.toString());
+
+            return true;
+        }
+
         dispatch(personalSettingImageSet({
             image: image.toString()
         }));
-    }, []);
+    }, [loggedIn]);
 
     const pictureList = times(identity, 10);
 
     return (
         <SettingWrap>
             {
-                pictureList.map((val) => {
-                    return (
-                        <SettingItem key={`P_${val}`} alignItemsCenter onClick={() => setPuzzlePicture(val)}>
-                            <SettingItemImage image={val} />
-                            {image === val.toString() ? <MdCheckmark /> : null}
-                        </SettingItem>
-                    )
-                })
+                pictureList.map((val) => (
+                    <SettingItem key={`P_${val}`} alignItemsCenter onClick={() => setPuzzlePicture(val)}>
+                        <SettingItemImage image={val} />
+                        {personal.image === val.toString() ? <MdCheckmark /> : null}
+                    </SettingItem>
+                ))
             }
         </SettingWrap>
     );

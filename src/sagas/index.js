@@ -16,11 +16,17 @@ import {
     setPersonalSetting
 } from './personal-setting';
 import {
+    personalRecordAllSet,
     personalRecordFetchFromFirebase,
     personalRecordFetchFromLocal,
     personalRecordSet
 } from "../modules/personal-record";
-import { fetchFirebasePersonalRecord, fetchLocalPersonalRecord, setPersonalRecord } from "./personal-record";
+import {
+    fetchFirebasePersonalRecord,
+    fetchLocalPersonalRecord,
+    setAllPersonalRecord,
+    setPersonalRecord
+} from "./personal-record";
 
 function* watchIndexDBSet() {
     yield takeEvery(IDBSet.type, indexDBSet);
@@ -54,6 +60,10 @@ function* watchPersonalRecordFetchFromLocal() {
     yield takeEvery(personalRecordFetchFromLocal.type, fetchLocalPersonalRecord);
 }
 
+function* watchPersonalRecordAllSet() {
+    yield takeEvery(personalRecordAllSet.type, setAllPersonalRecord);
+}
+
 function* watchPersonalRecordSet() {
     yield takeEvery(personalRecordSet.type, setPersonalRecord);
 }
@@ -80,6 +90,7 @@ export default function* rootSaga() {
         watchPersonalSettingReset(),
         watchPersonalRecordFetchFromFirebase(),
         watchPersonalRecordFetchFromLocal(),
+        watchPersonalRecordAllSet(),
         watchPersonalRecordSet(),
         watchPersonalGrids(),
         watchPersonalImage(),

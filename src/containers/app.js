@@ -17,8 +17,9 @@ import modelReducer from '../modules/model';
 import themeReducer, { colorModeSet, toggleSwitchSet } from '../modules/theme';
 import authReducer, { authInfoSet } from '../modules/auth-info';
 import personalRecordReducer, {
+    personalRecordAllSet,
     personalRecordFetchFromFirebase,
-    personalRecordFetchFromLocal
+    personalRecordFetchFromLocal, personalRecordSet
 } from '../modules/personal-record';
 import { Container, Wrapper } from '../styles/layout-style';
 import Header from '../components/header';
@@ -60,7 +61,6 @@ const App = () => {
             const setting = firebase.database().ref('/users/' + auth.loggedIn.uid);
             setting.on('value', function(snapshot) {
                 const val = snapshot.val();
-
                 if (val !== null) {
                     // 曾經登入，以 firebase 的資料為主
                     dispatch(personalSettingSet({
@@ -71,6 +71,18 @@ const App = () => {
                     setting.set({
                         ...personal
                     });
+                }
+            });
+
+            const record = firebase.database().ref('/records/' + auth.loggedIn.uid);
+            record.on('value', (snapshot) => {
+                const val = snapshot.val();
+                console.log(val);
+
+                if (val !== null) {
+                    dispatch(personalRecordAllSet({
+                        ...val
+                    }));
                 }
             });
         }
