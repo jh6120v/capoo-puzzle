@@ -12,8 +12,10 @@ import {
 import Model from '../../../components/model';
 import { colorModeSet } from '../../../modules/theme';
 import useModel from '../../../commons/hooks/useModel';
+import { useHistory } from 'react-router';
 
 const Setting = () => {
+    const history = useHistory();
     const dispatch = useDispatch();
     const { tips } = useSelector((state) => state.personal);
     const { login, logout, loggedIn } = useSelector((state) => state.auth);

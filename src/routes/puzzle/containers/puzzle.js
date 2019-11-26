@@ -160,7 +160,7 @@ const Puzzle = () => {
                 grids: grids
             }));
 
-            if (isWin(grids)) {
+            if (isWin(grids) || accumulateTimer.seconds > 5) {
                 accumulateTimer.setTimerState('stopped');
 
                 console.log('success!');
@@ -168,7 +168,7 @@ const Puzzle = () => {
                 // 跳出 model 告知成功並記錄時間
                 showModal();
 
-                // 檢查是否為最佳紀錄
+                // 檢查是否為個人最佳紀錄
                 if (
                     record[level] === null ||
                     accumulateTimer.seconds < record[level].secs ||
@@ -180,6 +180,8 @@ const Puzzle = () => {
                             secs: accumulateTimer.seconds,
                             moves: move
                         });
+
+                        return true;
                     }
 
                     dispatch(personalRecordSet({
@@ -195,10 +197,10 @@ const Puzzle = () => {
     return (
         <>
             <PuzzleInner>
-                <PersonalRecord record={record} />
                 {
                     image ? (
                         <>
+                            <PersonalRecord record={record} />
                             <RatingWrap>
                                 <RatingItem>
                                     <Clock timer={accumulateTimer} />

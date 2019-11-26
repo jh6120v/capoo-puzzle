@@ -43,6 +43,7 @@ const PersonalRecordItemTitle = styled.div`
 `;
 
 const PersonalRecordItemContent = styled.div`
+  height: 50px;
   padding: 10px 8px;
   border-radius: 5px;
   background-color: ${(props) => props.theme.personalRecordItemContentBg};
