@@ -85,6 +85,11 @@ const App = () => {
                     }));
                 }
             });
+
+            const ranking = firebase.database().ref('/ranking').child('easy').orderByChild('secs').limitToFirst(5);
+            ranking.on('value', (snapshot) => {
+                console.log(snapshot.val());
+            });
         }
     }, [auth.loggedIn]);
 

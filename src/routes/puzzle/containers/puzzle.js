@@ -175,20 +175,41 @@ const Puzzle = () => {
                     (accumulateTimer.seconds === record[level].secs && move < record[level].moves)
                 ) {
                     if (loggedIn) {
-                        const record = firebase.database().ref('/records/' + loggedIn.uid);
-                        record.child(level).set({
+                        firebase.database().ref('/records/' + loggedIn.uid).child(level).set({
                             secs: accumulateTimer.seconds,
                             moves: move
                         });
-
-                        return true;
+                    } else {
+                        dispatch(personalRecordSet({
+                            level: level,
+                            secs: accumulateTimer.seconds,
+                            moves: move
+                        }));
                     }
+                }
 
-                    dispatch(personalRecordSet({
-                        level: level,
-                        secs: accumulateTimer.seconds,
-                        moves: move
-                    }));
+                // 送至 firebase
+                if (loggedIn) {
+                    firebase.database().ref(`/ranking/${level}/${loggedIn.uid}`).once('value', (snapshot) => {
+                        const val = snapshot.val();
+
+                        if (
+                            val === null ||
+                            accumulateTimer.seconds < val.secs ||
+                            (accumulateTimer.seconds === val.secs && move < val.moves)
+                        ) {
+                            let updates = {};
+                            updates[`/ranking/${level}/${loggedIn.uid}`] = {
+                                name: loggedIn.displayName,
+                                avatar: loggedIn.photoURL,
+                                secs: accumulateTimer.seconds,
+                                moves: move
+                            };
+
+                            // update
+                            firebase.database().ref().update(updates);
+                        }
+                    });
                 }
             }
         }
