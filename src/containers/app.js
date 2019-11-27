@@ -7,20 +7,13 @@ import { store, history, sagaMiddleware } from '../store';
 import Routes from '../routes';
 import Spinner from '../components/spinner';
 import { injectReducer } from '../store/reducers';
-import personalSettingReducer, {
-    personalSettingFetchFromFirebase,
-    personalSettingFetchFromLocal, personalSettingSet
-} from '../modules/personal-setting';
+import personalSettingReducer, { personalSettingFetchFromLocal, personalSettingSet } from '../modules/personal-setting';
 import spinnerReducer from '../modules/spinner';
 import headerTitleReducer from '../modules/header';
 import modelReducer from '../modules/model';
 import themeReducer, { colorModeSet, toggleSwitchSet } from '../modules/theme';
 import authReducer, { authInfoSet } from '../modules/auth-info';
-import personalRecordReducer, {
-    personalRecordAllSet,
-    personalRecordFetchFromFirebase,
-    personalRecordFetchFromLocal, personalRecordSet
-} from '../modules/personal-record';
+import personalRecordReducer, { personalRecordAllSet, personalRecordFetchFromLocal } from '../modules/personal-record';
 import { Container, Wrapper } from '../styles/layout-style';
 import Header from '../components/header';
 import ResetStyle from '../styles/reset-style';
@@ -29,7 +22,6 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from '../commons/utils';
 import useAuthentication from '../commons/hooks/useAuthentication';
 import useDarkMode from '../commons/hooks/useDarkMode';
-import { PERSONAL_DEFAULT_SETTING } from "../constants";
 
 injectReducer(history, store, [
     { key: 'personal', reducer: personalSettingReducer },
@@ -59,7 +51,7 @@ const App = () => {
     useEffect(() => {
         if (auth.loggedIn && auth.loggedIn !== 'loading') {
             const setting = firebase.database().ref('/users/' + auth.loggedIn.uid);
-            setting.on('value', function(snapshot) {
+            setting.on('value', function (snapshot) {
                 const val = snapshot.val();
                 if (val !== null) {
                     // 曾經登入，以 firebase 的資料為主
@@ -84,11 +76,6 @@ const App = () => {
                         ...val
                     }));
                 }
-            });
-
-            const ranking = firebase.database().ref('/ranking').child('easy').orderByChild('secs').limitToFirst(5);
-            ranking.on('value', (snapshot) => {
-                console.log(snapshot.val());
             });
         }
     }, [auth.loggedIn]);
