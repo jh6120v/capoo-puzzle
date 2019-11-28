@@ -16,12 +16,12 @@ const Ranking = () => {
     }, []);
 
     useEffect(() => {
-        const rankingEasy = firebase.database().ref('test/easy').orderByChild('secs').limitToFirst(3);
-        rankingEasy.on('child_added', (snapshot) => {
+        const rankingEasy = firebase.database().ref('test/easy').orderByKey().limitToFirst(3);
+        rankingEasy.on('value', (snapshot) => {
             const val = snapshot.val();
 
             console.log(val);
-            console.log(Object.values(val));
+            // console.log(Object.values(val));
             // if (val !== null) {
             //     const sortVal = sortWith([
             //         ascend(prop('secs'))

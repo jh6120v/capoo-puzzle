@@ -21,6 +21,21 @@ export const waitingRouteComponent = (Component) => () => (
     </Suspense>
 );
 
+export const initialStateFromLocalStorage = (key, initialState) => {
+    if (typeof initialState === 'undefined' || !initialState) throw new Error('initial state must be set.');
+
+    if (typeof localStorage !== 'undefined') {
+        const state = localStorage[key];
+        if (!state) {
+            localStorage[key] = JSON.stringify(initialState);
+        }
+
+        return state ? JSON.parse(state) : initialState;
+    } else {
+        return initialState;
+    }
+};
+
 export const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 /**

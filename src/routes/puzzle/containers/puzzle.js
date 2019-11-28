@@ -190,7 +190,9 @@ const Puzzle = () => {
 
                 // 送至 firebase
                 if (loggedIn) {
-                    firebase.database().ref(`/ranking/${level}/${loggedIn.uid}`).once('value', (snapshot) => {
+                    const key = accumulateTimer.seconds + move;
+
+                    firebase.database().ref(`/ranking/${level}/${key}`).once('value', (snapshot) => {
                         const val = snapshot.val();
 
                         if (
@@ -199,7 +201,7 @@ const Puzzle = () => {
                             (accumulateTimer.seconds === val.secs && move < val.moves)
                         ) {
                             let updates = {};
-                            updates[`/ranking/${level}/${loggedIn.uid}`] = {
+                            updates[`/ranking/${level}/${key}`] = {
                                 name: loggedIn.displayName,
                                 avatar: loggedIn.photoURL,
                                 secs: accumulateTimer.seconds,

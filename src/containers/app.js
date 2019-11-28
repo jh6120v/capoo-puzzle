@@ -22,6 +22,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from '../commons/utils';
 import useAuthentication from '../commons/hooks/useAuthentication';
 import useDarkMode from '../commons/hooks/useDarkMode';
+import FirebaseDatabaseProvider from '@react-firebase/database';
 
 injectReducer(history, store, [
     { key: 'personal', reducer: personalSettingReducer },
@@ -95,7 +96,6 @@ const App = () => {
         // 為了讓 :active 在 ios 生效
         document.addEventListener('touchstart', () => {
         }, false);
-
     }, []);
 
     return (
