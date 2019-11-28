@@ -2,7 +2,6 @@ import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IosArrowForward from 'react-ionicons/lib/IosArrowForward';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
-import { history } from '../../../store';
 import { headerTitleSet, prevLinkActGoBack } from '../../../modules/header';
 import { SettingWrap, SettingItem, Version, UserInfo, UserInfoAvatar, UserName } from '../styles';
 import {
@@ -34,8 +33,6 @@ const Setting = () => {
         if (loggedIn) {
             const setting = firebase.database().ref('/users/' + loggedIn.uid);
             setting.child('tips').set(!tips);
-
-            return true;
         }
 
         dispatch(personalSettingTipsChange());

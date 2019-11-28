@@ -22,8 +22,6 @@ const GameLevel = () => {
         if (loggedIn) {
             const setting = firebase.database().ref('/users/' + loggedIn.uid);
             setting.child('level').set(level);
-
-            return true;
         }
 
         dispatch(personalSettingLevelSet({

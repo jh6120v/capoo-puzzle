@@ -7,22 +7,21 @@ import { store, history, sagaMiddleware } from '../store';
 import Routes from '../routes';
 import Spinner from '../components/spinner';
 import { injectReducer } from '../store/reducers';
-import personalSettingReducer, { personalSettingFetchFromLocal, personalSettingSet } from '../modules/personal-setting';
+import personalSettingReducer, { personalSettingSet } from '../modules/personal-setting';
 import spinnerReducer from '../modules/spinner';
 import headerTitleReducer from '../modules/header';
 import modelReducer from '../modules/model';
 import themeReducer, { colorModeSet, toggleSwitchSet } from '../modules/theme';
 import authReducer, { authInfoSet } from '../modules/auth-info';
-import personalRecordReducer, { personalRecordAllSet, personalRecordFetchFromLocal } from '../modules/personal-record';
+import personalRecordReducer from '../modules/personal-record';
 import { Container, Wrapper } from '../styles/layout-style';
 import Header from '../components/header';
 import ResetStyle from '../styles/reset-style';
 import GlobalStyle from '../styles/global-style';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '../commons/utils';
+import { theme } from '../commons/theme';
 import useAuthentication from '../commons/hooks/useAuthentication';
 import useDarkMode from '../commons/hooks/useDarkMode';
-import FirebaseDatabaseProvider from '@react-firebase/database';
 
 injectReducer(history, store, [
     { key: 'personal', reducer: personalSettingReducer },
@@ -40,19 +39,16 @@ const App = () => {
     const header = useSelector((state) => state.header);
     const personal = useSelector((state) => state.personal);
     const auth = useAuthentication();
-
     const [darkModeEnabled, colorMode, setter] = useDarkMode();
 
     useEffect(() => {
         dispatch(authInfoSet({
             ...auth
         }));
-    }, [auth.loggedIn]);
 
-    useEffect(() => {
         if (auth.loggedIn && auth.loggedIn !== 'loading') {
             const setting = firebase.database().ref('/users/' + auth.loggedIn.uid);
-            setting.on('value', function (snapshot) {
+            setting.once('value', function (snapshot) {
                 const val = snapshot.val();
                 if (val !== null) {
                     // 曾經登入，以 firebase 的資料為主
@@ -66,25 +62,10 @@ const App = () => {
                     });
                 }
             });
-
-            const record = firebase.database().ref('/records/' + auth.loggedIn.uid);
-            record.on('value', (snapshot) => {
-                const val = snapshot.val();
-                console.log(val);
-
-                if (val !== null) {
-                    dispatch(personalRecordAllSet({
-                        ...val
-                    }));
-                }
-            });
         }
     }, [auth.loggedIn]);
 
     useEffect(() => {
-        dispatch(personalSettingFetchFromLocal());
-        dispatch(personalRecordFetchFromLocal());
-
         dispatch(colorModeSet({
             colorMode: colorMode
         }));

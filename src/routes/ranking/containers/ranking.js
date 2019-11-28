@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { headerTitleSet, prevLinkActClose } from '../../../modules/header';
 import { ContainerInner } from '../../../styles/layout-style';
-import { ascend, prop, sortWith } from 'ramda';
+import { useList } from 'react-firebase-hooks/database';
 
 const Ranking = () => {
     const dispatch = useDispatch();
+    const { login, loggedIn } = useSelector((state) => state.auth);
 
     useEffect(() => {
         dispatch(headerTitleSet({
@@ -15,30 +16,33 @@ const Ranking = () => {
         dispatch(prevLinkActClose());
     }, []);
 
-    useEffect(() => {
-        const rankingEasy = firebase.database().ref('test/easy').orderByKey().limitToFirst(3);
-        rankingEasy.on('value', (snapshot) => {
-            const val = snapshot.val();
-
-            console.log(val);
-            // console.log(Object.values(val));
-            // if (val !== null) {
-            //     const sortVal = sortWith([
-            //         ascend(prop('secs'))
-            //     ])(Object.values(val));
-            //
-            //     console.log(sortVal);
-            // }
-        });
-
-        return () => {
-            rankingEasy.off();
-        };
-    }, []);
+    const reference = firebase.database().ref('ranking/easy').orderByChild('secs').limitToFirst(3);
+    const [snapshots, loading, error] = useList(reference);
 
     return (
         <ContainerInner>
-            Ranking
+            {loggedIn !== "loading" ? (
+                <>
+                    {loggedIn ? (
+                        <div>
+                            {error && <strong>Error: {error}</strong>}
+                            {loading && <span>List: Loading...</span>}
+                            {!loading && snapshots && (
+                                <>
+                                    {snapshots.map(v => (
+                                        <div key={v.key}>{v.val().secs}, </div>
+                                    ))}
+                                </>
+                            )}
+                        </div>
+                    ) : (
+                        <div onClick={login}>Sign with Google</div>
+                    )}
+                </>
+            ) : (
+                "loading..."
+            )}
+
         </ContainerInner>
     );
 };

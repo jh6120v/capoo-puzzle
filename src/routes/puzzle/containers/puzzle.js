@@ -28,7 +28,8 @@ import { FUNC_SETTING, LEVEL_MAP, RANKING_INFO } from "../../../constants";
 import useTimer from '../../../commons/hooks/useTimer';
 import useModel from '../../../commons/hooks/useModel';
 import PersonalRecord from "../components/personal-record";
-import { personalRecordSet } from "../../../modules/personal-record";
+import { personalRecordAllSet, personalRecordSet } from "../../../modules/personal-record";
+import moment from "moment";
 
 const Puzzle = () => {
     const dispatch = useDispatch();
@@ -37,10 +38,11 @@ const Puzzle = () => {
 
     const [cols, setCols] = useState(0);
 
+    // 登入狀態
+    const { loggedIn } = useSelector((state) => state.auth);
+
     // 取個人設定值
     const { level, image, tips } = useSelector((state) => state.personal);
-
-    const { loggedIn } = useSelector((state) => state.auth);
 
     // 取個人最佳成績
     const record = useSelector((state) => state.record);
@@ -51,11 +53,22 @@ const Puzzle = () => {
     // 移動次數
     let [move, setMove] = useState(0);
 
+    useEffect(() => {
+        if (loggedIn && loggedIn !== 'loading') {
+            const record = firebase.database().ref('/records/' + loggedIn.uid);
+            record.once('value', (snapshot) => {
+                const val = snapshot.val();
+                if (val !== null) {
+                    dispatch(personalRecordAllSet({
+                        ...val
+                    }));
+                }
+            });
+        }
+    }, [loggedIn]);
+
     // set default setting
     useEffect(() => {
-        //
-        setFirst(true);
-
         // set default header
         dispatch(headerTitleDefault());
 
@@ -111,16 +124,10 @@ const Puzzle = () => {
         }));
 
         dispatch(preparedOff());
-
-        setMove(0);
     }, [cols]);
 
     // 重新遊戲
     const resume = useCallback(() => {
-        // dispatch(gridsSet({
-        //     grids: getInOrderGrids(cols)
-        // }));
-
         dispatch(preparedOn());
 
         setMove(0);
@@ -190,9 +197,7 @@ const Puzzle = () => {
 
                 // 送至 firebase
                 if (loggedIn) {
-                    const key = accumulateTimer.seconds + move;
-
-                    firebase.database().ref(`/ranking/${level}/${key}`).once('value', (snapshot) => {
+                    firebase.database().ref(`/ranking/${level}/${loggedIn.uid}`).once('value', (snapshot) => {
                         const val = snapshot.val();
 
                         if (
@@ -201,11 +206,12 @@ const Puzzle = () => {
                             (accumulateTimer.seconds === val.secs && move < val.moves)
                         ) {
                             let updates = {};
-                            updates[`/ranking/${level}/${key}`] = {
+                            updates[`/ranking/${level}/${loggedIn.uid}`] = {
                                 name: loggedIn.displayName,
                                 avatar: loggedIn.photoURL,
                                 secs: accumulateTimer.seconds,
-                                moves: move
+                                moves: move,
+                                time: +moment()
                             };
 
                             // update
@@ -220,59 +226,53 @@ const Puzzle = () => {
     return (
         <>
             <PuzzleInner>
-                {
-                    image ? (
-                        <>
-                            <PersonalRecord record={record} />
-                            <RatingWrap>
-                                <RatingItem>
-                                    <Clock timer={accumulateTimer} />
-                                </RatingItem>
-                                <RatingItem>{move === 0 && accumulateTimer.timerState === 'reset' ? '--' : move} moves</RatingItem>
-                            </RatingWrap>
-                            <PuzzleContainer
-                                active={accumulateTimer.timerState === 'started'}
-                                first={first}
-                                duration={400}
-                            >
-                                <PuzzleFront image={image} />
-                                <PuzzleBack>
-                                    <GridWrap>
-                                        {
-                                            grids.map((item, idx) => {
-                                                let isSpace = parseInt(item.label) === cols * cols - 1 && prepared === false;
-                                                const { x, y } = layoutPositionList[item.position];
+                <PersonalRecord record={record} />
+                <RatingWrap>
+                    <RatingItem>
+                        <Clock timer={accumulateTimer} />
+                    </RatingItem>
+                    <RatingItem>{move === 0 && accumulateTimer.timerState === 'reset' ? '--' : move} moves</RatingItem>
+                </RatingWrap>
+                <PuzzleContainer
+                    active={accumulateTimer.timerState === 'started'}
+                    first={first}
+                    duration={400}
+                >
+                    <PuzzleFront image={image} />
+                    <PuzzleBack>
+                        <GridWrap>
+                            {
+                                grids.map((item, idx) => {
+                                    let isSpace = parseInt(item.label) === cols * cols - 1 && prepared === false;
+                                    const { x, y } = layoutPositionList[item.position];
 
-                                                return (
-                                                    <Grid
-                                                        key={item.label}
-                                                        totalWidth={width}
-                                                        width={width / cols}
-                                                        position={layoutPositionList[item.label]}
-                                                        isSpace={isSpace}
-                                                        image={image}
-                                                        onClick={() => moveHandler(idx, item)}
-                                                        style={{ transform: `translate3d(${x}px,${y}px,0)` }}
-                                                    >
-                                                        {tips ? item.label : null}
-                                                    </Grid>
-                                                )
-                                            })
-                                        }
-                                    </GridWrap>
-                                </PuzzleBack>
-                            </PuzzleContainer>
-                            <Functions>
-                                {
-                                    accumulateTimer.timerState === 'started' ?
-                                        (<FunctionButton onClick={resume}>Resume</FunctionButton>) :
-                                        (<FunctionButton
-                                            onClick={play}>Play</FunctionButton>)
-                                }
-                            </Functions>
-                        </>
-                    ) : null
-                }
+                                    return (
+                                        <Grid
+                                            key={item.label}
+                                            totalWidth={width}
+                                            width={width / cols}
+                                            position={layoutPositionList[item.label]}
+                                            isSpace={isSpace}
+                                            image={image}
+                                            onClick={() => moveHandler(idx, item)}
+                                            style={{ transform: `translate3d(${x}px,${y}px,0)` }}
+                                        >
+                                            {tips ? item.label : null}
+                                        </Grid>
+                                    )
+                                })
+                            }
+                        </GridWrap>
+                    </PuzzleBack>
+                </PuzzleContainer>
+                <Functions>
+                    {
+                        accumulateTimer.timerState === 'started' ?
+                            (<FunctionButton onClick={resume}>Resume</FunctionButton>) :
+                            (<FunctionButton
+                                onClick={play}>Play</FunctionButton>)
+                    }
+                </Functions>
                 <Model isShow={isShown}>
                     <ModelBox />
                 </Model>

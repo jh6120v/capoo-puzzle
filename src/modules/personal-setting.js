@@ -1,11 +1,9 @@
-import { createActionCreator } from '../commons/utils';
+import { createActionCreator, initialStateFromLocalStorage } from '../commons/utils';
 import { createReducer } from '../store/reducers';
-import { PERSONAL_DEFAULT_SETTING } from '../constants';
+import { PERSONAL_DEFAULT_SETTING, PERSONAL_SETTING } from '../constants';
 
 // Actions
 const actionCreator = createActionCreator('@@PERSONAL_SETTING');
-const personalSettingFetchFromLocal = actionCreator('SETTING_FETCH_FROM_LOCAL');
-const personalSettingFetchFromFirebase = actionCreator('SETTING_FETCH_FROM_FIREBASE');
 const personalSettingSet = actionCreator('SETTING_SET');
 const personalSettingReset = actionCreator('SETTING_RESET');
 const personalSettingLevelSet = actionCreator('SETTING_LEVEL_SET');
@@ -13,8 +11,6 @@ const personalSettingImageSet = actionCreator('SETTING_IMAGE_SET');
 const personalSettingTipsChange = actionCreator('SETTING_TIPS_CHANGE');
 
 export {
-    personalSettingFetchFromLocal,
-    personalSettingFetchFromFirebase,
     personalSettingSet,
     personalSettingReset,
     personalSettingLevelSet,
@@ -24,7 +20,7 @@ export {
 
 
 // Reducers
-const initialState = PERSONAL_DEFAULT_SETTING;
+const initialState = initialStateFromLocalStorage(PERSONAL_SETTING, PERSONAL_DEFAULT_SETTING);
 
 const handlers = {
     [personalSettingSet.type]: (state, { payload }) => ({

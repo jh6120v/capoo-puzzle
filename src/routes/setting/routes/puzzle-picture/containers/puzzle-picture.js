@@ -23,8 +23,6 @@ const PuzzlePicture = () => {
         if (loggedIn) {
             const setting = firebase.database().ref('/users/' + loggedIn.uid);
             setting.child('image').set(image.toString());
-
-            return true;
         }
 
         dispatch(personalSettingImageSet({

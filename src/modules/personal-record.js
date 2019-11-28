@@ -1,27 +1,24 @@
-import { createActionCreator } from '../commons/utils';
+import { createActionCreator, initialStateFromLocalStorage } from '../commons/utils';
 import { createReducer } from '../store/reducers';
+import { PERSONAL_RECORD } from "../constants";
 
 // Actions
 const actionCreator = createActionCreator('@@PERSONAL_RECORD');
-const personalRecordFetchFromLocal = actionCreator('RECORD_FETCH_FROM_LOCAL');
-const personalRecordFetchFromFirebase = actionCreator('RECORD_FETCH_FROM_FIREBASE');
 const personalRecordAllSet = actionCreator('RECORD_ALL_SET');
 const personalRecordSet = actionCreator('RECORD_SET');
 
 export {
-    personalRecordFetchFromLocal,
-    personalRecordFetchFromFirebase,
     personalRecordAllSet,
     personalRecordSet
 }
 
 
 // Reducers
-const initialState = {
+const initialState = initialStateFromLocalStorage(PERSONAL_RECORD, {
     easy: null,
     medium: null,
     hard: null
-};
+});
 
 const handlers = {
     [personalRecordAllSet.type]: (state, { payload }) => ({
