@@ -45,7 +45,9 @@ const App = () => {
         dispatch(authInfoSet({
             ...auth
         }));
+    }, [auth.loggedIn]);
 
+    useEffect(() => {
         if (auth.loggedIn && auth.loggedIn !== 'loading') {
             const setting = firebase.database().ref('/users/' + auth.loggedIn.uid);
             setting.once('value', function (snapshot) {
@@ -87,7 +89,7 @@ const App = () => {
                 <Spinner show={isShow} />
                 <ConnectedRouter history={history}>
                     <Wrapper>
-                        <Header {...header} />
+                        <Header {...header} {...auth} />
                         <Container>
                             <Routes />
                         </Container>

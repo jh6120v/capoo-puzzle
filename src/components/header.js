@@ -10,16 +10,25 @@ import {
 } from '../styles/layout-style';
 import IosStats from 'react-ionicons/lib/IosStats';
 import MdClose from 'react-ionicons/lib/MdClose';
+import MdLogIn from 'react-ionicons/lib/MdLogIn';
 
-const Header = ({ title, prev, next }) => {
+const Header = ({ title, prev, next, login, logout, loggedIn }) => {
     const renderPrev = (prevState) => {
         switch (prevState) {
             case RANKING_INFO:
                 return (
                     <PrevLinkItem>
-                        <Link to="/ranking">
-                            <IosStats fontSize="25px" color="#fff" />
-                        </Link>
+                        {
+                            loggedIn && loggedIn !== 'loading' ? (
+                                <Link to="/ranking">
+                                    <IosStats fontSize="25px" color="#fff" />
+                                </Link>
+                            ) : (
+                                <a onClick={login}>
+                                    <MdLogIn fontSize="25px" color="#fff" />
+                                </a>
+                            )
+                        }
                     </PrevLinkItem>
                 );
 

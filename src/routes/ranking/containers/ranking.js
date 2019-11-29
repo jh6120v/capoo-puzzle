@@ -25,9 +25,9 @@ const Ranking = () => {
                 <>
                     {loggedIn ? (
                         <div>
-                            {error && <strong>Error: {error}</strong>}
+                            {error && <strong>Error: {console.log(error)}</strong>}
                             {loading && <span>List: Loading...</span>}
-                            {!loading && snapshots && (
+                            {!loading && snapshots && error !== 'undefined' && (
                                 <>
                                     {snapshots.map(v => (
                                         <div key={v.key}>{v.val().secs}, </div>
