@@ -13,7 +13,7 @@ const PersonalRecord = ({ record }) => {
             <PersonalRecordTitle>YOUR BEST</PersonalRecordTitle>
             <PersonalRecordInner>
                 {
-                    Object.keys(record).map((val) => {
+                    Object.keys(record).sort().map((val) => {
                         return (
                             <PersonalRecordItem key={val}>
                                 <PersonalRecordItemTitle>{val}</PersonalRecordItemTitle>

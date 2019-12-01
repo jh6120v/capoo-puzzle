@@ -1,6 +1,6 @@
 import { createActionCreator, initialStateFromLocalStorage } from '../commons/utils';
 import { createReducer } from '../store/reducers';
-import { PERSONAL_RECORD } from "../constants";
+import { PERSONAL_DEFAULT_RECORD, PERSONAL_RECORD } from "../constants";
 
 // Actions
 const actionCreator = createActionCreator('@@PERSONAL_RECORD');
@@ -14,22 +14,19 @@ export {
 
 
 // Reducers
-const initialState = initialStateFromLocalStorage(PERSONAL_RECORD, {
-    easy: null,
-    medium: null,
-    hard: null
-});
+const initialState = initialStateFromLocalStorage(PERSONAL_RECORD, PERSONAL_DEFAULT_RECORD);
 
 const handlers = {
     [personalRecordAllSet.type]: (state, { payload }) => ({
         ...state,
         ...payload
     }),
-    [personalRecordSet.type]: (state, { payload: { level, secs, moves } }) => ({
+    [personalRecordSet.type]: (state, { payload: { level, secs, moves, time } }) => ({
         ...state,
         [level]: {
             secs: secs,
-            moves: moves
+            moves: moves,
+            time: time
         }
     })
 };

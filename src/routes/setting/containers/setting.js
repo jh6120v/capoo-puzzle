@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import IosArrowForward from 'react-ionicons/lib/IosArrowForward';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
 import { headerTitleSet, prevLinkActGoBack } from '../../../modules/header';
-import { SettingWrap, SettingItem, Version, UserInfo, UserInfoAvatar, UserName } from '../styles';
+import { SettingInner, SettingItem, Version, UserInfo, UserInfoAvatar, UserName } from '../styles';
 import {
     personalSettingReset,
     personalSettingTipsChange
@@ -12,6 +12,8 @@ import Model from '../../../components/model';
 import { colorModeSet } from '../../../modules/theme';
 import useModel from '../../../commons/hooks/useModel';
 import { useHistory } from 'react-router';
+import { personalRecordAllSet } from "../../../modules/personal-record";
+import { PERSONAL_DEFAULT_RECORD } from "../../../constants";
 
 const Setting = () => {
     const history = useHistory();
@@ -30,7 +32,7 @@ const Setting = () => {
 
     const linkTo = useCallback((url) => history.push(url), []);
     const tipsChange = useCallback((tips) => {
-        if (loggedIn) {
+        if (loggedIn && loggedIn !== 'loading') {
             const setting = firebase.database().ref('/users/' + loggedIn.uid);
             setting.child('tips').set(!tips);
         }
@@ -66,9 +68,15 @@ const Setting = () => {
         hideModal();
     }, []), 'Cancel');
 
+    const logoutAndReset = useCallback(() => {
+        logout();
+        dispatch(personalSettingReset());
+        dispatch(personalRecordAllSet(PERSONAL_DEFAULT_RECORD));
+    }, []);
+
     return (
         <>
-            <SettingWrap>
+            <SettingInner>
                 {
                     loggedIn && loggedIn !== 'loading' ? (
                         <SettingItem>
@@ -105,23 +113,29 @@ const Setting = () => {
                     <IosArrowForward />
                 </SettingItem>
                 <SettingItem isSpace />
-                <SettingItem alignItemsCenter justifyContentSpaceAround>
-                    <div>
-                        {loggedIn !== "loading" ? (
-                            <>
-                                {loggedIn ? (
-                                    <div onClick={logout}>Sign out</div>
+                {
+                    loggedIn !== "loading" ? (
+                        <>
+                            {
+                                loggedIn ? (
+                                    <SettingItem alignItemsCenter justifyContentSpaceAround onClick={logoutAndReset}>
+                                        Sign out
+                                    </SettingItem>
                                 ) : (
-                                    <div onClick={login}>Sign with Google</div>
-                                )}
-                            </>
-                        ) : (
-                            "loading..."
-                        )}
-                    </div>
-                </SettingItem>
+                                    <SettingItem alignItemsCenter justifyContentSpaceAround onClick={login}>
+                                        Sign with Google
+                                    </SettingItem>
+                                )
+                            }
+                        </>
+                    ) : (
+                        <SettingItem alignItemsCenter justifyContentSpaceAround>
+                            loading...
+                        </SettingItem>
+                    )
+                }
                 <Version>Version 1.0.0</Version>
-            </SettingWrap>
+            </SettingInner>
             <Model isShow={isShown}>
                 <ModelBox />
             </Model>

@@ -62,7 +62,8 @@ const LazyLoad = styled.div`
   justify-content: center;
   align-items: center;
   color: #FFF;
-  background-color: #aadff0;
+  opacity: 0;
+  //background-color: #aadff0;
 `;
 
 export {

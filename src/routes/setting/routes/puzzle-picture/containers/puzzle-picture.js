@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SettingItem, SettingItemImage, SettingWrap } from '../../../styles';
+import { SettingItem, SettingItemImage, SettingInner } from '../../../styles';
 import { headerTitleSet, prevLinkActGoBack } from '../../../../../modules/header';
 import { personalSettingImageSet } from '../../../../../modules/personal-setting';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
@@ -20,7 +20,7 @@ const PuzzlePicture = () => {
     }, []);
 
     const setPuzzlePicture = useCallback((image) => {
-        if (loggedIn) {
+        if (loggedIn && loggedIn !== 'loading') {
             const setting = firebase.database().ref('/users/' + loggedIn.uid);
             setting.child('image').set(image.toString());
         }
@@ -33,7 +33,7 @@ const PuzzlePicture = () => {
     const pictureList = times(identity, 10);
 
     return (
-        <SettingWrap>
+        <SettingInner>
             {
                 pictureList.map((val) => (
                     <SettingItem key={`P_${val}`} alignItemsCenter onClick={() => setPuzzlePicture(val)}>
@@ -42,7 +42,7 @@ const PuzzlePicture = () => {
                     </SettingItem>
                 ))
             }
-        </SettingWrap>
+        </SettingInner>
     );
 };
 

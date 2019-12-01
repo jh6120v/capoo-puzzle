@@ -1,10 +1,9 @@
+import React, { lazy } from 'react';
+import { Redirect } from 'react-router-dom';
 import Puzzle from './puzzle';
-import Setting from './setting';
-import GameLevel from './setting/routes/game-level';
+// import Setting from './setting';
 import PuzzlePicture from './setting/routes/puzzle-picture';
-import DarkMode from './setting/routes/dark-mode';
-import About from './setting/routes/about';
-import Ranking from './ranking';
+import { waitingRouteComponent } from "../commons/utils";
 
 // const Puzzle = lazy(() => import('./puzzle'));
 // const Setting = lazy(() => import('./setting'));
@@ -18,11 +17,12 @@ export const RouterConfig = [
     {
         path: '/',
         component: Puzzle,
-        exact: true
+        exact: true,
+
     },
     {
         path: '/setting',
-        component: Setting,
+        component: waitingRouteComponent(lazy(() => import('./setting'))),
         exact: true,
         sceneConfig: {
             enter: 'page-right-forward',
@@ -31,7 +31,7 @@ export const RouterConfig = [
     },
     {
         path: '/setting/game-level',
-        component: GameLevel,
+        component: waitingRouteComponent(lazy(() => import('./setting/routes/game-level'))),
         exact: true,
         sceneConfig: {
             enter: 'page-right-forward',
@@ -49,7 +49,7 @@ export const RouterConfig = [
     },
     {
         path: '/setting/dark-mode',
-        component: DarkMode,
+        component: waitingRouteComponent(lazy(() => import('./setting/routes/dark-mode'))),
         exact: true,
         sceneConfig: {
             enter: 'page-right-forward',
@@ -58,16 +58,19 @@ export const RouterConfig = [
     },
     {
         path: '/setting/about',
-        component: About,
+        component: waitingRouteComponent(lazy(() => import('./setting/routes/about'))),
         exact: true,
         sceneConfig: {
             enter: 'page-right-forward',
             exit: 'page-right-back'
         }
-    },
+    }
+];
+
+export const PrivateRouterConfig = [
     {
         path: '/ranking',
-        component: Ranking,
+        component: waitingRouteComponent(lazy(() => import('./ranking'))),
         exact: true
     }
 ];
@@ -76,3 +79,11 @@ export const getSceneConfig = (location) => {
     const matchedRoute = RouterConfig.find((config) => new RegExp(`^${config.path}$`).test(location.pathname));
     return (matchedRoute && matchedRoute.sceneConfig) || DEFAULT_SCENE_CONFIG;
 };
+
+export const PrivateRoute = (props) => (
+    <>
+        {
+            props.auth ? props.children : <Redirect to={'/'} />
+        }
+    </>
+);

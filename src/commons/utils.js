@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
-import { LazyLoad } from '../styles/common-style';
 import { all } from "ramda";
+import Spinner from "../components/spinner";
 
 export const createActionCreator = (namespace) => (actionType) => {
     const type = `${namespace}/${actionType}`;
@@ -16,7 +16,7 @@ export const createActionCreator = (namespace) => (actionType) => {
 };
 
 export const waitingRouteComponent = (Component) => () => (
-    <Suspense fallback={<LazyLoad>Loading...</LazyLoad>}>
+    <Suspense fallback={<Spinner show={true} />}>
         <Component />
     </Suspense>
 );

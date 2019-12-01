@@ -10,11 +10,13 @@ const useAuthentication = () => {
         auth.signInWithPopup(provider);
     }
 
-    function logout() {
+    function logout(callback = null) {
         auth
             .signOut()
             .then(function () {
-                // Sign-out successful.
+                if (callback !== null) {
+                    callback()
+                }
             })
             .catch(function (error) {
                 // An error happened.

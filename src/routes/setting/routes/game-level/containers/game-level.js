@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SettingItem, SettingWrap } from '../../../styles';
+import { SettingItem, SettingInner } from '../../../styles';
 import { headerTitleSet, prevLinkActGoBack } from '../../../../../modules/header';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
 import { personalSettingLevelSet } from '../../../../../modules/personal-setting';
@@ -19,7 +19,7 @@ const GameLevel = () => {
     }, []);
 
     const setGameLevel = useCallback((level) => {
-        if (loggedIn) {
+        if (loggedIn && loggedIn !== 'loading') {
             const setting = firebase.database().ref('/users/' + loggedIn.uid);
             setting.child('level').set(level);
         }
@@ -30,7 +30,7 @@ const GameLevel = () => {
     }, [loggedIn]);
 
     return (
-        <SettingWrap>
+        <SettingInner>
             <SettingItem onClick={() => setGameLevel('easy')}>
                 Easy
                 {level === 'easy' ? <MdCheckmark /> : null}
@@ -43,7 +43,7 @@ const GameLevel = () => {
                 Hard
                 {level === 'hard' ? <MdCheckmark /> : null}
             </SettingItem>
-        </SettingWrap>
+        </SettingInner>
     );
 };
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SettingItem, SettingWrap } from '../../../styles';
+import { SettingItem, SettingInner } from '../../../styles';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
 import { colorModeSet } from '../../../../../modules/theme';
 import { headerTitleSet, prevLinkActGoBack } from '../../../../../modules/header';
@@ -26,7 +26,7 @@ const DarkMode = () => {
     }, [toggle]);
 
     return (
-        <SettingWrap>
+        <SettingInner>
             <SettingItem onClick={() => darkModeChange('system')}>
                 System Default
                 {colorMode === 'system' ? <MdCheckmark /> : null}
@@ -39,7 +39,7 @@ const DarkMode = () => {
                 Disable
                 {colorMode === 'light' ? <MdCheckmark /> : null}
             </SettingItem>
-        </SettingWrap>
+        </SettingInner>
     );
 };
 

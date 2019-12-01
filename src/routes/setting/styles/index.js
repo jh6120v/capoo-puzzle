@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
+import { ContainerInner } from "../../../styles/layout-style";
 
 const itemBackgroundShow = (props) => keyframes`
   from {
@@ -9,11 +10,8 @@ const itemBackgroundShow = (props) => keyframes`
   }
 `;
 
-const SettingWrap = styled.div`
-  width: 100%;
-  height: 100%;
+const SettingInner = styled(ContainerInner)`
   background-color: ${props => props.theme.settingBg};
-  padding-top: 44px;
 `;
 
 const SettingItem = styled.div`
@@ -32,33 +30,33 @@ const SettingItem = styled.div`
   }
   ${(props) => (props.alignItemsCenter ? css`align-items: center;` : '')}
   ${(props) => {
-        if (props.isTitle) {
-            return css`
-              padding-top: 20px;
-              padding-bottom: 5px;
-              font-size: 1rem;
-              font-weight: bold;
-            `;
-        }
+    if (props.isTitle) {
+      return css`
+        padding-top: 20px;
+        padding-bottom: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+      `;
+    }
 
-        if (props.isSpace) {
-            return css`
-              padding: 5px 0;
-            `;
+    if (props.isSpace) {
+      return css`
+        padding: 5px 0;
+      `;
+    }
+    
+    return css`
+      background-color: ${(props) => props.theme.settingItemBg};
+      justify-content: ${props.justifyContentSpaceAround ? 'space-around' : 'space-between'};
+      ${!props.noActive ? css`
+        &:active {
+          animation: ${(props) => itemBackgroundShow(props)} .1s ease-in;
+          animation-iteration-count: 1;
+          animation-fill-mode: forwards;
         }
-
-        return css`
-          background-color: ${(props) => props.theme.settingItemBg};
-          justify-content: ${props.justifyContentSpaceAround ? 'space-around' : 'space-between'};
-          ${!props.noActive ? css`
-              &:active {
-                animation: ${(props) => itemBackgroundShow(props)} .1s ease-in;
-                animation-iteration-count: 1;
-                animation-fill-mode: forwards;
-              }
-          ` : ''}
-        `;
-    }}
+      ` : ''}
+    `;
+  }}
 `;
 
 const SettingItemImage = styled.div`
@@ -99,7 +97,7 @@ const Version = styled.div`
 `;
 
 export {
-    SettingWrap, SettingItem, SettingItemImage,
+    SettingInner, SettingItem, SettingItemImage,
     UserInfo, UserInfoAvatar, UserName,
     Version
 };

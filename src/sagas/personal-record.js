@@ -16,14 +16,16 @@ export function* setPersonalRecord({ payload }) {
                 ...record,
                 [payload.level]: {
                     secs: payload.secs,
-                    moves: payload.moves
+                    moves: payload.moves,
+                    time: payload.time
                 }
             }));
         } else {
             yield localStorage.setItem(PERSONAL_RECORD, JSON.stringify({
                 [payload.level]: {
                     secs: payload.secs,
-                    moves: payload.moves
+                    moves: payload.moves,
+                    time: payload.time
                 }
             }));
         }

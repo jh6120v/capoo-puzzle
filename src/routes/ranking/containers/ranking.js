@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { headerTitleSet, prevLinkActClose } from '../../../modules/header';
-import { ContainerInner } from '../../../styles/layout-style';
 import { useList } from 'react-firebase-hooks/database';
+import { RankingInner } from "../styles";
+import RankingInfo from "../components/ranking-info";
 
 const Ranking = () => {
     const dispatch = useDispatch();
-    const { login, loggedIn } = useSelector((state) => state.auth);
+    const { loggedIn } = useSelector((state) => state.auth);
 
     useEffect(() => {
         dispatch(headerTitleSet({
@@ -16,34 +17,39 @@ const Ranking = () => {
         dispatch(prevLinkActClose());
     }, []);
 
-    const reference = firebase.database().ref('ranking/easy').orderByChild('secs').limitToFirst(3);
-    const [snapshots, loading, error] = useList(reference);
+    const easyReference = firebase.database().ref('ranking/easy').orderByChild('secs').limitToFirst(5);
+    const [easySnapshots, easyLoading, easyError] = useList(easyReference);
+
+    const mediumReference = firebase.database().ref('ranking/medium').orderByChild('secs').limitToFirst(5);
+    const [mediumSnapshots, mediumLoading, mediumError] = useList(mediumReference);
+
+    const hardReference = firebase.database().ref('ranking/hard').orderByChild('secs').limitToFirst(5);
+    const [hardSnapshots, hardLoading, hardError] = useList(hardReference);
 
     return (
-        <ContainerInner>
-            {loggedIn !== "loading" ? (
-                <>
-                    {loggedIn ? (
-                        <div>
-                            {error && <strong>Error: {console.log(error)}</strong>}
-                            {loading && <span>List: Loading...</span>}
-                            {!loading && snapshots && error !== 'undefined' && (
-                                <>
-                                    {snapshots.map(v => (
-                                        <div key={v.key}>{v.val().secs}, </div>
-                                    ))}
-                                </>
-                            )}
-                        </div>
-                    ) : (
-                        <div onClick={login}>Sign with Google</div>
-                    )}
-                </>
-            ) : (
-                "loading..."
-            )}
-
-        </ContainerInner>
+        <RankingInner>
+            <RankingInfo
+                title="EASY LEVEL"
+                loggedIn={loggedIn}
+                snapshots={easySnapshots}
+                loading={easyLoading}
+                error={easyError}
+            />
+            <RankingInfo
+                title="MEDIUM LEVEL"
+                loggedIn={loggedIn}
+                snapshots={mediumSnapshots}
+                loading={mediumLoading}
+                error={mediumError}
+            />
+            <RankingInfo
+                title="HARD LEVEL"
+                loggedIn={loggedIn}
+                snapshots={hardSnapshots}
+                loading={hardLoading}
+                error={hardError}
+            />
+        </RankingInner>
     );
 };
 

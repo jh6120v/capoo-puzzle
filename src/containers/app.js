@@ -1,5 +1,5 @@
 import { hot } from 'react-hot-loader/root';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import rootSaga from '../sagas';
@@ -22,6 +22,8 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from '../commons/theme';
 import useAuthentication from '../commons/hooks/useAuthentication';
 import useDarkMode from '../commons/hooks/useDarkMode';
+import useModel from "../commons/hooks/useModel";
+import Model from "../components/model";
 
 injectReducer(history, store, [
     { key: 'personal', reducer: personalSettingReducer },
@@ -45,9 +47,7 @@ const App = () => {
         dispatch(authInfoSet({
             ...auth
         }));
-    }, [auth.loggedIn]);
 
-    useEffect(() => {
         if (auth.loggedIn && auth.loggedIn !== 'loading') {
             const setting = firebase.database().ref('/users/' + auth.loggedIn.uid);
             setting.once('value', function (snapshot) {
@@ -81,6 +81,18 @@ const App = () => {
         }, false);
     }, []);
 
+    // model
+    const { ModelBox, isShown, showModal, hideModal } = useModel('Notice!',
+        'If you want to watch rankings, you must first login, press confirm and login with google',
+        useCallback(() => {
+            auth.login();
+            hideModal();
+        }, []),
+        'Confirm',
+        useCallback(() => {
+            hideModal();
+        }, []));
+
     return (
         <ThemeProvider theme={theme(darkModeEnabled)}>
             <>
@@ -89,11 +101,14 @@ const App = () => {
                 <Spinner show={isShow} />
                 <ConnectedRouter history={history}>
                     <Wrapper>
-                        <Header {...header} {...auth} />
+                        <Header showModal={showModal} {...header} {...auth} />
                         <Container>
-                            <Routes />
+                            <Routes {...auth} />
                         </Container>
                     </Wrapper>
+                    <Model isShow={isShown}>
+                        <ModelBox />
+                    </Model>
                 </ConnectedRouter>
             </>
         </ThemeProvider>

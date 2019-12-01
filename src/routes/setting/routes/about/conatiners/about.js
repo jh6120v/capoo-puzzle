@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { headerTitleSet, prevLinkActGoBack } from '../../../../../modules/header';
-import { SettingWrap } from '../../../styles';
+import { SettingInner } from '../../../styles';
 import { AboutContent, AppName } from '../styles';
 
 const About = () => {
@@ -16,7 +16,7 @@ const About = () => {
     }, [dispatch]);
 
     return (
-        <SettingWrap>
+        <SettingInner>
             <AboutContent>
                 <AppName>Capoo Puzzle</AppName>
                 This is an PWA for testing purposes only.
@@ -33,7 +33,7 @@ const About = () => {
                 Github:
                 <a href="https://github.com/jh6120v/capoo-puzzle" target="_new"> https://github.com/jh6120v/capoo-puzzle</a>
             </AboutContent>
-        </SettingWrap>
+        </SettingInner>
     );
 };
 

@@ -24,7 +24,7 @@ import {
 import Model from "../../../components/model";
 import Clock from "../components/clock";
 import { headerTitleDefault, prevLinkActSet } from '../../../modules/header';
-import { FUNC_SETTING, LEVEL_MAP, RANKING_INFO } from "../../../constants";
+import { FUNC_SETTING, LEVEL_MAP, PERSONAL_DEFAULT_RECORD, RANKING_INFO } from "../../../constants";
 import useTimer from '../../../commons/hooks/useTimer';
 import useModel from '../../../commons/hooks/useModel';
 import PersonalRecord from "../components/personal-record";
@@ -34,8 +34,10 @@ import moment from "moment";
 const Puzzle = () => {
     const dispatch = useDispatch();
 
+    // 是否為第一次進入
     const [first, setFirst] = useState(true);
 
+    // 總欄位數
     const [cols, setCols] = useState(0);
 
     // 登入狀態
@@ -51,17 +53,22 @@ const Puzzle = () => {
     const { prepared, grids, width, layoutPositionList } = useSelector(state => state.puzzle);
 
     // 移動次數
-    let [move, setMove] = useState(0);
+    let [moves, setMoves] = useState(0);
 
     useEffect(() => {
         if (loggedIn && loggedIn !== 'loading') {
-            const record = firebase.database().ref('/records/' + loggedIn.uid);
-            record.once('value', (snapshot) => {
+            const records = firebase.database().ref('/records/' + loggedIn.uid);
+            records.once('value', (snapshot) => {
                 const val = snapshot.val();
                 if (val !== null) {
                     dispatch(personalRecordAllSet({
+                        ...PERSONAL_DEFAULT_RECORD,
                         ...val
                     }));
+                } else {
+                    records.set({
+                        ...record
+                    });
                 }
             });
         }
@@ -110,7 +117,7 @@ const Puzzle = () => {
     // model
     const {
         ModelBox, isShown, showModal, hideModal
-    } = useModel('Congratulations', `You spent a total of ${accumulateTimer.seconds} secs and ${move} moves.`, useCallback(() => {
+    } = useModel('Congratulations', `You spent a total of ${accumulateTimer.seconds} secs and ${moves} moves.`, useCallback(() => {
         resume();
         hideModal();
     }, []));
@@ -130,7 +137,7 @@ const Puzzle = () => {
     const resume = useCallback(() => {
         dispatch(preparedOn());
 
-        setMove(0);
+        setMoves(0);
 
         accumulateTimer.setTimerState('reset');
 
@@ -147,7 +154,6 @@ const Puzzle = () => {
 
         // 取空白磚塊的 x, y 座標
         const spacePos = getSpacePosition(grids, cols);
-        // console.log(elemPos, spacePos);
 
         // 檢查是否為相鄰方塊
         if (
@@ -155,9 +161,9 @@ const Puzzle = () => {
             (elemPos.y === spacePos.y && Math.abs(elemPos.x - spacePos.x) === 1)
         ) {
             console.log('can move');
-            move++;
+            moves++;
 
-            setMove(move);
+            setMoves(moves);
 
             // 和空白磚塊交換 position
             grids[spacePos.idx].position = grids[idx].position;
@@ -167,10 +173,9 @@ const Puzzle = () => {
                 grids: grids
             }));
 
-            if (isWin(grids) || accumulateTimer.seconds > 5) {
+            if (isWin(grids)) {
+                // 停止計時器
                 accumulateTimer.setTimerState('stopped');
-
-                console.log('success!');
 
                 // 跳出 model 告知成功並記錄時間
                 showModal();
@@ -179,38 +184,40 @@ const Puzzle = () => {
                 if (
                     record[level] === null ||
                     accumulateTimer.seconds < record[level].secs ||
-                    (accumulateTimer.seconds === record[level].secs && move < record[level].moves)
+                    (accumulateTimer.seconds === record[level].secs && moves < record[level].moves)
                 ) {
-                    if (loggedIn) {
+                    if (loggedIn && loggedIn !== 'loading') {
                         firebase.database().ref('/records/' + loggedIn.uid).child(level).set({
                             secs: accumulateTimer.seconds,
-                            moves: move
+                            moves: moves,
+                            time: +moment()
                         });
-                    } else {
-                        dispatch(personalRecordSet({
-                            level: level,
-                            secs: accumulateTimer.seconds,
-                            moves: move
-                        }));
                     }
+
+                    dispatch(personalRecordSet({
+                        level: level,
+                        secs: accumulateTimer.seconds,
+                        moves: moves,
+                        time: +moment()
+                    }));
                 }
 
                 // 送至 firebase
-                if (loggedIn) {
+                if (loggedIn && loggedIn !== 'loading') {
                     firebase.database().ref(`/ranking/${level}/${loggedIn.uid}`).once('value', (snapshot) => {
                         const val = snapshot.val();
 
                         if (
                             val === null ||
                             accumulateTimer.seconds < val.secs ||
-                            (accumulateTimer.seconds === val.secs && move < val.moves)
+                            (accumulateTimer.seconds === val.secs && moves < val.moves)
                         ) {
                             let updates = {};
                             updates[`/ranking/${level}/${loggedIn.uid}`] = {
                                 name: loggedIn.displayName,
                                 avatar: loggedIn.photoURL,
                                 secs: accumulateTimer.seconds,
-                                moves: move,
+                                moves: moves,
                                 time: +moment()
                             };
 
@@ -231,7 +238,7 @@ const Puzzle = () => {
                     <RatingItem>
                         <Clock timer={accumulateTimer} />
                     </RatingItem>
-                    <RatingItem>{move === 0 && accumulateTimer.timerState === 'reset' ? '--' : move} moves</RatingItem>
+                    <RatingItem>{moves === 0 && accumulateTimer.timerState === 'reset' ? '--' : moves} moves</RatingItem>
                 </RatingWrap>
                 <PuzzleContainer
                     active={accumulateTimer.timerState === 'started'}

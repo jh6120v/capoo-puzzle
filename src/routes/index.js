@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { RouterConfig, getSceneConfig } from './router-config';
+import { RouterConfig, PrivateRouterConfig, getSceneConfig, PrivateRoute } from './router-config';
 import { RouterAnimation, RouteAnimateContent } from '../styles/router-animation';
 
 let oldLocation = null;
-const Routes = withRouter(({ location, history }) => {
+const Routes = withRouter(({ location, history, loggedIn }) => {
     let classNames = '';
     if (history.action === 'PUSH') {
         classNames = `page ${getSceneConfig(location).enter}`;
@@ -36,6 +36,18 @@ const Routes = withRouter(({ location, history }) => {
                                     />
                                 ))
                             }
+                            <PrivateRoute auth={loggedIn && loggedIn !== 'loading'}>
+                                {
+                                    PrivateRouterConfig.map((config) => (
+                                        <Route
+                                            key={config.path}
+                                            path={config.path}
+                                            component={config.component}
+                                            exact={config.exact}
+                                        />
+                                    ))
+                                }
+                            </PrivateRoute>
                         </Switch>
                     </RouteAnimateContent>
                 </CSSTransition>

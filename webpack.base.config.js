@@ -45,13 +45,13 @@ module.exports = {
     // plugins 放置所使用的外掛
     plugins: [
         new HtmlWebpackPlugin({
-            template: `${__dirname}/index.html`,
+            template: `${__dirname}/src/index.html`,
             filename: 'index.html',
             inject: 'body'
         }),
         new CopyPlugin([
             { from: './manifest.json', to: './manifest.json' },
-            { from: './favicon.ico', to: './favicon.ico' },
+            { from: 'src/assets/favicon.ico', to: './favicon.ico' },
             { from: 'src/assets/images/picture', to: './assets/images/picture' },
             { from: 'src/assets/icons', to: './assets/icons' },
             { from: 'src/assets/splash', to: './assets/splash' }

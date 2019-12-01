@@ -11,6 +11,12 @@ export const PERSONAL_DEFAULT_SETTING = {
     tips: false
 };
 
+export const PERSONAL_DEFAULT_RECORD = {
+    easy: null,
+    medium: null,
+    hard: null
+};
+
 export const LEVEL_MAP = {
     easy: 3,
     medium: 4,
