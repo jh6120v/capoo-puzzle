@@ -25,7 +25,7 @@ describe('test flip-card', () => {
     });
 
     it('test <FlipCard /> when render with props width[50%] and height[50%]', () => {
-        const { container } = render(<FlipCard first />);
+        const { container } = render(<FlipCard first width={'50%'} height={'50%'} />);
         const tree = container.firstChild;
 
         expect(tree).toHaveStyleRule('width', '50%');

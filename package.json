@@ -74,6 +74,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
     "jest-each": "^24.9.0",
+    "jest-localstorage-mock": "^2.4.0",
     "jest-single-file-coverage": "^1.0.2",
     "jest-styled-components": "^6.3.3",
     "path": "^0.12.7",
@@ -91,7 +92,8 @@
   "jest": {
     "setupFiles": [
       "@testing-library/react/dont-cleanup-after-each",
-      "./__test__/setup.js"
+      "./__test__/setup.js",
+      "jest-localstorage-mock"
     ],
     "moduleFileExtensions": [
       "js",

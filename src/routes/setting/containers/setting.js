@@ -13,7 +13,7 @@ import { colorModeSet } from '../../../modules/theme';
 import useModel from '../../../commons/hooks/useModel';
 import { useHistory } from 'react-router';
 import { personalRecordAllSet } from "../../../modules/personal-record";
-import { PERSONAL_DEFAULT_RECORD } from "../../../constants";
+import { PERSONAL_DEFAULT_RECORD, PERSONAL_DEFAULT_SETTING } from "../../../constants";
 
 const Setting = () => {
     const history = useHistory();
@@ -58,6 +58,14 @@ const Setting = () => {
         hideModal();
 
         dispatch(personalSettingReset());
+
+        // 同步到 firebase
+        if (loggedIn && loggedIn !== 'loading') {
+            const setting = firebase.database().ref('/users/' + loggedIn.uid);
+            setting.set({
+                ...PERSONAL_DEFAULT_SETTING
+            });
+        }
 
         toggle('system');
 

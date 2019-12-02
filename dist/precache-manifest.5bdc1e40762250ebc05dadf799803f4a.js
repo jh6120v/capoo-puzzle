@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2c82283287d9576a62f29bbfa646c36f",
+    "revision": "c27d97c12b435d7fac934a8d1a4a71a7",
     "url": "/assets/icons/android-chrome-192x192.png"
   },
   {
-    "revision": "865f7c672a3b22e81aab9a29064bf3bf",
+    "revision": "dec2bab55a518d178363a1b4731040cd",
     "url": "/assets/icons/android-chrome-512x512.png"
   },
   {
@@ -29,10 +29,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   },
   {
     "url": "/assets/images/i.f7e4de84157f27155fd5f6aeb1329a52.svg"
-  },
-  {
-    "revision": "5f51d07ca562337ec48d48b878c485ab",
-    "url": "/assets/images/picture/.DS_Store"
   },
   {
     "revision": "32a4db0238a6b561c44a00af2179b246",
@@ -75,28 +71,28 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/images/picture/9.jpg"
   },
   {
-    "url": "/assets/js/0.bundle.80591cd73d0d511b1981.js"
+    "url": "/assets/js/0.bundle.aa5aca080f9197a5d59a.js"
   },
   {
-    "url": "/assets/js/2.bundle.80591cd73d0d511b1981.js"
+    "url": "/assets/js/2.bundle.aa5aca080f9197a5d59a.js"
   },
   {
-    "url": "/assets/js/3.bundle.80591cd73d0d511b1981.js"
+    "url": "/assets/js/3.bundle.aa5aca080f9197a5d59a.js"
   },
   {
-    "url": "/assets/js/4.bundle.80591cd73d0d511b1981.js"
+    "url": "/assets/js/4.bundle.aa5aca080f9197a5d59a.js"
   },
   {
-    "url": "/assets/js/5.bundle.80591cd73d0d511b1981.js"
+    "url": "/assets/js/5.bundle.aa5aca080f9197a5d59a.js"
   },
   {
-    "url": "/assets/js/6.bundle.80591cd73d0d511b1981.js"
+    "url": "/assets/js/6.bundle.aa5aca080f9197a5d59a.js"
   },
   {
-    "url": "/assets/js/7.bundle.80591cd73d0d511b1981.js"
+    "url": "/assets/js/7.bundle.aa5aca080f9197a5d59a.js"
   },
   {
-    "url": "/assets/js/bundle.80591cd73d0d511b1981.js"
+    "url": "/assets/js/bundle.aa5aca080f9197a5d59a.js"
   },
   {
     "revision": "4e886489486e80519e564cf1429bc4f9",
@@ -139,11 +135,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/favicon.ico"
   },
   {
-    "revision": "42e4954e4df1abbbf03f5eb041a900bf",
+    "revision": "2ef2fff7ac2fcdd6e810587d025af980",
     "url": "/index.html"
   },
   {
-    "revision": "99007b6688a0e5c848b7926246e78ea8",
+    "revision": "c7a622ff485e03c15166539418e6caf7",
     "url": "/manifest.json"
   }
 ]);
