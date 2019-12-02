@@ -52,23 +52,8 @@ const BallScaleMultipleInner = styled.div`
   }
 `;
 
-const LazyLoad = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #FFF;
-  opacity: 0;
-  //background-color: #aadff0;
-`;
-
 export {
     SpinnerWrap,
     BallScaleMultiple,
-    BallScaleMultipleInner,
-    LazyLoad
+    BallScaleMultipleInner
 };

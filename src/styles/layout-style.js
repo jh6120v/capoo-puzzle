@@ -50,7 +50,7 @@ const PrevLinkItem = styled.div`
   z-index: 3;
   color: #fff;
   font-size: 25px;
-  font-family: 'Orbitron', sans-serif;
+  font-family: sans-serif;
   cursor: pointer;
   transition: all 0.2s ease-in;
   padding-left: 3px;

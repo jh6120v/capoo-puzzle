@@ -41,12 +41,12 @@ const FlipCard = styled.div`
   width: ${(props) => (props.width ? props.width : '100%')};
   height: ${(props) => (props.height ? props.height : '100%')};
   animation: ${(props) => {
-        if (props.first) {
-            return 'none';
-        }
+    if (props.first) {
+      return 'none';
+    }
 
-        return (props.active ? scaleIn : scaleOut);
-    }};
+    return (props.active ? scaleIn : scaleOut);
+  }};
   animation-fill-mode: forwards;
   animation-duration: ${(props) => (props.duration ? `${props.duration}ms` : '300ms')};
   transform-style: preserve-3d;
