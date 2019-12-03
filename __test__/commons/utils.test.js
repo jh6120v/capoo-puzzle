@@ -5,7 +5,12 @@ import {
     createActionCreator,
     waitingRouteComponent,
     getRandom,
-    initialStateFromLocalStorage, getTiles
+    initialStateFromLocalStorage,
+    getTiles,
+    getLayoutPositionList,
+    checkResolvable,
+    getSpacePosition,
+    getGrids, isWin, getInOrderGrids
 } from '../../src/commons/utils';
 
 describe('test utils', () => {
@@ -119,5 +124,76 @@ describe('test utils', () => {
             expect(tiles[i].label).toEqual(i);
             expect(tiles[i].position).toEqual(i);
         }
+    });
+
+    it('test getLayoutPositionList', () => {
+        const list = getLayoutPositionList(100, 2);
+
+        expect(list.length).toEqual(4);
+        expect(list[0].x).toEqual(0);
+        expect(list[0].y).toEqual(0);
+        expect(list[1].x).toEqual(50);
+        expect(list[1].y).toEqual(0);
+        expect(list[2].x).toEqual(0);
+        expect(list[2].y).toEqual(50);
+        expect(list[3].x).toEqual(50);
+        expect(list[3].y).toEqual(50);
+    });
+
+    it('test checkResolvable', () => {
+        const result = checkResolvable([
+            { label: 0, position: 0 },
+            { label: 1, position: 1 },
+            { label: 2, position: 2 },
+            { label: 3, position: 3 }
+        ], 2);
+
+        expect(result).toBeTruthy();
+    });
+
+    it('test getInOrderGrids', () => {
+        const result = getInOrderGrids(2);
+
+        expect(result).toStrictEqual([
+            { label: 0, position: 0 },
+            { label: 1, position: 1 },
+            { label: 2, position: 2 },
+            { label: 3, position: 3 }
+        ]);
+    });
+
+    it('test getGrids', () => {
+        const result = getGrids(2);
+
+        for (let i = 0; i < 4; i++) {
+            expect(result[i].position).toEqual(i);
+        }
+    });
+
+    it('test isWin', () => {
+        const result = isWin([
+            { label: 2, position: 0 },
+            { label: 0, position: 1 },
+            { label: 1, position: 2 },
+            { label: 3, position: 3 }
+        ]);
+
+        expect(result).toBeFalsy();
+    });
+
+    it('test getSpacePosition', () => {
+        const result = getSpacePosition([
+            { label: 0, position: 0 },
+            { label: 3, position: 3 },
+            { label: 1, position: 1 },
+            { label: 2, position: 2 }
+        ], 2);
+
+        expect(result).toStrictEqual({
+            x: 1,
+            y: 1,
+            idx: 1,
+            position: 3
+        });
     });
 });

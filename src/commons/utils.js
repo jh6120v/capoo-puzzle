@@ -73,7 +73,7 @@ export const getLayoutPositionList = (puzzleWidth, cols) => {
  * @param cols
  * @returns {*}
  */
-export const getAcceptableTiles = (tiles, cols) => {
+export let getAcceptableTiles = (tiles, cols) => {
     let resolvable = false;
 
     while (!resolvable) {
@@ -113,8 +113,6 @@ export const checkResolvable = (grids, cols) => {
         return item.label !== grids.length - 1;
     });
 
-    console.log(grids);
-
     // 計算逆序列數和
     grids.forEach((item, idx, grids) => {
         let j = idx;
@@ -126,8 +124,6 @@ export const checkResolvable = (grids, cols) => {
             j++;
         }
     });
-
-    console.log(spaceX, count);
 
     return cols % 2 ? count % 2 === 0 : count % 2 + spaceX % 2 === 0;
 };
@@ -147,6 +143,7 @@ export function getInOrderGrids(cols) {
  * @returns {*}
  */
 export const getGrids = (cols) => {
+    console.log(getAcceptableTiles);
     const tiles = getTiles(cols * cols);
     const grids = getAcceptableTiles(tiles, cols);
 
