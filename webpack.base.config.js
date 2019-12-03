@@ -3,6 +3,7 @@ const path = require('path');
 // 這邊使用 HtmlWebpackPlugin，將 bundle 好的 <script> 插入到 body。${__dirname} 為 ES6 語法對應到 __dirname
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     // 檔案起始點從 entry 進入，因為是陣列所以也可以是多個檔案
@@ -55,7 +56,10 @@ module.exports = {
             { from: 'src/assets/images/picture', to: './assets/images/picture' },
             { from: 'src/assets/icons', to: './assets/icons' },
             { from: 'src/assets/splash', to: './assets/splash' }
-        ])
+        ]),
+        new Dotenv({
+            path: './.env'
+        })
     ],
     resolve: {
         extensions: ['.js', 'jsx'],

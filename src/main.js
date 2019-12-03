@@ -5,6 +5,14 @@ import { Provider } from 'react-redux';
 import App from './containers/app';
 import { store } from './store';
 import PWAPrompt from 'react-ios-pwa-prompt';
+import { firebaseConfig } from "./constants";
+import * as firebase from "firebase/app";
+import "firebase/analytics";
+import "firebase/auth";
+import "firebase/database";
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {

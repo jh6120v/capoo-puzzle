@@ -30,6 +30,7 @@ import useModel from '../../../commons/hooks/useModel';
 import PersonalRecord from "../components/personal-record";
 import { personalRecordAllSet, personalRecordSet } from "../../../modules/personal-record";
 import moment from "moment";
+import * as firebase from 'firebase/app';
 
 const Puzzle = () => {
     const dispatch = useDispatch();

@@ -4,6 +4,7 @@ import { SettingItem, SettingInner } from '../../../styles';
 import { headerTitleSet, prevLinkActGoBack } from '../../../../../modules/header';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
 import { personalSettingLevelSet } from '../../../../../modules/personal-setting';
+import * as firebase from 'firebase/app';
 
 const GameLevel = () => {
     const dispatch = useDispatch();

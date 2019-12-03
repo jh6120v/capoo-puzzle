@@ -14,6 +14,7 @@ import useModel from '../../../commons/hooks/useModel';
 import { useHistory } from 'react-router';
 import { personalRecordAllSet } from "../../../modules/personal-record";
 import { PERSONAL_DEFAULT_RECORD, PERSONAL_DEFAULT_SETTING } from "../../../constants";
+import * as firebase from 'firebase/app';
 
 const Setting = () => {
     const history = useHistory();

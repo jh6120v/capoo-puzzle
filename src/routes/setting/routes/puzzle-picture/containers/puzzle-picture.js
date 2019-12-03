@@ -5,6 +5,7 @@ import { headerTitleSet, prevLinkActGoBack } from '../../../../../modules/header
 import { personalSettingImageSet } from '../../../../../modules/personal-setting';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
 import { identity, times } from 'ramda';
+import * as firebase from 'firebase/app';
 
 const PuzzlePicture = () => {
     const dispatch = useDispatch();

@@ -4,6 +4,7 @@ import { headerTitleSet, prevLinkActClose } from '../../../modules/header';
 import { useList } from 'react-firebase-hooks/database';
 import { RankingInner } from "../styles";
 import RankingInfo from "../components/ranking-info";
+import * as firebase from 'firebase/app';
 
 const Ranking = () => {
     const dispatch = useDispatch();

@@ -8,3 +8,4 @@ functions
 database.rules.json
 firebase.json
 .firebase
+.env

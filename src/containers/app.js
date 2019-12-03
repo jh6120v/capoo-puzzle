@@ -24,6 +24,7 @@ import useAuthentication from '../commons/hooks/useAuthentication';
 import useDarkMode from '../commons/hooks/useDarkMode';
 import useModel from "../commons/hooks/useModel";
 import Model from "../components/model";
+import * as firebase from 'firebase/app';
 
 injectReducer(history, store, [
     { key: 'personal', reducer: personalSettingReducer },
