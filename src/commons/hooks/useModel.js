@@ -9,14 +9,14 @@ const useModel = (title, message = null, confirm = null, confirmText = 'Confirm'
     const ModelBox = () => (
         <div>
             <ModelWrap>
-                <ModelTitle>{title}</ModelTitle>
-                <ModelContent>{message}</ModelContent>
+                <ModelTitle data-testid='display_title'>{title}</ModelTitle>
+                <ModelContent data-testid='display_message'>{message}</ModelContent>
                 <ModelFooter>
                     {
-                        cancel ? (<Button type="cancel" onClick={cancel}>{cancelText}</Button>) : null
+                        cancel ? (<Button type="cancel" onClick={cancel} data-testid='display_cancel_btn'>{cancelText}</Button>) : null
                     }
                     {
-                        confirm ? (<Button type="confirm" onClick={confirm}>{confirmText}</Button>) : null
+                        confirm ? (<Button type="confirm" onClick={confirm} data-testid='display_confirm_btn'>{confirmText}</Button>) : null
                     }
                 </ModelFooter>
             </ModelWrap>

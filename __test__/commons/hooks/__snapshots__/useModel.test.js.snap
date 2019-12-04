@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test useModel hook test 1`] = `
+<div>
+  <div
+    class="sc-bwzfXH ebVDIy"
+  >
+    <div
+      class="sc-htpNat uEuno"
+      data-testid="display_title"
+    >
+      title
+    </div>
+    <div
+      class="sc-bxivhb iCCdRw"
+      data-testid="display_message"
+    >
+      message
+    </div>
+    <div
+      class="sc-ifAKCX kdvBBw"
+    >
+      <div
+        class="sc-EHOje kNhJuu"
+        data-testid="display_cancel_btn"
+        type="cancel"
+      >
+        Cancel
+      </div>
+      <div
+        class="sc-EHOje brQrel"
+        data-testid="display_confirm_btn"
+        type="confirm"
+      >
+        Confirm
+      </div>
+    </div>
+  </div>
+  <div
+    class="sc-bdVaJa giODjc"
+  />
+</div>
+`;

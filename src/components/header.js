@@ -19,11 +19,11 @@ const Header = ({ title, prev, next, loggedIn, showModal }) => {
                     <PrevLinkItem>
                         {
                             loggedIn && loggedIn !== 'loading' ? (
-                                <Link to="/ranking">
+                                <Link to="/ranking" data-testid='display_prev_link_ranking_btn'>
                                     <IosStats fontSize="25px" color="#fff" />
                                 </Link>
                             ) : (
-                                <a onClick={showModal}>
+                                <a onClick={showModal} data-testid='display_prev_link_login_btn'>
                                     <IosStats fontSize="25px" color="#fff" />
                                 </a>
                             )

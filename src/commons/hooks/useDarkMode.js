@@ -8,7 +8,7 @@ const useDarkMode = (initialValue = `system`) => {
     const setter = value => {
         document.body.style.transition = `color 0.5s, background 0.5s`;
 
-        setColorMode(value)
+        setColorMode(value);
     };
 
     const prefersDarkMode = useMediaQuery(`(prefers-color-scheme: dark)`);
