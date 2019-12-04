@@ -19,11 +19,11 @@ const Header = ({ title, prev, next, loggedIn, showModal }) => {
                     <PrevLinkItem>
                         {
                             loggedIn && loggedIn !== 'loading' ? (
-                                <Link to="/ranking" data-testid='display_prev_link_ranking_btn'>
+                                <Link to="/ranking">
                                     <IosStats fontSize="25px" color="#fff" />
                                 </Link>
                             ) : (
-                                <a onClick={showModal} data-testid='display_prev_link_login_btn'>
+                                <a onClick={showModal}>
                                     <IosStats fontSize="25px" color="#fff" />
                                 </a>
                             )
@@ -56,8 +56,6 @@ const Header = ({ title, prev, next, loggedIn, showModal }) => {
                 return null;
 
         }
-
-        return null;
     };
 
     const renderNext = (nextState) => {
