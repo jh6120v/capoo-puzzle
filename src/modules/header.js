@@ -1,6 +1,6 @@
 import { createActionCreator } from '../commons/utils';
 import { createReducer } from '../store/reducers';
-import { FUNC_CLOSE, FUNC_GO_BACK, FUNC_SETTING, USER_INFO } from '../constants';
+import { FUNC_CLOSE, FUNC_GO_BACK, FUNC_SETTING } from '../constants';
 
 // Actions
 const actionCreator = createActionCreator('@@HEADER');
