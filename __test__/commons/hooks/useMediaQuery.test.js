@@ -9,7 +9,9 @@ describe('test useMediaQuery hook', () => {
                 media: query,
                 onchange: null,
                 addEventListener: jest.fn(),
-                removeEventListener: jest.fn()
+                removeEventListener: jest.fn(),
+                addListener: jest.fn(),
+                removeListener: jest.fn()
             };
         });
     });
