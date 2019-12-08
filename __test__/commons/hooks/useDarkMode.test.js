@@ -10,7 +10,9 @@ describe('test useDarkMode hook', () => {
                 onchange: null,
                 addEventListener: jest.fn(),
                 removeEventListener: jest.fn(),
-                dispatchEvent: jest.fn(),
+                addListener: jest.fn(),
+                removeListener: jest.fn(),
+                dispatchEvent: jest.fn()
             };
         });
     });

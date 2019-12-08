@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.13179c94fdbec1d50e943f8f45d09484.js"
+  "/precache-manifest.d4259eb36540f633168c177c6a2cfb42.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "capoo-puzzle-pwa"});

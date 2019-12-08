@@ -5,8 +5,7 @@
       {
         "targets": {
           "browsers": [
-            "> 1%",
-            "ie 11"
+            "> 1%"
           ]
         }
       }
@@ -28,10 +27,8 @@
     "react-hot-loader/babel"
   ],
   "env": {
-    "production": {
-      "plugins": [
-        ["react-remove-properties", {"properties": ["data-testid"]}]
-      ]
+    "development": {
+      "plugins": ["babel-plugin-jsx-remove-data-test-id"]
     }
   }
 }
