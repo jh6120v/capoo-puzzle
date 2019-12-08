@@ -1,8 +1,9 @@
 import { PERSONAL_RECORD } from "../constants";
+import { call } from 'redux-saga/effects';
 
 export function* setAllPersonalRecord({ payload }) {
     try {
-        yield localStorage.setItem(PERSONAL_RECORD, JSON.stringify(payload));
+        yield call([localStorage, 'setItem'], PERSONAL_RECORD, JSON.stringify(payload));
     } catch (e) {
         console.log(e);
     }
@@ -10,9 +11,10 @@ export function* setAllPersonalRecord({ payload }) {
 
 export function* setPersonalRecord({ payload }) {
     try {
-        const record = yield JSON.parse(localStorage.getItem(PERSONAL_RECORD));
+        const data = yield call([localStorage, 'getItem'], PERSONAL_RECORD);
+        const record = yield call([JSON, 'parse'], data);
         if (record !== null) {
-            yield localStorage.setItem(PERSONAL_RECORD, JSON.stringify({
+            yield call([localStorage, 'setItem'], PERSONAL_RECORD, JSON.stringify({
                 ...record,
                 [payload.level]: {
                     secs: payload.secs,
@@ -21,7 +23,7 @@ export function* setPersonalRecord({ payload }) {
                 }
             }));
         } else {
-            yield localStorage.setItem(PERSONAL_RECORD, JSON.stringify({
+            yield call([localStorage, 'setItem'], PERSONAL_RECORD, JSON.stringify({
                 [payload.level]: {
                     secs: payload.secs,
                     moves: payload.moves,

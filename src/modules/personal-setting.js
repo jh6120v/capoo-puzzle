@@ -29,8 +29,7 @@ const handlers = {
     }),
     [personalSettingReset.type]: (state) => ({
         ...state,
-        ...PERSONAL_DEFAULT_SETTING,
-        image: '0'
+        ...PERSONAL_DEFAULT_SETTING
     }),
     [personalSettingLevelSet.type]: (state, { payload: { level } }) => ({
         ...state,

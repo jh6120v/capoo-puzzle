@@ -13,6 +13,7 @@ import "firebase/database";
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {

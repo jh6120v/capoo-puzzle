@@ -1,8 +1,9 @@
 import { PERSONAL_DEFAULT_SETTING, PERSONAL_SETTING } from '../constants';
+import { call } from 'redux-saga/effects';
 
 export function* setPersonalSetting({ payload }) {
     try {
-        yield localStorage.setItem(PERSONAL_SETTING, JSON.stringify(payload));
+        yield call([localStorage, 'setItem'], PERSONAL_SETTING, JSON.stringify(payload));
     } catch (e) {
         console.log(e);
     }
@@ -10,7 +11,7 @@ export function* setPersonalSetting({ payload }) {
 
 export function* resetPersonalSetting() {
     try {
-        yield localStorage.setItem(PERSONAL_SETTING, JSON.stringify(PERSONAL_DEFAULT_SETTING));
+        yield call([localStorage, 'setItem'], PERSONAL_SETTING, JSON.stringify(PERSONAL_DEFAULT_SETTING));
     } catch (e) {
         console.log(e);
     }
@@ -18,9 +19,10 @@ export function* resetPersonalSetting() {
 
 export function* changePersonalLevel({ payload }) {
     try {
-        const personal = yield JSON.parse(localStorage.getItem(PERSONAL_SETTING));
+        const data = yield call([localStorage, 'getItem'], PERSONAL_SETTING);
+        const personal = yield call([JSON, 'parse'], data);
 
-        yield localStorage.setItem(PERSONAL_SETTING, JSON.stringify({
+        yield call([localStorage, 'setItem'], PERSONAL_SETTING, JSON.stringify({
             ...personal,
             level: payload.level
         }));
@@ -31,9 +33,10 @@ export function* changePersonalLevel({ payload }) {
 
 export function* changePersonalImage({ payload }) {
     try {
-        const personal = yield JSON.parse(localStorage.getItem(PERSONAL_SETTING));
+        const data = yield call([localStorage, 'getItem'], PERSONAL_SETTING);
+        const personal = yield call([JSON, 'parse'], data);
 
-        yield localStorage.setItem(PERSONAL_SETTING, JSON.stringify({
+        yield call([localStorage, 'setItem'], PERSONAL_SETTING, JSON.stringify({
             ...personal,
             image: payload.image
         }));
@@ -44,9 +47,10 @@ export function* changePersonalImage({ payload }) {
 
 export function* changePersonalTips() {
     try {
-        const personal = yield JSON.parse(localStorage.getItem(PERSONAL_SETTING));
+        const data = yield call([localStorage, 'getItem'], PERSONAL_SETTING);
+        const personal = yield call([JSON, 'parse'], data);
 
-        yield localStorage.setItem(PERSONAL_SETTING, JSON.stringify({
+        yield call([localStorage, 'setItem'], PERSONAL_SETTING, JSON.stringify({
             ...personal,
             tips: !personal.tips
         }));

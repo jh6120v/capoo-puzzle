@@ -71,28 +71,31 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/images/picture/9.jpg"
   },
   {
-    "url": "/assets/js/0.bundle.0fa9d1cca8a4f724165a.js"
+    "url": "/assets/js/0.bundle.bceba5f2d56e80a95554.js"
   },
   {
-    "url": "/assets/js/2.bundle.0fa9d1cca8a4f724165a.js"
+    "url": "/assets/js/1.bundle.bceba5f2d56e80a95554.js"
   },
   {
-    "url": "/assets/js/3.bundle.0fa9d1cca8a4f724165a.js"
+    "url": "/assets/js/3.bundle.bceba5f2d56e80a95554.js"
   },
   {
-    "url": "/assets/js/4.bundle.0fa9d1cca8a4f724165a.js"
+    "url": "/assets/js/4.bundle.bceba5f2d56e80a95554.js"
   },
   {
-    "url": "/assets/js/5.bundle.0fa9d1cca8a4f724165a.js"
+    "url": "/assets/js/5.bundle.bceba5f2d56e80a95554.js"
   },
   {
-    "url": "/assets/js/6.bundle.0fa9d1cca8a4f724165a.js"
+    "url": "/assets/js/6.bundle.bceba5f2d56e80a95554.js"
   },
   {
-    "url": "/assets/js/7.bundle.0fa9d1cca8a4f724165a.js"
+    "url": "/assets/js/7.bundle.bceba5f2d56e80a95554.js"
   },
   {
-    "url": "/assets/js/bundle.0fa9d1cca8a4f724165a.js"
+    "url": "/assets/js/8.bundle.bceba5f2d56e80a95554.js"
+  },
+  {
+    "url": "/assets/js/bundle.bceba5f2d56e80a95554.js"
   },
   {
     "revision": "4e886489486e80519e564cf1429bc4f9",
@@ -135,7 +138,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/favicon.ico"
   },
   {
-    "revision": "bdb9e0d6cea0e06f65db68eac74f920d",
+    "revision": "b4482da2070f037572d57b9823ee281f",
     "url": "/index.html"
   },
   {

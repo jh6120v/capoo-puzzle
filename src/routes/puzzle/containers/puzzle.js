@@ -205,26 +205,14 @@ const Puzzle = () => {
 
                 // 送至 firebase
                 if (loggedIn && loggedIn !== 'loading') {
-                    firebase.database().ref(`/ranking/${level}/${loggedIn.uid}`).once('value', (snapshot) => {
-                        const val = snapshot.val();
-
-                        if (
-                            val === null ||
-                            accumulateTimer.seconds < val.secs ||
-                            (accumulateTimer.seconds === val.secs && moves < val.moves)
-                        ) {
-                            let updates = {};
-                            updates[`/ranking/${level}/${loggedIn.uid}`] = {
-                                name: loggedIn.displayName,
-                                avatar: loggedIn.photoURL,
-                                secs: accumulateTimer.seconds,
-                                moves: moves,
-                                time: +moment()
-                            };
-
-                            // update
-                            firebase.database().ref().update(updates);
-                        }
+                    firebase.database().ref('/ranking/temp').push({
+                        uid: loggedIn.uid,
+                        name: loggedIn.displayName,
+                        avatar: loggedIn.photoURL,
+                        secs: accumulateTimer.seconds,
+                        moves: moves,
+                        level: level,
+                        time: +moment()
                     });
                 }
             }

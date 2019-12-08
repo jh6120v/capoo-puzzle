@@ -143,7 +143,6 @@ export function getInOrderGrids(cols) {
  * @returns {*}
  */
 export const getGrids = (cols) => {
-    console.log(getAcceptableTiles);
     const tiles = getTiles(cols * cols);
     const grids = getAcceptableTiles(tiles, cols);
 

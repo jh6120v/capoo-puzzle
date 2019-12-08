@@ -31,7 +31,6 @@ const Header = ({ title, prev, next, loggedIn, showModal }) => {
                     </PrevLinkItem>
                 );
 
-                break;
             case FUNC_GO_BACK:
                 return (
                     <PrevLinkItem>
@@ -41,7 +40,6 @@ const Header = ({ title, prev, next, loggedIn, showModal }) => {
                     </PrevLinkItem>
                 );
 
-                break;
             case FUNC_CLOSE:
                 return (
                     <PrevLinkItem>
@@ -51,7 +49,6 @@ const Header = ({ title, prev, next, loggedIn, showModal }) => {
                     </PrevLinkItem>
                 );
 
-                break;
             default:
                 return null;
 

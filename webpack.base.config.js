@@ -72,10 +72,27 @@ module.exports = {
             name: 'm'
         },
         splitChunks: {
+            chunks: 'all',
             cacheGroups: {
+                react: {
+                    name: 'react',
+                    test: (module) => {
+                        return /react|redux|prop-types/.test(module.context);
+                    },
+                    chunks: 'all',
+                    priority: 10
+                },
+                firebase: {
+                    name: 'firebase',
+                    test: (module) => {
+                        return /firebase/.test(module.context);
+                    },
+                    chunks: 'all',
+                    priority: 10
+                },
                 commons: {
                     test: /[\\/]node_modules[\\/]/,
-                    name: 'v',
+                    name: 'vendors',
                     chunks: 'all'
                 }
             }
