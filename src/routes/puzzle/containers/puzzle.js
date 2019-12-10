@@ -10,8 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { gridsSet, preparedOn, preparedOff, layoutPositionListSet } from "../modules/puzzle";
 import {
     PuzzleContainer,
-    GridWrap,
-    Grid,
     Functions,
     RatingWrap,
     RatingItem,
@@ -31,6 +29,8 @@ import PersonalRecord from "../components/personal-record";
 import { personalRecordAllSet, personalRecordSet } from "../../../modules/personal-record";
 import moment from "moment";
 import * as firebase from 'firebase/app';
+import PuzzleGrids from '../components/puzzle-grids';
+import { history } from '../../../store';
 
 const Puzzle = () => {
     const dispatch = useDispatch();
@@ -236,37 +236,28 @@ const Puzzle = () => {
                 >
                     <PuzzleFront image={image} />
                     <PuzzleBack>
-                        <GridWrap>
-                            {
-                                grids.map((item, idx) => {
-                                    let isSpace = parseInt(item.label) === cols * cols - 1 && prepared === false;
-                                    const { x, y } = layoutPositionList[item.position];
-
-                                    return (
-                                        <Grid
-                                            key={item.label}
-                                            totalWidth={width}
-                                            width={width / cols}
-                                            position={layoutPositionList[item.label]}
-                                            isSpace={isSpace}
-                                            image={image}
-                                            onClick={() => moveHandler(idx, item)}
-                                            style={{ transform: `translate3d(${x}px,${y}px,0)` }}
-                                        >
-                                            {tips ? item.label : null}
-                                        </Grid>
-                                    )
-                                })
-                            }
-                        </GridWrap>
+                        <PuzzleGrids
+                            prepared={prepared}
+                            width={width}
+                            grids={grids}
+                            cols={cols}
+                            image={image}
+                            tips={tips}
+                            layoutPositionList={layoutPositionList}
+                            moveHandler={moveHandler}
+                        />
                     </PuzzleBack>
                 </PuzzleContainer>
                 <Functions>
                     {
                         accumulateTimer.timerState === 'started' ?
-                            (<FunctionButton onClick={resume}>Resume</FunctionButton>) :
-                            (<FunctionButton
-                                onClick={play}>Play</FunctionButton>)
+                            <FunctionButton onClick={resume}>RESUME</FunctionButton> :
+                            (
+                                <>
+                                    <FunctionButton onClick={play}>PLAY</FunctionButton>
+                                    <FunctionButton onClick={() => history.push('/competition')}>PLAY WITH YOUR FRIEND</FunctionButton>
+                                </>
+                            )
                     }
                 </Functions>
                 <Model isShow={isShown}>

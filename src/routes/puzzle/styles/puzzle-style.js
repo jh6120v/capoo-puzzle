@@ -156,12 +156,15 @@ const Functions = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
+  flex-wrap: wrap;
   margin: 15px 0;
 `;
 
 const FunctionButton = styled.div`
+  width: 100%;
   font-size: 1.5rem;
   padding: 10px 20px;
+  text-align: center;
   color: ${(props) => props.theme.functionBtnTextColor};
 `;
 
