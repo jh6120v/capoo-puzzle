@@ -21,11 +21,6 @@ export const RouterConfig = [
 
     },
     {
-        path: '/competition',
-        component: waitingRouteComponent(lazy(() => import('./competition'))),
-        exact: true
-    },
-    {
         path: '/setting',
         component: waitingRouteComponent(lazy(() => import('./setting'))),
         exact: true,
@@ -76,6 +71,11 @@ export const PrivateRouterConfig = [
     {
         path: '/ranking',
         component: waitingRouteComponent(lazy(() => import('./ranking'))),
+        exact: true
+    },
+    {
+        path: '/competition',
+        component: waitingRouteComponent(lazy(() => import('./competition'))),
         exact: true
     }
 ];
