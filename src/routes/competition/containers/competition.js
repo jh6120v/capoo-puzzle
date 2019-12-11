@@ -1,13 +1,17 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { headerTitleSet, prevLinkActClose } from '../../../modules/header';
+import { headerTitleSet, headerVisibleToggle, prevLinkActClose } from '../../../modules/header';
 import { CompetitionInner } from '../styles';
 import * as firebase from 'firebase/app';
 import { setRoomId } from '../modules/competition';
 import { history } from '../../../store';
+import CodeReader from "../components/code-reader";
 
 const Competition = () => {
     const dispatch = useDispatch();
+
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [scannerShow, setScannerShow] = useState(true);
 
     // 登入狀態
     const { loggedIn } = useSelector((state) => state.auth);
@@ -105,9 +109,15 @@ const Competition = () => {
     return (
         <CompetitionInner>
             <div onClick={newRoom}>new room</div>
-            <div onClick={() => history.push('/competition/scanner')}>scanner</div>
+            <div onClick={() => {
+                dispatch(headerVisibleToggle());
+                setIsLoaded(true);
+                setScannerShow(true);
+            }}>
+                show scanner
+            </div>
+            {isLoaded ? <CodeReader isVisible={scannerShow} toggle={setScannerShow} /> : null}
             {/*<CodeGenerate isVisible={generateOpen} toggle={close} roomId={roomId} />*/}
-            {/*<div onClick={() => setReaderOpen(true)}>reader</div>*/}
         </CompetitionInner>
     );
 };

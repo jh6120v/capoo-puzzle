@@ -11,10 +11,11 @@ const CompetitionInner = styled(ContainerInner)`
 const QRCodeContent = styled.div`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  background-color: #eee;
+  background-color: ${props => props.theme.rankingBg};
 `;
 
 export {

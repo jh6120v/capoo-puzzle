@@ -11,7 +11,7 @@ import {
 import IosStats from 'react-ionicons/lib/IosStats';
 import MdClose from 'react-ionicons/lib/MdClose';
 
-const Header = ({ title, prev, next, loggedIn, showModal }) => {
+const Header = ({ visible, title, prev, next, loggedIn, showModal }) => {
     const renderPrev = (prevState) => {
         switch (prevState) {
             case RANKING_INFO:
@@ -49,6 +49,7 @@ const Header = ({ title, prev, next, loggedIn, showModal }) => {
                     </PrevLinkItem>
                 );
 
+                break;
             default:
                 return null;
 
@@ -69,13 +70,13 @@ const Header = ({ title, prev, next, loggedIn, showModal }) => {
         return null;
     };
 
-    return (
+    return visible ? (
         <HeaderStyle data-testid="display_header">
             <PrevLink data-testid="display_prev_link">{renderPrev(prev)}</PrevLink>
             <Title data-testid="display_title">{title}</Title>
             <NextLink data-testid="display_next_link">{renderNext(next)}</NextLink>
         </HeaderStyle>
-    );
+    ) : null;
 };
 
 Header.propsTypes = {
