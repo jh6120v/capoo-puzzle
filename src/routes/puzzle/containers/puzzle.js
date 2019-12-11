@@ -21,7 +21,7 @@ import {
 } from "../styles/puzzle-style";
 import Model from "../../../components/model";
 import Clock from "../components/clock";
-import { headerTitleDefault, prevLinkActSet } from '../../../modules/header';
+import { headerTitleDefault, linkActSet } from '../../../modules/header';
 import { FUNC_SETTING, LEVEL_MAP, PERSONAL_DEFAULT_RECORD, RANKING_INFO } from "../../../constants";
 import useTimer from '../../../commons/hooks/useTimer';
 import useModel from '../../../commons/hooks/useModel';
@@ -81,7 +81,7 @@ const Puzzle = () => {
         dispatch(headerTitleDefault());
 
         // set link
-        dispatch(prevLinkActSet({
+        dispatch(linkActSet({
             prev: RANKING_INFO,
             next: FUNC_SETTING
         }));

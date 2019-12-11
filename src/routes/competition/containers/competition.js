@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { headerTitleSet, prevLinkActClose } from '../../../modules/header';
 import { CompetitionInner } from '../styles';
-import CodeGenerate from '../components/code-generate';
 import * as firebase from 'firebase/app';
 import { setRoomId } from '../modules/competition';
 import { history } from '../../../store';
@@ -50,8 +49,6 @@ const Competition = () => {
     // }, [generateOpen]);
 
     const genCode = useCallback((loggedIn, generateOpen) => {
-        setGenerateOpen(!generateOpen);
-
         // 推送一筆比賽至 firebase
         const pushId = firebase.database().ref().push().key;
         firebase.database().ref(`/competition/${pushId}`).set({
@@ -77,9 +74,9 @@ const Competition = () => {
         }));
     }, []);
 
-    const newRoom = useCallback(() => {
+    const newRoom = useCallback(async () => {
         const roomId = firebase.database().ref().push().key;
-        firebase.database().ref(`/competition/${roomId}`).set({
+        await firebase.database().ref(`/competition/${roomId}`).set({
             player: 2,
             level: 'easy',
             image: '0',
@@ -97,17 +94,18 @@ const Competition = () => {
             winner: 'none'
         });
 
-        dispatch(setRoomId({
+        await dispatch(setRoomId({
             roomId: roomId
         }));
 
         //
-        history.push('/competition/room');
+        await history.push('/competition/room');
     }, []);
 
     return (
         <CompetitionInner>
             <div onClick={newRoom}>new room</div>
+            <div onClick={() => history.push('/competition/scanner')}>scanner</div>
             {/*<CodeGenerate isVisible={generateOpen} toggle={close} roomId={roomId} />*/}
             {/*<div onClick={() => setReaderOpen(true)}>reader</div>*/}
         </CompetitionInner>

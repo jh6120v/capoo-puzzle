@@ -4,7 +4,7 @@ import headerReducer, {
     headerTitleSet, nextLinkActSetting,
     prevLinkActClose,
     prevLinkActGoBack,
-    prevLinkActSet
+    linkActSet
 } from '../../src/modules/header';
 import { FUNC_CLOSE, FUNC_GO_BACK, FUNC_SETTING } from "../../src/constants";
 
@@ -28,7 +28,7 @@ describe('test header modules', () => {
         ],
         [
             'prevLinkActSet',
-            prevLinkActSet,
+            linkActSet,
             {
                 type: '@@HEADER/PREV_LINK_ACT_SET',
                 payload: {}
@@ -118,7 +118,7 @@ describe('test header modules', () => {
             next: FUNC_SETTING
         };
 
-        const result = headerReducer(state, prevLinkActSet({
+        const result = headerReducer(state, linkActSet({
             prev: FUNC_GO_BACK
         }));
 

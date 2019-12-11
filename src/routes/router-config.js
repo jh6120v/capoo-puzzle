@@ -64,6 +64,20 @@ export const RouterConfig = [
             enter: 'page-right-forward',
             exit: 'page-right-back'
         }
+    },
+    {
+        path: '/competition',
+        component: waitingRouteComponent(lazy(() => import('./competition'))),
+        exact: true
+    },
+    {
+        path: '/competition/scanner',
+        component: waitingRouteComponent(lazy(() => import('./competition/routes/scanner'))),
+        exact: true,
+        sceneConfig: {
+            enter: 'page-bottom-forward',
+            exit: 'page-bottom-back'
+        }
     }
 ];
 
@@ -71,11 +85,6 @@ export const PrivateRouterConfig = [
     {
         path: '/ranking',
         component: waitingRouteComponent(lazy(() => import('./ranking'))),
-        exact: true
-    },
-    {
-        path: '/competition',
-        component: waitingRouteComponent(lazy(() => import('./competition'))),
         exact: true
     }
 ];
