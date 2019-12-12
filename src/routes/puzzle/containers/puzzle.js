@@ -21,8 +21,7 @@ import {
 } from "../styles/puzzle-style";
 import Model from "../../../components/model";
 import Clock from "../components/clock";
-import { headerTitleDefault, linkActSet } from '../../../modules/header';
-import { FUNC_SETTING, LEVEL_MAP, PERSONAL_DEFAULT_RECORD, RANKING_INFO } from "../../../constants";
+import { LEVEL_MAP, PERSONAL_DEFAULT_RECORD } from "../../../constants";
 import useTimer from '../../../commons/hooks/useTimer';
 import useModel from '../../../commons/hooks/useModel';
 import PersonalRecord from "../components/personal-record";
@@ -31,6 +30,10 @@ import moment from "moment";
 import * as firebase from 'firebase/app';
 import PuzzleGrids from '../components/puzzle-grids';
 import { history } from '../../../store';
+import { Wrapper } from "../../../styles/layout-style";
+import Navigation from "../../../components/navigation";
+import LinkRanking from "../../../components/navigation-items/link-ranking";
+import LinkSetting from "../../../components/navigation-items/link-setting";
 
 const Puzzle = () => {
     const dispatch = useDispatch();
@@ -42,7 +45,7 @@ const Puzzle = () => {
     const [cols, setCols] = useState(0);
 
     // 登入狀態
-    const { loggedIn } = useSelector((state) => state.auth);
+    const { login, loggedIn } = useSelector((state) => state.auth);
 
     // 取個人設定值
     const { level, image, tips } = useSelector((state) => state.personal);
@@ -77,16 +80,6 @@ const Puzzle = () => {
 
     // set default setting
     useEffect(() => {
-        // set default header
-        dispatch(headerTitleDefault());
-
-        // set link
-        dispatch(linkActSet({
-            prev: RANKING_INFO,
-            next: FUNC_SETTING
-        }));
-
-        //
         dispatch(preparedOn());
     }, []);
 
@@ -219,8 +212,25 @@ const Puzzle = () => {
         }
     };
 
+    // model
+    const model = useModel('Notice!',
+        'If you want to watch rankings, you must first login, press confirm and login with google',
+        () => {
+            login();
+            model.hideModal();
+        },
+        'Confirm',
+        () => {
+            model.hideModal();
+        });
+
     return (
-        <>
+        <Wrapper>
+            <Navigation
+                title={'Capoo Puzzle'}
+                prev={<LinkRanking loggedIn={loggedIn} {...model} />}
+                next={<LinkSetting />}
+            />
             <PuzzleInner>
                 <PersonalRecord record={record} />
                 <RatingWrap>
@@ -268,7 +278,10 @@ const Puzzle = () => {
                 countDownTimer.timerState === 'started' ?
                     <CountDownTips>{countDownTimer.seconds === 0 ? 'GO' : countDownTimer.seconds}</CountDownTips> : null
             }
-        </>
+            <Model isShow={model.isShown}>
+                <model.ModelBox />
+            </Model>
+        </Wrapper>
     );
 };
 

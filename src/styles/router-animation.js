@@ -64,10 +64,12 @@ const slideFromBottomBackOut = keyframes`
 const RouterAnimation = styled.div`
   position: relative;
   width: 100vw;
-  height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  //height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   z-index: 1;
   ${respondTo.xs`
+    left: 50%;
     width: 400px;
+    margin-left: -200px;
   `}
   .page-fade-in {
     &-enter {

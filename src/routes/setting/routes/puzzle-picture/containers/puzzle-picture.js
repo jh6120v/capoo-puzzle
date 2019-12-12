@@ -1,24 +1,18 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SettingItem, SettingItemImage, SettingInner } from '../../../styles';
-import { headerTitleSet, prevLinkActGoBack } from '../../../../../modules/header';
 import { personalSettingImageSet } from '../../../../../modules/personal-setting';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
 import { identity, times } from 'ramda';
 import * as firebase from 'firebase/app';
+import { Wrapper } from "../../../../../styles/layout-style";
+import LinkGoBack from "../../../../../components/navigation-items/link-go-back";
+import Navigation from "../../../../../components/navigation";
 
 const PuzzlePicture = () => {
     const dispatch = useDispatch();
     const { loggedIn } = useSelector((state) => state.auth);
     const personal = useSelector((state) => state.personal);
-
-    useEffect(() => {
-        dispatch(headerTitleSet({
-            title: 'Puzzle Picture'
-        }));
-
-        dispatch(prevLinkActGoBack());
-    }, []);
 
     const setPuzzlePicture = useCallback((image) => {
         if (loggedIn && loggedIn !== 'loading') {
@@ -34,16 +28,22 @@ const PuzzlePicture = () => {
     const pictureList = times(identity, 10);
 
     return (
-        <SettingInner>
-            {
-                pictureList.map((val) => (
-                    <SettingItem key={`P_${val}`} alignItemsCenter onClick={() => setPuzzlePicture(val)}>
-                        <SettingItemImage image={val} />
-                        {personal.image === val.toString() ? <MdCheckmark /> : null}
-                    </SettingItem>
-                ))
-            }
-        </SettingInner>
+        <Wrapper>
+            <Navigation
+                title={'Puzzle Picture'}
+                prev={<LinkGoBack />}
+            />
+            <SettingInner>
+                {
+                    pictureList.map((val) => (
+                        <SettingItem key={`P_${val}`} alignItemsCenter onClick={() => setPuzzlePicture(val)}>
+                            <SettingItemImage image={val} />
+                            {personal.image === val.toString() ? <MdCheckmark /> : null}
+                        </SettingItem>
+                    ))
+                }
+            </SettingInner>
+        </Wrapper>
     );
 };
 

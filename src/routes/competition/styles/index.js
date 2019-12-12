@@ -22,7 +22,8 @@ const QRCodeContent = styled.div`
       & > div {
         border-top: calc((66vh - calc(100vw - 100px)) / 2) solid rgba(0, 0, 0, 0.3) !important;
         border-bottom: calc((66vh - calc(100vw - 100px)) / 2) solid rgba(0, 0, 0, 0.3) !important;
-        box-shadow: none !important;
+        box-shadow: inset 0 0 0 5px rgba(255,255,255,.5) !important;
+       
       }
     }
   }

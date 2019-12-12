@@ -15,6 +15,9 @@ import { useHistory } from 'react-router';
 import { personalRecordAllSet } from "../../../modules/personal-record";
 import { PERSONAL_DEFAULT_RECORD, PERSONAL_DEFAULT_SETTING } from "../../../constants";
 import * as firebase from 'firebase/app';
+import { Wrapper } from "../../../styles/layout-style";
+import Navigation from "../../../components/navigation";
+import LinkGoBack from "../../../components/navigation-items/link-go-back";
 
 const Setting = () => {
     const history = useHistory();
@@ -84,7 +87,11 @@ const Setting = () => {
     }, []);
 
     return (
-        <>
+        <Wrapper>
+            <Navigation
+                title={'Setting'}
+                prev={<LinkGoBack />}
+            />
             <SettingInner>
                 {
                     loggedIn && loggedIn !== 'loading' ? (
@@ -148,7 +155,7 @@ const Setting = () => {
             <Model isShow={isShown}>
                 <ModelBox />
             </Model>
-        </>
+        </Wrapper>
     );
 };
 

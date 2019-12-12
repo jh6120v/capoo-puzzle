@@ -1,5 +1,5 @@
 import { hot } from 'react-hot-loader/root';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import rootSaga from '../sagas';
@@ -14,16 +14,12 @@ import modelReducer from '../modules/model';
 import themeReducer, { colorModeSet, toggleSwitchSet } from '../modules/theme';
 import authReducer, { authInfoSet } from '../modules/auth-info';
 import personalRecordReducer from '../modules/personal-record';
-import { Container, Wrapper } from '../styles/layout-style';
-import Header from '../components/header';
 import ResetStyle from '../styles/reset-style';
 import GlobalStyle from '../styles/global-style';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../commons/theme';
 import useAuthentication from '../commons/hooks/useAuthentication';
 import useDarkMode from '../commons/hooks/useDarkMode';
-import useModel from "../commons/hooks/useModel";
-import Model from "../components/model";
 import * as firebase from 'firebase/app';
 
 injectReducer(history, store, [
@@ -39,7 +35,6 @@ injectReducer(history, store, [
 const App = () => {
     const dispatch = useDispatch();
     const { isShow } = useSelector((state) => state.spinner);
-    const header = useSelector((state) => state.header);
     const personal = useSelector((state) => state.personal);
     const auth = useAuthentication();
     const [darkModeEnabled, colorMode, setter] = useDarkMode();
@@ -82,17 +77,7 @@ const App = () => {
         }, false);
     }, []);
 
-    // model
-    const { ModelBox, isShown, showModal, hideModal } = useModel('Notice!',
-        'If you want to watch rankings, you must first login, press confirm and login with google',
-        useCallback(() => {
-            auth.login();
-            hideModal();
-        }, []),
-        'Confirm',
-        useCallback(() => {
-            hideModal();
-        }, []));
+
 
     return (
         <ThemeProvider theme={theme(darkModeEnabled)}>
@@ -101,15 +86,7 @@ const App = () => {
                 <GlobalStyle />
                 <Spinner show={isShow} />
                 <ConnectedRouter history={history}>
-                    <Wrapper>
-                        <Header showModal={showModal} {...header} {...auth} />
-                        <Container>
-                            <Routes {...auth} />
-                        </Container>
-                    </Wrapper>
-                    <Model isShow={isShown}>
-                        <ModelBox />
-                    </Model>
+                    <Routes {...auth} />
                 </ConnectedRouter>
             </>
         </ThemeProvider>

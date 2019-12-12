@@ -4,6 +4,8 @@ import { Animated } from 'react-animated-css';
 import QrReader from 'react-qr-reader';
 import { useDispatch } from "react-redux";
 import { headerVisibleToggle } from "../../../modules/header";
+import Navigation from "../../../components/navigation";
+import LinkClose from "../../../components/navigation-items/link-close";
 
 const CodeReader = ({ isVisible, toggle }) => {
     const dispatch = useDispatch();
@@ -19,6 +21,11 @@ const CodeReader = ({ isVisible, toggle }) => {
         }
     }, []);
 
+    const hideScanner = useCallback(() => {
+        toggle(false);
+        dispatch(headerVisibleToggle());
+    }, []);
+
     return (
         <Animated
             animationIn="fadeInUp"
@@ -30,6 +37,10 @@ const CodeReader = ({ isVisible, toggle }) => {
             }}
         >
             <QRCodeContent>
+                <Navigation
+                    prev={<LinkClose func={hideScanner} />}
+                    bgHide={true}
+                />
                 <QrReader
                     onError={handleError}
                     onScan={handleScan}
@@ -37,10 +48,6 @@ const CodeReader = ({ isVisible, toggle }) => {
                     style={{ width: '100%' }}
                     className={'aaa'}
                 />
-                <div onClick={() => {
-                    toggle(false);
-                    dispatch(headerVisibleToggle());
-                }}>close</div>
                 <div>{result}</div>
             </QRCodeContent>
         </Animated>

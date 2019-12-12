@@ -6,6 +6,10 @@ import * as firebase from 'firebase/app';
 import { setRoomId } from '../modules/competition';
 import { history } from '../../../store';
 import CodeReader from "../components/code-reader";
+import { Wrapper } from "../../../styles/layout-style";
+import LinkGoBack from "../../../components/navigation-items/link-go-back";
+import Navigation from "../../../components/navigation";
+import LinkClose from "../../../components/navigation-items/link-close";
 
 const Competition = () => {
     const dispatch = useDispatch();
@@ -106,19 +110,32 @@ const Competition = () => {
         await history.push('/competition/room');
     }, []);
 
+    const HideCamera = () => {
+        dispatch(headerVisibleToggle());
+        setIsLoaded(true);
+        setScannerShow(true);
+    };
+
     return (
-        <CompetitionInner>
-            {/*<div onClick={newRoom}>new room</div>*/}
-            <div onClick={() => {
-                dispatch(headerVisibleToggle());
-                setIsLoaded(true);
-                setScannerShow(true);
-            }}>
-                show scanner
-            </div>
-            {isLoaded ? <CodeReader isVisible={scannerShow} toggle={setScannerShow} /> : null}
-            {/*<CodeGenerate isVisible={generateOpen} toggle={close} roomId={roomId} />*/}
-        </CompetitionInner>
+        <Wrapper>
+            <Navigation
+                title={'Competition'}
+                prev={<LinkClose func={() => history.push('/')} />}
+            />
+            <CompetitionInner>
+                {/*<div onClick={newRoom}>new room</div>*/}
+                <div onClick={() => {
+                    dispatch(headerVisibleToggle());
+                    setIsLoaded(true);
+                    setScannerShow(true);
+                }}>
+                    show scanner
+                </div>
+                {isLoaded ? <CodeReader isVisible={scannerShow} toggle={setScannerShow} /> : null}
+                {/*<CodeGenerate isVisible={generateOpen} toggle={close} roomId={roomId} />*/}
+            </CompetitionInner>
+        </Wrapper>
+
     );
 };
 

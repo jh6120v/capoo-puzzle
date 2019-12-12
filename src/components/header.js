@@ -6,12 +6,12 @@ import IosSettings from 'react-ionicons/lib/IosSettings';
 import { FUNC_CLOSE, FUNC_GO_BACK, FUNC_SETTING, RANKING_INFO } from '../constants';
 import { history } from '../store';
 import {
-    HeaderStyle, NextLink, NextLinkItem, PrevLink, PrevLinkItem, Title
+    NavigationBar, NextLink, NextLinkItem, PrevLink, PrevLinkItem, Title
 } from '../styles/layout-style';
 import IosStats from 'react-ionicons/lib/IosStats';
 import MdClose from 'react-ionicons/lib/MdClose';
 
-const Header = ({ visible, title, bgOpacity,  prev, next, loggedIn, showModal }) => {
+const Header = ({ visible, title,  prev, next, loggedIn, showModal }) => {
     const renderPrev = (prevState) => {
         switch (prevState) {
             case RANKING_INFO:
@@ -71,11 +71,11 @@ const Header = ({ visible, title, bgOpacity,  prev, next, loggedIn, showModal })
     };
 
     return visible ? (
-        <HeaderStyle data-testid="display_header">
+        <NavigationBar data-testid="display_header">
             <PrevLink data-testid="display_prev_link">{renderPrev(prev)}</PrevLink>
             <Title data-testid="display_title">{title}</Title>
             <NextLink data-testid="display_next_link">{renderNext(next)}</NextLink>
-        </HeaderStyle>
+        </NavigationBar>
     ) : null;
 };
 

@@ -16,11 +16,13 @@ const ballScaleMultipleAnimation = keyframes`
 
 const SpinnerWrap = styled.div`
   display: flex;
-  width: 100vw;
-  height: 100vh;
   justify-content: center;
   align-items: center;
   position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   opacity: ${(props) => (props.show ? '1' : '0')};
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
   transition: all .5s ease-in-out;

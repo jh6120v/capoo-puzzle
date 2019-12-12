@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import 'jest-styled-components';
 import { ThemeProvider } from 'styled-components';
 import {
-    Container, ContainerInner, HeaderStyle, NextLink, NextLinkItem, PrevLink, PrevLinkItem, Title, Wrapper
+    Container, ContainerInner, NavigationBar, NextLink, NextLinkItem, PrevLink, PrevLinkItem, Title, Wrapper
 } from '../../src/styles/layout-style';
 import { theme } from '../../src/commons/theme';
 
@@ -29,20 +29,20 @@ describe('test layout-style.', () => {
         });
     });
 
-    it('test <HeaderStyle /> snapshot.', () => {
+    it('test <NavigationBar /> snapshot.', () => {
         const { container } = render(
             <ThemeProvider theme={theme(false)}>
-                <HeaderStyle />
+                <NavigationBar />
             </ThemeProvider>
         );
 
         expect(container.firstChild).toMatchSnapshot();
     });
 
-    it('test <HeaderStyle /> when render it.', () => {
+    it('test <NavigationBar /> when render it.', () => {
         const { container } = render(
             <ThemeProvider theme={theme(false)}>
-                <HeaderStyle />
+                <NavigationBar />
             </ThemeProvider>
         );
         const tree = container.firstChild;
@@ -71,10 +71,10 @@ describe('test layout-style.', () => {
         expect(tree).toHaveStyleRule('background-color', '#6cb8cf')
     });
 
-    it('test <HeaderStyle /> when dark mode enabled', () => {
+    it('test <NavigationBar /> when dark mode enabled', () => {
         const { container } = render(
             <ThemeProvider theme={theme(true)}>
-                <HeaderStyle />
+                <NavigationBar />
             </ThemeProvider>
         );
         const tree = container.firstChild;

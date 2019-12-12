@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   `}
 `;
 
-const HeaderStyle = styled.header`
+const NavigationBar = styled.header`
   width: 100%;
   height: calc(44px + env(safe-area-inset-top));
   position: fixed;
@@ -25,7 +25,7 @@ const HeaderStyle = styled.header`
   color: ${props => props.theme.headerTextColor};
   padding: env(safe-area-inset-top) 5px 0 5px;
   overflow: hidden;
-  background-color: ${props => props.theme.headerBg};
+  background-color: ${props => props.bgHide ? 'rgba(0,0,0,0)' : props.theme.headerBg};
   z-index: 3;
   ${respondTo.xs`
     left: 50%;
@@ -79,12 +79,13 @@ const ContainerInner = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${props => props.theme.containerBg};
-  padding-top: 44px;
+  padding-top: calc(44px + env(safe-area-inset-top));
+  flex: 1 1 auto;
 `;
 
 export {
     Wrapper,
-    HeaderStyle,
+    NavigationBar,
     Title,
     PrevLink, PrevLinkItem,
     NextLink, NextLinkItem,
