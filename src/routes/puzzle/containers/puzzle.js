@@ -255,7 +255,7 @@ const Puzzle = () => {
                             (
                                 <>
                                     <FunctionButton onClick={play}>PLAY</FunctionButton>
-                                    <FunctionButton onClick={() => history.push('/competition')}>PLAY WITH YOUR FRIEND</FunctionButton>
+                                    <FunctionButton onClick={() => history.push('/competition')} isHidden={true}>PLAY WITH YOUR FRIEND</FunctionButton>
                                 </>
                             )
                     }

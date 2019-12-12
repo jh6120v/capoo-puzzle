@@ -11,7 +11,7 @@ import {
 import IosStats from 'react-ionicons/lib/IosStats';
 import MdClose from 'react-ionicons/lib/MdClose';
 
-const Header = ({ visible, title, prev, next, loggedIn, showModal }) => {
+const Header = ({ visible, title, bgOpacity,  prev, next, loggedIn, showModal }) => {
     const renderPrev = (prevState) => {
         switch (prevState) {
             case RANKING_INFO:

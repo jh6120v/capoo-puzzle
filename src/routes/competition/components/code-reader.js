@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { QRCodeContent } from '../styles';
 import { Animated } from 'react-animated-css';
 import QrReader from 'react-qr-reader';
@@ -7,13 +7,16 @@ import { headerVisibleToggle } from "../../../modules/header";
 
 const CodeReader = ({ isVisible, toggle }) => {
     const dispatch = useDispatch();
+    const [result, setResult] = useState('no result');
 
     const handleError = useCallback((err) => {
 
     }, []);
 
     const handleScan = useCallback((data) => {
-
+        if (data) {
+            setResult(data);
+        }
     }, []);
 
     return (
@@ -30,12 +33,15 @@ const CodeReader = ({ isVisible, toggle }) => {
                 <QrReader
                     onError={handleError}
                     onScan={handleScan}
-                    style={{ width: '300px', margin: '0 auto' }}
+                    facingMode={'environment'}
+                    style={{ width: '100%' }}
+                    className={'aaa'}
                 />
                 <div onClick={() => {
                     toggle(false);
                     dispatch(headerVisibleToggle());
                 }}>close</div>
+                <div>{result}</div>
             </QRCodeContent>
         </Animated>
     );

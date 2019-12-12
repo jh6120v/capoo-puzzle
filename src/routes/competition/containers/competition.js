@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { headerTitleSet, headerVisibleToggle, prevLinkActClose } from '../../../modules/header';
+import { headerTitleSet, headerVisibleToggle, prevLinkActGoBack } from '../../../modules/header';
 import { CompetitionInner } from '../styles';
 import * as firebase from 'firebase/app';
 import { setRoomId } from '../modules/competition';
@@ -21,7 +21,7 @@ const Competition = () => {
             title: 'Competition'
         }));
 
-        dispatch(prevLinkActClose());
+        dispatch(prevLinkActGoBack());
     }, []);
 
     useEffect(() => {
@@ -108,7 +108,7 @@ const Competition = () => {
 
     return (
         <CompetitionInner>
-            <div onClick={newRoom}>new room</div>
+            {/*<div onClick={newRoom}>new room</div>*/}
             <div onClick={() => {
                 dispatch(headerVisibleToggle());
                 setIsLoaded(true);

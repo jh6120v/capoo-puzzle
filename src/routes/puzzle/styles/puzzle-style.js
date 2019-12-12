@@ -166,6 +166,7 @@ const FunctionButton = styled.div`
   padding: 10px 20px;
   text-align: center;
   color: ${(props) => props.theme.functionBtnTextColor};
+  opacity: ${(props) => props.isHidden ? '0' : '1'};
 `;
 
 export {

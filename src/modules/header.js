@@ -19,7 +19,7 @@ export {
     linkActSet,
     prevLinkActGoBack,
     prevLinkActClose,
-    nextLinkActSetting
+    nextLinkActSetting,
 };
 
 
