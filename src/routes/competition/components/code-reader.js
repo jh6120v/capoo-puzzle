@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { QRCodeContent } from '../styles';
+import { QRCodeReaderContent, ReaderDescription } from '../styles';
 import { Animated } from 'react-animated-css';
 import QrReader from 'react-qr-reader';
 import { useDispatch } from "react-redux";
@@ -36,7 +36,7 @@ const CodeReader = ({ isVisible, toggle }) => {
                 position: 'fixed', left: 0, top: 0, width: '100%', zIndex: 3
             }}
         >
-            <QRCodeContent>
+            <QRCodeReaderContent>
                 <Navigation
                     prev={<LinkClose func={hideScanner} />}
                     bgHide={true}
@@ -46,10 +46,14 @@ const CodeReader = ({ isVisible, toggle }) => {
                     onScan={handleScan}
                     facingMode={'environment'}
                     style={{ width: '100%' }}
-                    className={'aaa'}
+                    className={'reader'}
                 />
-                <div>{result}</div>
-            </QRCodeContent>
+                <ReaderDescription>
+                    You can scan QR code to join multi player games. <br />
+                    or<br />
+                    enter room id by yourself.
+                </ReaderDescription>
+            </QRCodeReaderContent>
         </Animated>
     );
 };

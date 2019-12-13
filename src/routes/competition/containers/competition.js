@@ -7,7 +7,6 @@ import { setRoomId } from '../modules/competition';
 import { history } from '../../../store';
 import CodeReader from "../components/code-reader";
 import { Wrapper } from "../../../styles/layout-style";
-import LinkGoBack from "../../../components/navigation-items/link-go-back";
 import Navigation from "../../../components/navigation";
 import LinkClose from "../../../components/navigation-items/link-close";
 

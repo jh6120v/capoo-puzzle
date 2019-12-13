@@ -8,14 +8,14 @@ const CompetitionInner = styled(ContainerInner)`
   background-color: ${props => props.theme.rankingBg};
 `;
 
-const QRCodeContent = styled.div`
+const QRCodeReaderContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background-color: ${props => props.theme.rankingBg};
-  .aaa {
+  background-color: rgba(0,0,0,.75);
+  .reader {
     & > section {
       height: 66vh !important;
       padding-top: 0 !important;
@@ -29,7 +29,18 @@ const QRCodeContent = styled.div`
   }
 `;
 
+const ReaderDescription = styled.div`
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  padding: 20px 10px;
+`;
+
+// const Reader
+
 export {
     CompetitionInner,
-    QRCodeContent
+    QRCodeReaderContent,
+    ReaderDescription
 }
