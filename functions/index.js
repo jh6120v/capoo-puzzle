@@ -4,6 +4,38 @@ const moment = require('moment');
 
 admin.initializeApp();
 
+exports.updateCompetition = functions.database
+    .ref('/competition/{pushId}/users')
+    .onUpdate(async (change, context) => {
+        const beforeData = change.before.val();
+        const afterData = change.after.val();
+        console.log(context);
+        console.log(beforeData);
+        console.log(afterData);
+
+        if (beforeData.allReady === true) {
+            return ;
+        }
+
+        console.log('start check');
+        let readyNums = 0;
+        await Object.keys(afterData).forEach(async (key) => {
+            if (afterData[key].ready) await readyNums++;
+        });
+        console.log('end check');
+
+        const competition = await admin.database().ref(`/competition/${context.params.pushId}`).once('value');
+        console.log(readyNums, competition.val().player);
+        if (readyNums === competition.val().player) {
+            console.log('before update');
+            await admin
+                .database()
+                .ref(`/competition/${context.params.pushId}/allReady`)
+                .set(true);
+            console.log('after update');
+        }
+    });
+
 exports.addRanking = functions.database
     .ref('/ranking/temp/{pushId}')
     .onCreate(async (snapshot, context) => {

@@ -30,7 +30,7 @@ export const initialStateFromLocalStorage = (key, initialState) => {
             localStorage[key] = JSON.stringify(initialState);
         }
 
-        return state ? {...initialState, ...JSON.parse(state)} : initialState;
+        return state ? { ...initialState, ...JSON.parse(state) } : initialState;
     } else {
         return initialState;
     }
@@ -159,6 +159,18 @@ export const getGrids = (cols) => {
 // 檢查成功的條件
 export const isWin = (grids) => {
     return all((x) => x.label === x.position)(grids);
+};
+
+export const completePercent = (grids) => {
+    const total = grids.length;
+
+    let complete = grids.reduce((prev, element) => {
+        return prev + (element.label === element.position ? 1 : 0);
+    }, 0);
+
+    console.log(complete, total);
+
+    return ~~((complete / total) * 100);
 };
 
 // 轉換為 x, y 座標

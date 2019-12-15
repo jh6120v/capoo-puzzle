@@ -11,7 +11,9 @@ export const injectReducer = (history, store, reducerList = []) => {
     // console.log(reducerList);
     const injectList = store.asyncReducers;
     for (const item of reducerList.values()) {
-        injectList[item.key] = item.reducer;
+        if (typeof injectList[item.key] === 'undefined') {
+            injectList[item.key] = item.reducer;
+        }
     }
 
     store.replaceReducer(createRootReducer(history, injectList));

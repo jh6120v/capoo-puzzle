@@ -1,7 +1,6 @@
 import React, { lazy } from 'react';
 import { Redirect } from 'react-router-dom';
 import Puzzle from './puzzle';
-// import Setting from './setting';
 import PuzzlePicture from './setting/routes/puzzle-picture';
 import { waitingRouteComponent } from "../commons/utils";
 
@@ -71,13 +70,9 @@ export const RouterConfig = [
         exact: true
     },
     {
-        path: '/competition/scanner',
-        component: waitingRouteComponent(lazy(() => import('./competition/routes/scanner'))),
-        exact: true,
-        sceneConfig: {
-            enter: 'page-bottom-forward',
-            exit: 'page-bottom-back'
-        }
+        path: '/competition/game',
+        component: waitingRouteComponent(lazy(() => import('./competition/routes/game'))),
+        exact: true
     }
 ];
 

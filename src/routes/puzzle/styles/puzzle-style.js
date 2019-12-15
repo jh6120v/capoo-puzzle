@@ -108,9 +108,15 @@ const PuzzleContainer = styled(FlipCard)`
 
 const PuzzleFront = styled(FlipCardFront)`
   z-index: 1;
-  background-image: ${(props) => `url(/assets/images/picture/${props.image}.jpg)`};
-  background-size: cover;
-  background-repeat: no-repeat;
+  ${(props) => {
+    if (props.image) {
+      return css`
+        background-image: url('/assets/images/picture/${props.image}.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+      `;
+    } 
+  }};
   border-radius: 10px;
   overflow: hidden;
 `;

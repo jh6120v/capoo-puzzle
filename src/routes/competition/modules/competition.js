@@ -6,8 +6,12 @@ const actionCreator = createActionCreator('@@COMPETITION');
 const setRoomId = actionCreator('SET_ROOM_ID');
 const setCompetition = actionCreator('SET_COMPETITION');
 const removeRoomId = actionCreator('REMOVE_ROOM_ID');
+const setPlayer = actionCreator('SET_PLAYER');
+const setLevel = actionCreator('SET_LEVEL');
+const setTips = actionCreator('SET_TIPS');
+const setImage = actionCreator('SET_IMAGE');
 
-export { setRoomId, setCompetition, removeRoomId };
+export { setRoomId, setCompetition, removeRoomId, setPlayer, setLevel, setTips, setImage };
 
 
 // Reducers
@@ -16,7 +20,9 @@ const initialState = {
     player: 2,
     level: 'easy',
     image: '0',
-    tips: false
+    tips: false,
+    users: {},
+    grids: []
 };
 
 const handlers = {
@@ -31,6 +37,22 @@ const handlers = {
     [removeRoomId.type]: (state) => ({
         ...state,
         roomId: null
+    }),
+    [setPlayer.type]: (state, { payload }) => ({
+        ...state,
+        player: payload
+    }),
+    [setLevel.type]: (state, { payload }) => ({
+        ...state,
+        level: payload
+    }),
+    [setTips.type]: (state, { payload }) => ({
+        ...state,
+        tips: payload
+    }),
+    [setImage.type]: (state, { payload }) => ({
+        ...state,
+        image: payload
     })
 };
 
