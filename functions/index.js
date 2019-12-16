@@ -1,40 +1,102 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const moment = require('moment');
+const { getGrids, LEVEL_MAP } = require('./commons/utils');
 
 admin.initializeApp();
 
-exports.updateCompetition = functions.database
-    .ref('/competition/{pushId}/users')
-    .onUpdate(async (change, context) => {
-        const beforeData = change.before.val();
-        const afterData = change.after.val();
-        console.log(context);
-        console.log(beforeData);
-        console.log(afterData);
+exports.addCompetition = functions.database
+    .ref('/competition/{roomId}')
+    .onCreate(async (snapshot, context) => {
+        const roomId = context.params.roomId;
+        const { level, users } = snapshot.val();
+        const grids = getGrids(LEVEL_MAP[level]);
 
-        if (beforeData.allReady === true) {
-            return ;
-        }
+        await admin
+            .database()
+            .ref(`/competition/${roomId}/grids`)
+            .set(grids);
 
-        console.log('start check');
-        let readyNums = 0;
-        await Object.keys(afterData).forEach(async (key) => {
-            if (afterData[key].ready) await readyNums++;
-        });
-        console.log('end check');
-
-        const competition = await admin.database().ref(`/competition/${context.params.pushId}`).once('value');
-        console.log(readyNums, competition.val().player);
-        if (readyNums === competition.val().player) {
-            console.log('before update');
+        await Object.keys(users).forEach(async (key) => {
             await admin
                 .database()
-                .ref(`/competition/${context.params.pushId}/allReady`)
+                .ref(`/competition/${roomId}/users/${key}/grids`)
+                .set(grids);
+        })
+    });
+
+// exports.updateUsersPercent = functions.database
+//     .ref('/competition/{roomId}/users/{uid}/percent')
+//     .onUpdate(async (change, context) => {
+//         const roomId = context.params.roomId;
+//         const uid = context.params.uid;
+//         const afterData = change.after.val();
+//
+//         if (afterData >= 100) {
+//             await admin
+//                 .database()
+//                 .ref(`/competition/${roomId}/winner`)
+//                 .set(uid);
+//         }
+//     });
+
+exports.updateUserReady = functions.database
+    .ref('/competition/{roomId}/users/{uid}/ready')
+    .onUpdate(async (change, context) => {
+        const roomId = context.params.roomId;
+        const competition = await admin
+            .database()
+            .ref(`/competition/${roomId}`)
+            .once('value');
+
+        let readyNums = 0;
+        await Object.keys(competition.val().users).forEach(async (key) => {
+            if (competition.val().users[key].ready) await readyNums++;
+        });
+
+        if (readyNums === competition.val().player && competition.val().allReady === false) {
+            await admin
+                .database()
+                .ref(`/competition/${roomId}/allReady`)
                 .set(true);
-            console.log('after update');
         }
     });
+
+// exports.updateUsersCompetition = functions.database
+//     .ref('/competition/{roomId}/users')
+//     .onUpdate(async (change, context) => {
+//         const roomId = context.params.roomId;
+//         const beforeData = change.before.val();
+//         const afterData = change.after.val();
+//
+//         if (beforeData.allReady === true) {
+//             return;
+//         }
+//
+//         let readyNums = 0;
+//         await Object.keys(afterData).forEach(async (key) => {
+//             if (afterData[key].ready) await readyNums++;
+//
+//             if (afterData[key].percent >= 100) {
+//                 await admin
+//                     .database()
+//                     .ref(`/competition/${roomId}/winner`)
+//                     .set(key);
+//             }
+//         });
+//
+//         const competition = await admin
+//             .database()
+//             .ref(`/competition/${roomId}`)
+//             .once('value');
+//
+//         if (readyNums === competition.val().player && competition.val().allReady === false) {
+//             await admin
+//                 .database()
+//                 .ref(`/competition/${roomId}/allReady`)
+//                 .set(true);
+//         }
+//     });
 
 exports.addRanking = functions.database
     .ref('/ranking/temp/{pushId}')

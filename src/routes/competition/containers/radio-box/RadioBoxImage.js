@@ -20,7 +20,7 @@ const RadioBoxImage = () => {
                 {
                     imageList.map((val) => (
                         <RadioBoxItem
-                            key={`P_${val}`}
+                            key={`i_${val}`}
                             onClick={() => selectImage(val)}
                         >
                             <RadioBoxItemImg image={val} selected={image === val.toString()} />

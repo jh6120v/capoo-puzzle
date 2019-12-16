@@ -29,21 +29,26 @@ const CodeReader = ({ isVisible, toggle }) => {
     }, []);
 
     const handleScan = useCallback((data) => {
-        if (data === null) {
-            return;
-        }
+        if (data === null) return false;
 
         const result = data.split('::');
-        if (result[0] === 'cp') {
-            const roomId = result[1];
+        if (result[0] !== 'cp' && result.length !== 2) return false;
 
-            firebase
-                .database()
-                .ref(`/competition/${roomId}`)
-                .once('value', async (snapshot) => {
-                    const val = await snapshot.val();
-                    console.log(val);
-                    if (val !== null && Object.keys(val.users).length < val.player) {
+        const roomId = result[1];
+
+        firebase
+            .database()
+            .ref(`/competition/${roomId}`)
+            .once('value', async (snapshot) => {
+                const val = await snapshot.val();
+                console.log(val);
+
+                if (val === null) return false;
+
+                // 檢查是否已存在
+                if (typeof val.users[loggedIn.uid] === 'undefined') {
+                    // 若還有空位
+                    if (Object.keys(val.users).length < val.player) {
                         val.users[loggedIn.uid] = {
                             name: loggedIn.displayName,
                             avatar: loggedIn.photoURL,
@@ -56,18 +61,19 @@ const CodeReader = ({ isVisible, toggle }) => {
                             .database()
                             .ref(`/competition/${roomId}/users`)
                             .update(val.users);
-
-                        await dispatch(setRoomId({
-                            roomId: roomId
-                        }));
-
-                        console.log(val);
-                        await history.push('/competition/game');
-                    } else {
-                        console.log('error');
                     }
-                })
-        }
+                }
+
+                await dispatch(setRoomId({
+                    roomId: roomId
+                }));
+
+                console.log(val);
+                await history.push('/competition/game');
+            })
+            .catch((e) => {
+
+            });
     }, []);
 
     const hideScanner = useCallback(() => {

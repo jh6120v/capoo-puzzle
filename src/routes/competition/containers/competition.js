@@ -36,7 +36,7 @@ const Competition = () => {
     }, []);
 
     const newGame = useCallback(async (loggedIn ,player, level, image, tips) => {
-        const grids = getGrids(LEVEL_MAP[level]);
+        // const grids = getGrids(LEVEL_MAP[level]);
         const roomId = firebase.database().ref().push().key;
         await firebase.database().ref(`/competition/${roomId}`).set({
             player: player,
@@ -49,11 +49,11 @@ const Competition = () => {
                     avatar: loggedIn.photoURL,
                     ready: false,
                     percent: 0,
-                    grids: grids
+                    // grids: grids
                 }
             },
             allReady: false,
-            grids: grids
+            // grids: grids
         });
 
         await dispatch(setRoomId({

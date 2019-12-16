@@ -5,7 +5,7 @@ const PuzzleGrids = ({ prepared, width, grids, cols, image, tips, layoutPosition
     return (
         <GridWrap>
             {
-                grids.map((item, idx) => {
+                grids !== null && typeof grids !== 'undefined' ? grids.map((item, idx) => {
                     let isSpace = parseInt(item.label) === cols * cols - 1 && prepared === false;
                     const { x, y } = layoutPositionList[item.position];
 
@@ -23,7 +23,7 @@ const PuzzleGrids = ({ prepared, width, grids, cols, image, tips, layoutPosition
                             {tips ? item.label : null}
                         </Grid>
                     )
-                })
+                }) : null
             }
         </GridWrap>
     );

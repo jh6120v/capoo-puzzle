@@ -21,6 +21,8 @@ import QRCode from 'qrcode.react';
 import PuzzleGrids from "../../../../puzzle/components/puzzle-grids";
 import { LEVEL_MAP } from "../../../../../constants";
 import { completePercent, getLayoutPositionList, getPosition, getSpacePosition } from "../../../../../commons/utils";
+import useModel from "../../../../../commons/hooks/useModel";
+import Model from "../../../../../components/model";
 
 const Game = () => {
     const dispatch = useDispatch();
@@ -42,7 +44,15 @@ const Game = () => {
     const [prepared, setPrepared] = useState(true);
     const [cols, setCols] = useState(3);
     const [layoutPositionList, setLayoutPositionList] = useState([]);
-    const [grids, setGrids] = useState([]);
+    const [grids, setGrids] = useState(null);
+    const [msg, setMsg] = useState('');
+
+    // model
+    const {
+        ModelBox, isShown, showModal, hideModal
+    } = useModel('Message', msg, useCallback(() => {
+        hideModal();
+    }, []));
 
     useEffect(() => {
         const columns = LEVEL_MAP[level];
@@ -61,12 +71,28 @@ const Game = () => {
             game.on('value', (snapshot) => {
                 const val = snapshot.val();
 
+                // 檢查是否有勝利者
+                if (typeof val.winner !== 'undefined') {
+                    if (val.winner === loggedIn.uid) {
+                        setMsg('You are the winner.');
+                    } else {
+                        setMsg('You are the loser');
+                    }
+
+                    showModal();
+
+                    // 結束比賽，移除監聽
+                    game.off();
+
+                    return;
+                }
+
+                setGrids(val.users[loggedIn.uid].grids);
+
                 console.log('val::', val);
                 dispatch(setCompetition({
                     ...val
                 }));
-
-                setGrids(val.users[loggedIn.uid].grids);
 
                 // 全部都準備好
                 if (val.allReady && prepared === true) {
@@ -116,10 +142,18 @@ const Game = () => {
                 .ref(`/competition/${roomId}/users/${loggedIn.uid}/grids`)
                 .set(grids);
 
+            const percent = completePercent(grids);
             firebase
                 .database()
                 .ref(`/competition/${roomId}/users/${loggedIn.uid}/percent`)
-                .set(completePercent(grids));
+                .set(percent);
+
+            if (percent >= 100) {
+                firebase
+                    .database()
+                    .ref(`/competition/${roomId}/winner`)
+                    .set(loggedIn.uid);
+            }
         }
     };
 
@@ -199,6 +233,9 @@ const Game = () => {
                 countDownTimer.timerState === 'started' ?
                     <CountDownTips>{countDownTimer.seconds === 0 ? 'GO' : countDownTimer.seconds}</CountDownTips> : null
             }
+            <Model isShow={isShown}>
+                <ModelBox />
+            </Model>
         </Wrapper>
     );
 };
