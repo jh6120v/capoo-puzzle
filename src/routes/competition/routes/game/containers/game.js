@@ -23,6 +23,7 @@ import { LEVEL_MAP } from "../../../../../constants";
 import { completePercent, getLayoutPositionList, getPosition, getSpacePosition } from "../../../../../commons/utils";
 import useModel from "../../../../../commons/hooks/useModel";
 import Model from "../../../../../components/model";
+import { history } from '../../../../../store';
 
 const Game = () => {
     const dispatch = useDispatch();
@@ -52,6 +53,8 @@ const Game = () => {
         ModelBox, isShown, showModal, hideModal
     } = useModel('Message', msg, useCallback(() => {
         hideModal();
+
+        history.push('/competition');
     }, []));
 
     useEffect(() => {

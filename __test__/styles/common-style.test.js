@@ -16,8 +16,10 @@ describe('test common-style style.', () => {
         const tree = container.firstChild;
 
         expect(tree).toHaveStyleRule('display', 'flex');
-        expect(tree).toHaveStyleRule('width', '100vw');
-        expect(tree).toHaveStyleRule('height', '100vh');
+        expect(tree).toHaveStyleRule('top', '0');
+        expect(tree).toHaveStyleRule('right', '0');
+        expect(tree).toHaveStyleRule('bottom', '0');
+        expect(tree).toHaveStyleRule('left', '0');
         expect(tree).toHaveStyleRule('justify-content', 'center');
         expect(tree).toHaveStyleRule('align-items', 'center');
         expect(tree).toHaveStyleRule('position', 'fixed');

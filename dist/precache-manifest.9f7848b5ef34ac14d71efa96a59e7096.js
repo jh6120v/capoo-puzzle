@@ -31,6 +31,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/images/i.f7e4de84157f27155fd5f6aeb1329a52.svg"
   },
   {
+    "revision": "5f51d07ca562337ec48d48b878c485ab",
+    "url": "/assets/images/picture/.DS_Store"
+  },
+  {
     "revision": "32a4db0238a6b561c44a00af2179b246",
     "url": "/assets/images/picture/0.jpg"
   },
@@ -71,40 +75,40 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/images/picture/9.jpg"
   },
   {
-    "url": "/assets/js/0.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/0.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/1.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/1.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/10.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/10.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/11.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/11.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/2.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/2.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/4.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/4.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/5.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/5.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/6.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/6.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/7.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/7.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/8.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/8.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/9.bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/9.bundle.afac1cb3fe4dd40d624e.js"
   },
   {
-    "url": "/assets/js/bundle.64a177f359e5c85519b9.js"
+    "url": "/assets/js/bundle.afac1cb3fe4dd40d624e.js"
   },
   {
     "revision": "4e886489486e80519e564cf1429bc4f9",
@@ -147,7 +151,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/favicon.ico"
   },
   {
-    "revision": "3aa0ad7579515adf47a9bf337803de3a",
+    "revision": "7d16e16350a85dc77cecde2ead89fb35",
     "url": "/index.html"
   },
   {

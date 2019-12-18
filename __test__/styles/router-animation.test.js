@@ -16,7 +16,6 @@ describe('test router-animation style.', () => {
 
         expect(tree).toHaveStyleRule('position', 'relative');
         expect(tree).toHaveStyleRule('width', '100vw');
-        expect(tree).toHaveStyleRule('height', 'calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom))');
         expect(tree).toHaveStyleRule('width', '400px', {
             media: '(min-width: 480px)'
         });

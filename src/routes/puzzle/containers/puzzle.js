@@ -214,7 +214,7 @@ const Puzzle = () => {
 
     // model
     const model = useModel('Notice!',
-        'If you want to watch rankings, you must first login, press confirm and login with google',
+        'Please login first, press confirm and login with google',
         () => {
             login();
             model.hideModal();
@@ -265,7 +265,11 @@ const Puzzle = () => {
                             (
                                 <>
                                     <FunctionButton onClick={play}>PLAY</FunctionButton>
-                                    <FunctionButton onClick={() => history.push('/competition')} isHidden={true}>PLAY WITH YOUR FRIEND</FunctionButton>
+                                    <FunctionButton
+                                        onClick={() => loggedIn && loggedIn !== 'loading' ? history.push('/competition') : model.showModal()}
+                                    >
+                                        PLAY WITH YOUR FRIEND
+                                    </FunctionButton>
                                 </>
                             )
                     }

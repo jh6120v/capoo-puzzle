@@ -9,7 +9,6 @@ import Spinner from '../components/spinner';
 import { injectReducer } from '../store/reducers';
 import personalSettingReducer, { personalSettingSet } from '../modules/personal-setting';
 import spinnerReducer from '../modules/spinner';
-import headerTitleReducer from '../modules/header';
 import modelReducer from '../modules/model';
 import themeReducer, { colorModeSet, toggleSwitchSet } from '../modules/theme';
 import authReducer, { authInfoSet } from '../modules/auth-info';
@@ -25,7 +24,6 @@ import * as firebase from 'firebase/app';
 injectReducer(history, store, [
     { key: 'personal', reducer: personalSettingReducer },
     { key: 'spinner', reducer: spinnerReducer },
-    { key: 'header', reducer: headerTitleReducer },
     { key: 'model', reducer: modelReducer },
     { key: 'theme', reducer: themeReducer },
     { key: 'auth', reducer: authReducer },
@@ -76,8 +74,6 @@ const App = () => {
         document.addEventListener('touchstart', () => {
         }, false);
     }, []);
-
-
 
     return (
         <ThemeProvider theme={theme(darkModeEnabled)}>

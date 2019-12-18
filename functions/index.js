@@ -17,8 +17,8 @@ exports.addCompetition = functions.database
             .ref(`/competition/${roomId}/grids`)
             .set(grids);
 
-        await Object.keys(users).forEach(async (key) => {
-            await admin
+        await Object.keys(users).forEach((key) => {
+            admin
                 .database()
                 .ref(`/competition/${roomId}/users/${key}/grids`)
                 .set(grids);
@@ -50,8 +50,8 @@ exports.updateUserReady = functions.database
             .once('value');
 
         let readyNums = 0;
-        await Object.keys(competition.val().users).forEach(async (key) => {
-            if (competition.val().users[key].ready) await readyNums++;
+        await Object.keys(competition.val().users).forEach((key) => {
+            if (competition.val().users[key].ready) readyNums++;
         });
 
         if (readyNums === competition.val().player && competition.val().allReady === false) {

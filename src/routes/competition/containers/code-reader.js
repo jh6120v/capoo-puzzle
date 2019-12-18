@@ -3,7 +3,6 @@ import { QRCodeReaderContent, ReaderDescription } from '../styles';
 import { Animated } from 'react-animated-css';
 import QrReader from 'react-qr-reader';
 import { useDispatch, useSelector } from "react-redux";
-import { headerVisibleToggle } from "../../../modules/header";
 import Navigation from "../../../components/navigation";
 import LinkClose from "../../../components/navigation-items/link-close";
 import * as firebase from 'firebase';
@@ -69,7 +68,7 @@ const CodeReader = ({ isVisible, toggle }) => {
                 }));
 
                 console.log(val);
-                await history.push('/competition/game');
+                await history.replace('/competition/game');
             })
             .catch((e) => {
 
@@ -78,7 +77,6 @@ const CodeReader = ({ isVisible, toggle }) => {
 
     const hideScanner = useCallback(() => {
         toggle(false);
-        dispatch(headerVisibleToggle());
     }, []);
 
     const ref = useRef();

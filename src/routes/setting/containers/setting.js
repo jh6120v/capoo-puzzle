@@ -2,7 +2,6 @@ import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IosArrowForward from 'react-ionicons/lib/IosArrowForward';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
-import { headerTitleSet, prevLinkActGoBack } from '../../../modules/header';
 import { SettingInner, SettingItem, Version, UserInfo, UserInfoAvatar, UserName } from '../styles';
 import {
     personalSettingReset,
@@ -25,14 +24,6 @@ const Setting = () => {
     const { tips } = useSelector((state) => state.personal);
     const { login, logout, loggedIn } = useSelector((state) => state.auth);
     const { toggle } = useSelector((state) => state.theme);
-
-    useEffect(() => {
-        dispatch(headerTitleSet({
-            title: 'Setting'
-        }));
-
-        dispatch(prevLinkActGoBack());
-    }, []);
 
     const linkTo = useCallback((url) => history.push(url), []);
     const tipsChange = useCallback((tips) => {

@@ -13,8 +13,6 @@ import RadioBoxPlayer from "./radio-box/RadioBoxPlayer";
 import RadioBoxLevel from "./radio-box/RadioBoxLevel";
 import RadioBoxTips from "./radio-box/RadioBoxTips";
 import RadioBoxImage from "./radio-box/RadioBoxImage";
-import { getGrids } from "../../../commons/utils";
-import { LEVEL_MAP } from "../../../constants";
 
 const Competition = () => {
     const dispatch = useDispatch();
@@ -48,20 +46,22 @@ const Competition = () => {
                     name: loggedIn.displayName,
                     avatar: loggedIn.photoURL,
                     ready: false,
-                    percent: 0,
-                    // grids: grids
+                    percent: 0
                 }
             },
-            allReady: false,
-            // grids: grids
+            allReady: false
+        }).then(() => {
+            dispatch(setRoomId({
+                roomId: roomId
+            }));
         });
 
-        await dispatch(setRoomId({
-            roomId: roomId
-        }));
+        // await dispatch(setRoomId({
+        //     roomId: roomId
+        // }));
 
         //
-        await history.push('/competition/game');
+        await history.replace('/competition/game');
     }, []);
 
     const openScanner = useCallback(() => {

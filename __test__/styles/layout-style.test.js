@@ -205,7 +205,7 @@ describe('test layout-style.', () => {
 
         expect(tree).toHaveStyleRule('width', '100%');
         expect(tree).toHaveStyleRule('height', '100%');
-        expect(tree).toHaveStyleRule('padding-top', '44px');
+        expect(tree).toHaveStyleRule('padding-top', 'calc(44px + env(safe-area-inset-top))');
         expect(tree).toHaveStyleRule('background-color', '#aadff0');
     });
 
