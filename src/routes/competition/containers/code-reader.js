@@ -24,7 +24,7 @@ const CodeReader = ({ isVisible, toggle }) => {
     }, []);
 
 
-    const handleError = useCallback((err) => setDescription('Please scan again.'), []);
+    const handleError = useCallback((err) => setDescription('Please scan the QR Code.'), []);
     const handleScan = useCallback((data) => {
         if (data === null) return false;
 
