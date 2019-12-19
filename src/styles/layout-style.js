@@ -22,10 +22,10 @@ const NavigationBar = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${props => props.theme.headerTextColor};
+  color: ${props => props.theme.navigateTextColor};
   padding: env(safe-area-inset-top) 5px 0 5px;
   overflow: hidden;
-  background-color: ${props => props.bgHide ? 'rgba(0,0,0,0)' : props.theme.headerBg};
+  background-color: ${props => props.bgHide ? 'rgba(0,0,0,0)' : props.theme.navigateBg};
   z-index: 3;
   ${respondTo.xs`
     left: 50%;

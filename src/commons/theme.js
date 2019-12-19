@@ -3,8 +3,8 @@ export const theme = (darkMode) => {
         background: '#6cb8cf',
         textColor: '#1d1d1f',
 
-        headerBg: '#6cb8cf',
-        headerTextColor: '#ffffff',
+        navigateBg: '#6cb8cf',
+        navigateTextColor: '#ffffff',
 
         containerBg: '#aadff0',
 
@@ -35,15 +35,18 @@ export const theme = (darkMode) => {
         rankingTitleTextColor: '#4f6571',
         rankingListBg: '#AADFF0',
         rankingListTextColor: '#4f6571',
-        rankingItemBorderColor: '#6cb8cf'
+        rankingItemBorderColor: '#6cb8cf',
+
+        competitionItemTextColor: '#ffffff',
+        competitionPlayerListBgColor: '#6cb8cf'
     };
 
     const darkTheme = {
         background: '#121212',
         textColor: '#ffffff',
 
-        headerBg: '#262626',
-        headerTextColor: '#ffffff',
+        navigateBg: '#262626',
+        navigateTextColor: '#ffffff',
 
         containerBg: '#121212',
 
@@ -74,7 +77,10 @@ export const theme = (darkMode) => {
         rankingTitleTextColor: '#d7d7d7',
         rankingListBg: '#121212',
         rankingListTextColor: '#d7d7d7',
-        rankingItemBorderColor: '#191919'
+        rankingItemBorderColor: '#191919',
+
+        competitionItemTextColor: '#121212',
+        competitionPlayerListBgColor: '#ffffff'
     };
 
     return darkMode ? darkTheme : lightTheme;

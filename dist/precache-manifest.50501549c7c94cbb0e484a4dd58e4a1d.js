@@ -78,40 +78,40 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/images/picture/9.jpg"
   },
   {
-    "url": "/assets/js/0.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/0.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/1.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/1.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/10.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/10.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/11.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/11.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/2.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/2.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/4.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/4.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/5.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/5.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/6.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/6.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/7.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/7.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/8.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/8.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/9.bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/9.bundle.5b2b16b3989356a88760.js"
   },
   {
-    "url": "/assets/js/bundle.245b70c91f8fc266411b.js"
+    "url": "/assets/js/bundle.5b2b16b3989356a88760.js"
   },
   {
     "revision": "4e886489486e80519e564cf1429bc4f9",
@@ -154,7 +154,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/favicon.ico"
   },
   {
-    "revision": "40cf9788a5b31ed9b995a529a531aee6",
+    "revision": "710eea6216f5647b44a23fd251466d2e",
     "url": "/index.html"
   },
   {

@@ -11,11 +11,11 @@ const PlayerList = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin: 30px 10px 50px 10px;
-  padding: 10px;
+  margin: 30px 15px;
+  padding: 10px 20px;
   justify-content: space-between;
-  border: 1px solid #fff;
-  border-radius: 5px;
+  background-color: ${(props) => props.theme.competitionPlayerListBgColor};
+  border-radius: 10px;
 `;
 
 const PlayerItem = styled.div`
@@ -23,6 +23,7 @@ const PlayerItem = styled.div`
   display: flex;
   flex-wrap: nowrap;
   padding: 5px 0;
+  color: ${(props) => props.theme.competitionItemTextColor};
 `;
 
 const PlayerAvatar = styled.div`
@@ -38,13 +39,15 @@ const PlayerAvatar = styled.div`
   margin-right: 5px;
   border-width: 2px;
   border-style: solid;
-  border-color: ${(props) => props.ready ? 'green' : '#cccccc'};
+  border-color: ${(props) => props.ready ? '#23ff4f' : '#cccccc'};
 `;
 
 const PlayerName = styled.div`
   width: calc(100% - 60px);
-  color: #fff;
   align-self: center;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const PlayerGamePercent = styled.div`

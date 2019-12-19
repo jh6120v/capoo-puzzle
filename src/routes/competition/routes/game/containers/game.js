@@ -187,7 +187,7 @@ const Game = () => {
                                         return (
                                             <PlayerItem key={val}>
                                                 <PlayerAvatar>
-                                                    <MdPerson color="#fff" />
+                                                    <MdPerson color="#cccccc" />
                                                 </PlayerAvatar>
                                                 <PlayerName>wait...</PlayerName>
                                                 <PlayerGamePercent>-%</PlayerGamePercent>
