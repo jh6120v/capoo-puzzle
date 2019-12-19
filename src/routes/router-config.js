@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import Puzzle from './puzzle';
 import PuzzlePicture from './setting/routes/puzzle-picture';
 import { waitingRouteComponent } from "../commons/utils";
+import { Route } from 'react-router';
+import { useSelector } from 'react-redux';
 
 // const Puzzle = lazy(() => import('./puzzle'));
 // const Setting = lazy(() => import('./setting'));
@@ -64,11 +66,7 @@ export const RouterConfig = [
             exit: 'page-right-back'
         }
     },
-    {
-        path: '/competition/game',
-        component: waitingRouteComponent(lazy(() => import('./competition/routes/game'))),
-        exact: true
-    }
+
 ];
 
 export const PrivateRouterConfig = [
@@ -81,6 +79,11 @@ export const PrivateRouterConfig = [
         path: '/competition',
         component: waitingRouteComponent(lazy(() => import('./competition'))),
         exact: true
+    },
+    {
+        path: '/competition/game',
+        component: waitingRouteComponent(lazy(() => import('./competition/routes/game'))),
+        exact: true
     }
 ];
 
@@ -89,10 +92,14 @@ export const getSceneConfig = (location) => {
     return (matchedRoute && matchedRoute.sceneConfig) || DEFAULT_SCENE_CONFIG;
 };
 
-export const PrivateRoute = (props) => (
-    <>
-        {
-            props.auth ? props.children : <Redirect to={'/'} />
-        }
-    </>
-);
+export const PrivateRoute = ({ component: Component, ...rest }) => {
+    const auth = useSelector((state) => state.auth);
+
+    return (
+        <Route {...rest} render={props => (
+            auth.loggedIn && auth.loggedIn !== 'loading' ?
+                <Component {...props} />
+                : <Redirect to="/" />
+        )} />
+    );
+};

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useList } from 'react-firebase-hooks/database';
 import { RankingInner } from "../styles";
 import RankingInfo from "../components/ranking-info";

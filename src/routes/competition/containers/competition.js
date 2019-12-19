@@ -56,10 +56,6 @@ const Competition = () => {
             }));
         });
 
-        // await dispatch(setRoomId({
-        //     roomId: roomId
-        // }));
-
         //
         await history.replace('/competition/game');
     }, []);

@@ -12,6 +12,7 @@ import { history } from "../../../store";
 const CodeReader = ({ isVisible, toggle }) => {
     const dispatch = useDispatch();
     const [webRTCEnabled, setWebRTCEnabled] = useState(true);
+    const [description, setDescription] = useState('You can scan QR code to join multi player games');
 
     // 登入狀態
     const { loggedIn } = useSelector((state) => state.auth);
@@ -23,10 +24,7 @@ const CodeReader = ({ isVisible, toggle }) => {
     }, []);
 
 
-    const handleError = useCallback((err) => {
-
-    }, []);
-
+    const handleError = useCallback((err) => setDescription('Please scan again.'), []);
     const handleScan = useCallback((data) => {
         if (data === null) return false;
 
@@ -75,10 +73,7 @@ const CodeReader = ({ isVisible, toggle }) => {
             });
     }, []);
 
-    const hideScanner = useCallback(() => {
-        toggle(false);
-    }, []);
-
+    const hideScanner = useCallback(() => toggle(false), []);
     const ref = useRef();
 
     return (
@@ -118,9 +113,7 @@ const CodeReader = ({ isVisible, toggle }) => {
                         legacyMode={!webRTCEnabled}
                     />
                 </div>
-                <ReaderDescription>
-                    You can scan QR code to join multi player games
-                </ReaderDescription>
+                <ReaderDescription>{description}</ReaderDescription>
             </QRCodeReaderContent>
         </Animated>
     );

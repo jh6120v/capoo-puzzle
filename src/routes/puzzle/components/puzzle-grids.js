@@ -17,7 +17,7 @@ const PuzzleGrids = ({ prepared, width, grids, cols, image, tips, layoutPosition
                             position={layoutPositionList[item.label]}
                             isSpace={isSpace}
                             image={image}
-                            onClick={() => moveHandler(idx, item)}
+                            onClick={() => moveHandler(idx, item, grids)}
                             style={{ transform: `translate3d(${x}px,${y}px,0)` }}
                         >
                             {tips ? item.label : null}

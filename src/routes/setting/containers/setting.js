@@ -40,7 +40,7 @@ const Setting = () => {
             navigator.share({
                 title: 'Capoo Puzzle',
                 text: 'Capoo Puzzle Game',
-                url: 'https://capoo-puzzle.dailyofjames.com',
+                url: 'https://capoo-puzzle.firebaseapp.com',
             })
                 .then(() => console.log('Successful share'))
                 .catch((error) => console.log('Error sharing', error));

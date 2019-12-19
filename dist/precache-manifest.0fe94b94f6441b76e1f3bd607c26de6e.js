@@ -28,6 +28,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/icons/safari-pinned-tab.svg"
   },
   {
+    "url": "/assets/images/i.d9b1d0bd63ac5385c9b9a425533c11f2.png"
+  },
+  {
     "url": "/assets/images/i.f7e4de84157f27155fd5f6aeb1329a52.svg"
   },
   {
@@ -75,40 +78,40 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/assets/images/picture/9.jpg"
   },
   {
-    "url": "/assets/js/0.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/0.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/1.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/1.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/10.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/10.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/11.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/11.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/2.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/2.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/4.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/4.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/5.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/5.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/6.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/6.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/7.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/7.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/8.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/8.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/9.bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/9.bundle.245b70c91f8fc266411b.js"
   },
   {
-    "url": "/assets/js/bundle.afac1cb3fe4dd40d624e.js"
+    "url": "/assets/js/bundle.245b70c91f8fc266411b.js"
   },
   {
     "revision": "4e886489486e80519e564cf1429bc4f9",
@@ -151,7 +154,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/favicon.ico"
   },
   {
-    "revision": "7d16e16350a85dc77cecde2ead89fb35",
+    "revision": "40cf9788a5b31ed9b995a529a531aee6",
     "url": "/index.html"
   },
   {

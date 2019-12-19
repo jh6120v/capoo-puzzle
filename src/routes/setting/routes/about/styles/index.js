@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import qrCode from '../../../../../assets/images/qrcode.png';
 
 const AboutContent = styled.div`
   width: 100%;
@@ -15,7 +16,17 @@ const AppName = styled.h1`
   font-weight: bold;
 `;
 
+const AppQrCode = styled.div`
+  width: 250px;
+  height: 250px;
+  background-image: url(${qrCode});
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+`;
+
 export {
     AboutContent,
-    AppName
+    AppName,
+    AppQrCode
 };

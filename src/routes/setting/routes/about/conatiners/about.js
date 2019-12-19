@@ -1,6 +1,6 @@
 import React from 'react';
 import { SettingInner } from '../../../styles';
-import { AboutContent, AppName } from '../styles';
+import { AboutContent, AppName, AppQrCode } from '../styles';
 import { Wrapper } from "../../../../../styles/layout-style";
 import LinkGoBack from "../../../../../components/navigation-items/link-go-back";
 import Navigation from "../../../../../components/navigation";
@@ -29,6 +29,7 @@ const About = () => {
                     Github:
                     <a href="https://github.com/jh6120v/capoo-puzzle" target="_new"> https://github.com/jh6120v/capoo-puzzle</a>
                 </AboutContent>
+                <AppQrCode />
             </SettingInner>
         </Wrapper>
     );

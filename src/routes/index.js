@@ -36,18 +36,16 @@ const Routes = withRouter(({ location, history, loggedIn }) => {
                                     />
                                 ))
                             }
-                            <PrivateRoute auth={loggedIn && loggedIn !== 'loading'}>
-                                {
-                                    PrivateRouterConfig.map((config) => (
-                                        <Route
-                                            key={config.path}
-                                            path={config.path}
-                                            component={config.component}
-                                            exact={config.exact}
-                                        />
-                                    ))
-                                }
-                            </PrivateRoute>
+                            {
+                                PrivateRouterConfig.map((config) => (
+                                    <PrivateRoute
+                                        key={config.path}
+                                        path={config.path}
+                                        component={config.component}
+                                        exact={config.exact}
+                                    />
+                                ))
+                            }
                         </Switch>
                     </RouteAnimateContent>
                 </CSSTransition>
