@@ -1,5 +1,7 @@
 import styled, { keyframes, css } from 'styled-components';
 import { ContainerInner } from "../../../styles/layout-style";
+import googleIcon from '../../../../src/assets/images/google-logo.svg';
+import fbIcon from '../../../../src/assets/images/facebook-logo.svg';
 
 const itemBackgroundShow = (props) => keyframes`
   from {
@@ -87,6 +89,18 @@ const UserName = styled.div`
   font-size: 1.2rem;
 `;
 
+const SignButton = styled.div`
+  padding-left: 30px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  ${(props) => {
+      return props.provider === 'google' ? 
+        css`background-image: url(${googleIcon})` : 
+        css`background-image: url(${fbIcon})`;
+  }};
+`;
+
 const Version = styled.div`
   width: 100%;
   display: flex;
@@ -99,5 +113,6 @@ const Version = styled.div`
 export {
     SettingInner, SettingItem, SettingItemImage,
     UserInfo, UserInfoAvatar, UserName,
+    SignButton,
     Version
 };

@@ -68,7 +68,7 @@ describe('test layout-style.', () => {
             media: '(min-width:480px)'
         });
         expect(tree).toHaveStyleRule('color', '#ffffff');
-        expect(tree).toHaveStyleRule('background-color', '#6cb8cf')
+        expect(tree).toHaveStyleRule('background-color', '#6cb8cf');
     });
 
     it('test <NavigationBar /> when dark mode enabled', () => {
@@ -80,7 +80,18 @@ describe('test layout-style.', () => {
         const tree = container.firstChild;
 
         expect(tree).toHaveStyleRule('color', '#ffffff');
-        expect(tree).toHaveStyleRule('background-color', '#262626')
+        expect(tree).toHaveStyleRule('background-color', '#262626');
+    });
+
+    it('test <NavigationBar /> when prop bgHide.', () => {
+        const { container } = render(
+            <ThemeProvider theme={theme(true)}>
+                <NavigationBar bgHide={true} />
+            </ThemeProvider>
+        );
+        const tree = container.firstChild;
+
+        expect(tree).toHaveStyleRule('background-color', 'rgba(0,0,0,0)');
     });
 
     it('test <Title /> snapshot.', () => {

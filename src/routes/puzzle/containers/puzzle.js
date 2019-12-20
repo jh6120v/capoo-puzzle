@@ -214,9 +214,9 @@ const Puzzle = () => {
 
     // model
     const model = useModel('Notice!',
-        'Please login first, press confirm and login with google',
+        'Please login first, press confirm to login with google or facebook.',
         () => {
-            login();
+            history.push('/setting');
             model.hideModal();
         },
         'Confirm',

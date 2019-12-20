@@ -3,11 +3,14 @@ import * as firebase from 'firebase';
 
 const useAuthentication = () => {
     const auth = firebase.auth();
-    const provider = new firebase.auth.GoogleAuthProvider();
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    const facebookProvider = new firebase.auth.FacebookAuthProvider();
     const [authenticated, setAuthenticated] = useState('loading');
 
-    function login() {
-        auth.signInWithPopup(provider)
+    function login(provider = 'google') {
+        const providerSupport = provider === 'google' ? googleProvider : facebookProvider;
+
+        auth.signInWithPopup(providerSupport)
             .then(() => {
 
             })

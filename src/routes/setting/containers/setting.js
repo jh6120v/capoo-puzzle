@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IosArrowForward from 'react-ionicons/lib/IosArrowForward';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
-import { SettingInner, SettingItem, Version, UserInfo, UserInfoAvatar, UserName } from '../styles';
+import { SettingInner, SettingItem, Version, UserInfo, UserInfoAvatar, UserName, SignButton } from '../styles';
 import {
     personalSettingReset,
     personalSettingTipsChange
@@ -129,9 +129,14 @@ const Setting = () => {
                                         Sign out
                                     </SettingItem>
                                 ) : (
-                                    <SettingItem alignItemsCenter justifyContentSpaceAround onClick={login}>
-                                        Sign with Google
-                                    </SettingItem>
+                                    <>
+                                        <SettingItem alignItemsCenter justifyContentSpaceAround onClick={login}>
+                                            <SignButton provider={'google'}>Sign with Google</SignButton>
+                                        </SettingItem>
+                                        <SettingItem alignItemsCenter justifyContentSpaceAround onClick={() => login('facebook')}>
+                                            <SignButton provider={'facebook'}>Sign with Facebook</SignButton>
+                                        </SettingItem>
+                                    </>
                                 )
                             }
                         </>
