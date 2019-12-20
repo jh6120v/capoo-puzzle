@@ -130,7 +130,7 @@ const Setting = () => {
                                     </SettingItem>
                                 ) : (
                                     <>
-                                        <SettingItem alignItemsCenter justifyContentSpaceAround onClick={login}>
+                                        <SettingItem alignItemsCenter justifyContentSpaceAround onClick={() => login('google')}>
                                             <SignButton provider={'google'}>Sign with Google</SignButton>
                                         </SettingItem>
                                         <SettingItem alignItemsCenter justifyContentSpaceAround onClick={() => login('facebook')}>

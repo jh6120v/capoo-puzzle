@@ -7,7 +7,7 @@ const useAuthentication = () => {
     const facebookProvider = new firebase.auth.FacebookAuthProvider();
     const [authenticated, setAuthenticated] = useState('loading');
 
-    function login(provider = 'google') {
+    function login(provider) {
         const providerSupport = provider === 'google' ? googleProvider : facebookProvider;
 
         auth.signInWithPopup(providerSupport)
