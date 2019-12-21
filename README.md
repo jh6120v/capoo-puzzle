@@ -4,11 +4,19 @@
  - 1.0.0 is now released, it is recommended to reinstall the PWA App for best use experience
 
 ## Preview
-
+![image](cover_1.png)
+![image](cover_2.png)
+![image](cover_3.png)
+![image](cover_4.png)
+![image](cover_5.png)
+![image](cover_6.png)
 
 ## Description
 This is a PWA digital pusher game. It currently has three different difficulty levels and 10 different Capoo pictures. In addition to playing by yourself, you can also log in with your Google account to upload the best results to the leaderboard, and all Players compete together.
 In the multiplayer competition mode, up to four people can compete at the same time, and the completion rate is the scoring standard. After one person turns on the multiplayer competition mode, friends only need to use the QRCode scanner in the App to scan the game ’s exclusive QRCode and immediately Join the game and compete with friends to see who is the fastest!
+
+## Detailed introduction
+- https://docs.google.com/presentation/d/1dnAnUBZ9mJtXqb4hDewJIg5qZZjZbksJVz7jj1xy_kc/edit?usp=sharing
 
 ## Website
 ![image](src/assets/images/qrcode.png)
