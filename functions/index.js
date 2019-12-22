@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const moment = require('moment');
-const { getGrids, LEVEL_MAP } = require('./commons/utils');
+const { getGrids, getLayoutPositionList, LEVEL_MAP } = require('./commons/utils');
 
 admin.initializeApp();
 
@@ -10,12 +10,24 @@ exports.addCompetition = functions.database
     .onCreate(async (snapshot, context) => {
         const roomId = context.params.roomId;
         const { level, users } = snapshot.val();
-        const grids = getGrids(LEVEL_MAP[level]);
+        const cols = LEVEL_MAP[level];
+        const grids = getGrids(cols);
+        const layoutPositionList = getLayoutPositionList(300, LEVEL_MAP[level]);
 
         await admin
             .database()
             .ref(`/competition/${roomId}/grids`)
             .set(grids);
+
+        await admin
+            .database()
+            .ref(`/competition/${roomId}/cols`)
+            .set(cols);
+
+        await admin
+            .database()
+            .ref(`/competition/${roomId}/layoutPositionList`)
+            .set(layoutPositionList);
 
         await Object.keys(users).forEach((key) => {
             admin

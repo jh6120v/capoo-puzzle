@@ -19,11 +19,13 @@ export { resetCompetition, setRoomId, setCompetition, removeRoomId, setPlayer, s
 const initialState = {
     roomId: null,
     player: 2,
-    level: null,
+    level: 'easy',
+    cols: 3,
     image: '0',
     tips: false,
     users: {},
-    grids: []
+    grids: [],
+    layoutPositionList: []
 };
 
 const handlers = {

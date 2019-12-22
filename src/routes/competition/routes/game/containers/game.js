@@ -19,15 +19,14 @@ import {
 import useTimer from "../../../../../commons/hooks/useTimer";
 import QRCode from 'qrcode.react';
 import PuzzleGrids from "../../../../puzzle/components/puzzle-grids";
-import { LEVEL_MAP } from "../../../../../constants";
-import { completePercent, getLayoutPositionList, getPosition, getSpacePosition } from "../../../../../commons/utils";
+import { completePercent, getPosition, getSpacePosition } from "../../../../../commons/utils";
 import useModel from "../../../../../commons/hooks/useModel";
 import Model from "../../../../../components/model";
 import { history } from '../../../../../store';
 
 const Game = () => {
     const dispatch = useDispatch();
-    const { roomId, player, level, image, tips, users } = useSelector((state) => state.competition);
+    const { roomId, player, cols, image, tips, users, layoutPositionList } = useSelector((state) => state.competition);
 
     // 登入狀態
     const { loggedIn } = useSelector((state) => state.auth);
@@ -43,8 +42,6 @@ const Game = () => {
     });
 
     const [prepared, setPrepared] = useState(true);
-    const [cols, setCols] = useState(3);
-    const [layoutPositionList, setLayoutPositionList] = useState([]);
     const [grids, setGrids] = useState(null);
     const [msg, setMsg] = useState('');
 
@@ -56,16 +53,6 @@ const Game = () => {
 
         history.push('/competition');
     }, []));
-
-    useEffect(() => {
-        if (level !== null) {
-            const columns = LEVEL_MAP[level];
-
-            setCols(columns);
-
-            setLayoutPositionList(getLayoutPositionList(300, columns));
-        }
-    }, [level]);
 
     useEffect(() => {
         let game;

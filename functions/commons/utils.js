@@ -1,3 +1,4 @@
+
 /**
  * 取一逆序列數和為 0 的一維陣列
  *
@@ -87,6 +88,24 @@ exports.getGrids = (cols) => {
 
         return data;
     }, []);
+};
+
+const getPosition = (position, col) => {
+    return {
+        x: position % col,
+        y: Math.floor(position / col)
+    };
+};
+
+exports.getLayoutPositionList = (puzzleWidth, cols) => {
+    const totalCols = cols * cols;
+    const singleWidth = puzzleWidth / cols;
+
+    return Array(totalCols).fill(0).map((value, index) => index).map(n => {
+        const p = getPosition(n, cols);
+
+        return { x: singleWidth * p.x, y: singleWidth * p.y };
+    });
 };
 
 exports.LEVEL_MAP = {
