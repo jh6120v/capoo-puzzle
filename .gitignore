@@ -1,0 +1,10 @@
+.idea/*
+.DS_Store
+node_modules
+coverage
+stats.json
+.firebaserc
+database.rules.json
+firebase.json
+.firebase
+.env

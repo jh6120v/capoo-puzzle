@@ -1,0 +1,56 @@
+[debug] [2019-12-07T09:48:22.707Z] ----------------------------------------------------------------------
+[debug] [2019-12-07T09:48:22.711Z] Command:       /Users/james/.nvm/versions/node/v10.17.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2019-12-07T09:48:22.712Z] CLI Version:   7.4.0
+[debug] [2019-12-07T09:48:22.712Z] Platform:      darwin
+[debug] [2019-12-07T09:48:22.712Z] Node Version:  v10.17.0
+[debug] [2019-12-07T09:48:22.713Z] Time:          Sat Dec 07 2019 17:48:22 GMT+0800 (Taipei Standard Time)
+[debug] [2019-12-07T09:48:22.714Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-12-07T09:48:22.723Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-12-07T09:48:22.723Z] > authorizing via signed-in user
+[debug] [2019-12-07T09:48:22.723Z] [iam] checking project capoo-puzzle for permissions ["firebase.projects.get"]
+[debug] [2019-12-07T09:48:22.726Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/capoo-puzzle:testIamPermissions  
+
+[debug] [2019-12-07T09:48:23.748Z] <<< HTTP RESPONSE 200
+[warn] ⚠  Your requested "node" version "8" doesn't match your global version "10"
+[info] ✔  functions: Emulator started at http://localhost:5000
+[debug] [2019-12-07T09:48:24.033Z] [functions] Watching "/Users/james/Documents/personal-project/capoo-puzzle/functions" for Cloud Functions...
+[debug] [2019-12-07T09:48:24.367Z] DEBUG: [runtime-status] Functions runtime initialized. {"cwd":"/Users/james/Documents/personal-project/capoo-puzzle/functions","node_version":"10.17.0"}
+[debug] [2019-12-07T09:48:24.367Z] DEBUG: [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-12-07T09:48:24.370Z] DEBUG: [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.8.0","resolution":"/Users/james/Documents/personal-project/capoo-puzzle/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2019-12-07T09:48:24.371Z] DEBUG: [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/james/Documents/personal-project/capoo-puzzle/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2019-12-07T09:48:24.372Z] DEBUG: [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/james/Documents/personal-project/capoo-puzzle/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2019-12-07T09:48:24.438Z] [functions[addRanking]] function ignored because the database emulator does not exist or is not running.
+[info] i  functions: Loaded functions: addRanking
+[debug] [2019-12-07T09:48:48.813Z] shell:addRanking: trigger={"eventTrigger":{"resource":"projects/_/instances/capoo-puzzle/refs/ranking/temp/{pushId}","eventType":"providers/google.firebase.database/eventTypes/ref.create","service":"firebaseio.com"},"name":"addRanking","entryPoint":"addRanking"}
+[debug] [2019-12-07T09:48:48.814Z] shell:addRanking: opts={"resource":"projects/_/instances/capoo-puzzle/refs/ranking/temp/pushId8","auth":{"admin":true}}, data={"data":null}
+[debug] [2019-12-07T09:48:49.150Z] DEBUG: [runtime-status] Functions runtime initialized. {"cwd":"/Users/james/Documents/personal-project/capoo-puzzle/functions","node_version":"10.17.0"}
+[debug] [2019-12-07T09:48:49.151Z] [functions] Beginning execution of "addRanking"
+[debug] [2019-12-07T09:48:49.151Z] DEBUG: [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-12-07T09:48:49.154Z] DEBUG: [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.8.0","resolution":"/Users/james/Documents/personal-project/capoo-puzzle/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2019-12-07T09:48:49.155Z] DEBUG: [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/james/Documents/personal-project/capoo-puzzle/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2019-12-07T09:48:49.156Z] DEBUG: [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/james/Documents/personal-project/capoo-puzzle/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2019-12-07T09:48:49.222Z] DEBUG: [runtime-status] Trigger "addRanking" has been found, beginning invocation! {}
+[debug] [2019-12-07T09:48:49.222Z] DEBUG: [runtime-status]  {"eventTrigger":{"resource":"projects/_/instances/capoo-puzzle/refs/ranking/temp/{pushId}","eventType":"providers/google.firebase.database/eventTypes/ref.create","service":"firebaseio.com"},"name":"addRanking","entryPoint":"addRanking"}
+[debug] [2019-12-07T09:48:49.222Z] DEBUG: [runtime-status] Running addRanking in mode BACKGROUND {}
+[debug] [2019-12-07T09:48:49.222Z] DEBUG: [runtime-status] ProcessBackground {"eventId":"1d36013f-6a86-4068-aaa9-dcf8b480fcd2","timestamp":"2019-12-07T09:48:48.814Z","eventType":"providers/google.firebase.database/eventTypes/ref.create","resource":"projects/_/instances/capoo-puzzle/refs/ranking/temp/pushId8","auth":{"admin":true},"data":{"data":null}}
+[debug] [2019-12-07T09:48:49.223Z] DEBUG: [runtime-status] RunBackground {"data":{"data":null},"context":{"eventId":"1d36013f-6a86-4068-aaa9-dcf8b480fcd2","timestamp":"2019-12-07T09:48:48.814Z","eventType":"providers/google.firebase.database/eventTypes/ref.create","resource":"projects/_/instances/capoo-puzzle/refs/ranking/temp/pushId8","auth":{"admin":true}}}
+[debug] [2019-12-07T09:48:49.227Z] DEBUG: [runtime-status] Ephemeral server survived. {}
+[warn] ⚠  functions: ReferenceError: moment is not defined
+    at exports.addRanking.functions.database.ref.onCreate (/Users/james/Documents/personal-project/capoo-puzzle/functions/index.js:19:27)
+    at cloudFunction (/Users/james/Documents/personal-project/capoo-puzzle/functions/node_modules/firebase-functions/lib/cloud-functions.js:131:23)
+    at Run (/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:598:20)
+    at /usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:582:19
+    at Generator.next (<anonymous>)
+    at /usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:3:12)
+    at Run (/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:575:12)
+    at /usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:597:15
+[warn] ⚠  Your function was killed because it raised an unhandled error.
+[debug] [2019-12-07T09:48:58.854Z] DEBUG: File /Users/james/Documents/personal-project/capoo-puzzle/functions/index.js changed, reloading triggers
+[debug] [2019-12-07T09:49:00.226Z] DEBUG: [runtime-status] Functions runtime initialized. {"cwd":"/Users/james/Documents/personal-project/capoo-puzzle/functions","node_version":"10.17.0"}
+[debug] [2019-12-07T09:49:00.227Z] DEBUG: [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-12-07T09:49:00.230Z] DEBUG: [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.8.0","resolution":"/Users/james/Documents/personal-project/capoo-puzzle/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2019-12-07T09:49:00.232Z] DEBUG: [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/james/Documents/personal-project/capoo-puzzle/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2019-12-07T09:49:00.232Z] DEBUG: [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/james/Documents/personal-project/capoo-puzzle/functions/node_modules/firebase-functions/lib/index.js"}

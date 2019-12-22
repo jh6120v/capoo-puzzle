@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test flip-card test <FlipCard /> snapshot. 1`] = `
+.c0 {
+  width: 100%;
+  height: 100%;
+  -webkit-animation: iEMDfD;
+  animation: iEMDfD;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-duration: 300ms;
+  animation-duration: 300ms;
+  -webkit-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  position: relative;
+  z-index: 1;
+}
+
+<div
+  class="c0"
+/>
+`;
+
+exports[`test flip-card test <FlipCardBack /> snapshot. 1`] = `
+.c0 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+<div
+  class="c0"
+/>
+`;
+
+exports[`test flip-card test <FlipCardFront /> snapshot. 1`] = `
+.c0 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+<div
+  class="c0"
+/>
+`;

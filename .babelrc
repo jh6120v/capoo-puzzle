@@ -1,0 +1,34 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": [
+            "> 1%"
+          ]
+        }
+      }
+    ],
+    [
+      "@babel/preset-react"
+    ]
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": true
+      }
+    ],
+    "@babel/plugin-transform-classes",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-transform-runtime",
+    "react-hot-loader/babel"
+  ],
+  "env": {
+    "development": {
+      "plugins": ["babel-plugin-jsx-remove-data-test-id"]
+    }
+  }
+}

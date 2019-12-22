@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test utils rendered lazily fallback 1`] = `
+<div>
+  <div
+    class="sc-bdVaJa kXWkbh"
+  >
+    <div
+      class="sc-bwzfXH bggjYU"
+    >
+      <div
+        class="sc-htpNat fntENR"
+      />
+      <div
+        class="sc-htpNat fntENR"
+      />
+      <div
+        class="sc-htpNat fntENR"
+      />
+    </div>
+  </div>
+</div>
+`;
