@@ -58,12 +58,14 @@ const Game = () => {
     }, []));
 
     useEffect(() => {
-        const columns = LEVEL_MAP[level];
+        if (level !== null) {
+            const columns = LEVEL_MAP[level];
 
-        setCols(columns);
+            setCols(columns);
 
-        setLayoutPositionList(getLayoutPositionList(300, LEVEL_MAP[level]));
-    }, []);
+            setLayoutPositionList(getLayoutPositionList(300, columns));
+        }
+    }, [level]);
 
     useEffect(() => {
         let game;
@@ -120,7 +122,7 @@ const Game = () => {
         firebase.database().ref().update(updates);
     }, [roomId, loggedIn]);
 
-    const moveHandler = (idx, item) => {
+    const moveHandler = (idx, item, cols, grids) => {
         // console.log(idx, item);
         if (prepared || item.label === cols * cols - 1) return false;
 

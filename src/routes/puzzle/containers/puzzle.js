@@ -139,7 +139,7 @@ const Puzzle = () => {
     }, [cols]);
 
     // 移動磚塊
-    const moveHandler = (idx, item, grids) => {
+    const moveHandler = (idx, item, cols, grids) => {
         // console.log(idx, item);
         if (prepared || item.label === cols * cols - 1) return false;
 

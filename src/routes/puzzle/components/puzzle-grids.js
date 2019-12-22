@@ -5,7 +5,7 @@ const PuzzleGrids = ({ prepared, width, grids, cols, image, tips, layoutPosition
     return (
         <GridWrap>
             {
-                grids !== null && typeof grids !== 'undefined' ? grids.map((item, idx) => {
+                layoutPositionList.length > 0 && grids !== null && typeof grids !== 'undefined' ? grids.map((item, idx) => {
                     let isSpace = parseInt(item.label) === cols * cols - 1 && prepared === false;
                     const { x, y } = layoutPositionList[item.position];
 
@@ -17,7 +17,7 @@ const PuzzleGrids = ({ prepared, width, grids, cols, image, tips, layoutPosition
                             position={layoutPositionList[item.label]}
                             isSpace={isSpace}
                             image={image}
-                            onClick={() => moveHandler(idx, item, grids)}
+                            onClick={() => moveHandler(idx, item, cols, grids)}
                             style={{ transform: `translate3d(${x}px,${y}px,0)` }}
                         >
                             {tips ? item.label : null}

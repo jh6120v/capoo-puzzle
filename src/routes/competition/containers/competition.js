@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { CompetitionInner, FunctionButton } from '../styles';
 import * as firebase from 'firebase/app';
-import { setRoomId } from '../modules/competition';
+import { resetCompetition, setRoomId } from '../modules/competition';
 import { history } from '../../../store';
 import CodeReader from "./code-reader";
 import { Wrapper } from "../../../styles/layout-style";
@@ -28,9 +28,7 @@ const Competition = () => {
 
     useEffect(() => {
         // 先清除 room id
-        dispatch(setRoomId({
-            roomId: null
-        }));
+        dispatch(resetCompetition());
     }, []);
 
     const newGame = useCallback(async (loggedIn ,player, level, image, tips) => {
