@@ -1,5 +1,5 @@
-import { PERSONAL_RECORD } from "../constants";
 import { call } from 'redux-saga/effects';
+import { PERSONAL_RECORD } from '../constants';
 
 export function* setAllPersonalRecord({ payload }) {
     try {

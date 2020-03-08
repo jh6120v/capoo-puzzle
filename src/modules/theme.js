@@ -6,7 +6,7 @@ const actionCreator = createActionCreator('@@THEME');
 const colorModeSet = actionCreator('COLOR_MODE_SET');
 const toggleSwitchSet = actionCreator('TOGGLE_SWITCH_SET');
 
-export { colorModeSet, toggleSwitchSet }
+export { colorModeSet, toggleSwitchSet };
 
 
 // Reducers
@@ -19,11 +19,11 @@ const initialState = {
 const handlers = {
     [colorModeSet.type]: (state, { payload: { colorMode } }) => ({
         ...state,
-        colorMode: colorMode
+        colorMode
     }),
     [toggleSwitchSet.type]: (state, { payload: { toggle } }) => ({
         ...state,
-        toggle: toggle
+        toggle
     })
 };
 

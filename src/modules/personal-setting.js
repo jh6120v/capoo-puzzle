@@ -33,11 +33,11 @@ const handlers = {
     }),
     [personalSettingLevelSet.type]: (state, { payload: { level } }) => ({
         ...state,
-        level: level
+        level
     }),
     [personalSettingImageSet.type]: (state, { payload: { image } }) => ({
         ...state,
-        image: image
+        image
     }),
     [personalSettingTipsChange.type]: (state) => ({
         ...state,

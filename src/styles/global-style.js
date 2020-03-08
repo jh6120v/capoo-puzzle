@@ -13,8 +13,8 @@ const GlobalStyle = createGlobalStyle`
     height: calc(100% + env(safe-area-inset-top));
     font-display: optional;
     font-size: 16px;
-    color: ${props => props.theme.textColor};
-    background-color: ${props => props.theme.background};
+    color: ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.background};
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     -webkit-user-select: none;

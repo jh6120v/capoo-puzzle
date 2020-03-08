@@ -21,24 +21,24 @@ const useAuthentication = () => {
 
     function logout(callback = null) {
         auth.signOut()
-            .then(function () {
+            .then(() => {
                 if (callback !== null) {
-                    callback()
+                    callback();
                 }
             })
-            .catch(function (error) {
+            .catch((error) => {
                 // An error happened.
             });
     }
 
     useEffect(() => {
-        auth.onAuthStateChanged(function (userData) {
+        auth.onAuthStateChanged((userData) => {
             if (userData) {
                 setAuthenticated(userData);
             } else {
                 setAuthenticated(null);
             }
-        }, function (error) {
+        }, (error) => {
             console.log(error);
         });
     }, []);

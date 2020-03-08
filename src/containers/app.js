@@ -2,6 +2,8 @@ import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import { ThemeProvider } from 'styled-components';
+import * as firebase from 'firebase/app';
 import rootSaga from '../sagas';
 import { store, history, sagaMiddleware } from '../store';
 import Routes from '../routes';
@@ -15,11 +17,9 @@ import authReducer, { authInfoSet } from '../modules/auth-info';
 import personalRecordReducer from '../modules/personal-record';
 import ResetStyle from '../styles/reset-style';
 import GlobalStyle from '../styles/global-style';
-import { ThemeProvider } from 'styled-components';
 import { theme } from '../commons/theme';
 import useAuthentication from '../commons/hooks/useAuthentication';
 import useDarkMode from '../commons/hooks/useDarkMode';
-import * as firebase from 'firebase/app';
 
 injectReducer(history, store, [
     { key: 'personal', reducer: personalSettingReducer },
@@ -43,8 +43,8 @@ const App = () => {
         }));
 
         if (auth.loggedIn && auth.loggedIn !== 'loading') {
-            const setting = firebase.database().ref('/users/' + auth.loggedIn.uid);
-            setting.once('value', function (snapshot) {
+            const setting = firebase.database().ref(`/users/${auth.loggedIn.uid}`);
+            setting.once('value', (snapshot) => {
                 const val = snapshot.val();
                 if (val !== null) {
                     // 曾經登入，以 firebase 的資料為主
@@ -63,7 +63,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(colorModeSet({
-            colorMode: colorMode
+            colorMode
         }));
 
         dispatch(toggleSwitchSet({

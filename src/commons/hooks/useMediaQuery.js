@@ -6,14 +6,14 @@ const useMediaQuery = (mediaQuery) => {
     const [match, setMatch] = useState(query.matches);
 
     useEffect(() => {
-        const handleMatch = q => setMatch(q.matches);
+        const handleMatch = (q) => setMatch(q.matches);
         // safari not support addEventListener and removeEventListener yet
         query.addListener(handleMatch);
 
-        return () => query.removeListener(handleMatch)
+        return () => query.removeListener(handleMatch);
     }, [query]);
 
-    return match
+    return match;
 };
 
 export default useMediaQuery;

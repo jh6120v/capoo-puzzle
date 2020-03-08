@@ -14,11 +14,11 @@ import {
 import {
     personalRecordAllSet,
     personalRecordSet
-} from "../modules/personal-record";
+} from '../modules/personal-record';
 import {
     setAllPersonalRecord,
     setPersonalRecord
-} from "./personal-record";
+} from './personal-record';
 
 function* watchPersonalSettingSet() {
     yield takeEvery(personalSettingSet.type, setPersonalSetting);

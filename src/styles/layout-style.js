@@ -22,10 +22,10 @@ const NavigationBar = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${props => props.theme.navigateTextColor};
+  color: ${(props) => props.theme.navigateTextColor};
   padding: env(safe-area-inset-top) 5px 0 5px;
   overflow: hidden;
-  background-color: ${props => props.bgHide ? 'rgba(0,0,0,0)' : props.theme.navigateBg};
+  background-color: ${(props) => props.bgHide ? 'rgba(0,0,0,0)' : props.theme.navigateBg};
   z-index: 3;
   ${respondTo.xs`
     left: 50%;
@@ -78,7 +78,7 @@ const Container = styled.div`
 const ContainerInner = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${props => props.theme.containerBg};
+  background-color: ${(props) => props.theme.containerBg};
   padding-top: calc(44px + env(safe-area-inset-top));
   flex: 1 1 auto;
 `;

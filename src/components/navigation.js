@@ -1,24 +1,26 @@
 import React from 'react';
-import { NavigationBar, NextLink, PrevLink, Title } from "../styles/layout-style";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import {
+    NavigationBar, NextLink, PrevLink, Title
+} from '../styles/layout-style';
 
-const Navigation = ({ title, prev, next, bgHide }) => {
-    return (
-        <NavigationBar bgHide={bgHide}>
-            <PrevLink>
-                {
-                    typeof prev !== 'undefined' ? prev : null
-                }
-            </PrevLink>
-            <Title>{title}</Title>
-            <NextLink>
-                {
-                    typeof next !== 'undefined' ? next : null
-                }
-            </NextLink>
-        </NavigationBar>
-    );
-};
+const Navigation = ({
+    title, prev, next, bgHide
+}) => (
+    <NavigationBar bgHide={bgHide}>
+        <PrevLink>
+            {
+                typeof prev !== 'undefined' ? prev : null
+            }
+        </PrevLink>
+        <Title>{title}</Title>
+        <NextLink>
+            {
+                typeof next !== 'undefined' ? next : null
+            }
+        </NextLink>
+    </NavigationBar>
+);
 
 Navigation.propsTypes = {
     title: PropTypes.string,

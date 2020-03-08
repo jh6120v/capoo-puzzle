@@ -5,7 +5,7 @@ import { createReducer } from '../store/reducers';
 const actionCreator = createActionCreator('@@AUTH_INFO');
 const authInfoSet = actionCreator('AUTH_INFO_SET');
 
-export { authInfoSet }
+export { authInfoSet };
 
 
 // Reducers

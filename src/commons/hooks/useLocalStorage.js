@@ -3,10 +3,8 @@ import { useState } from 'react';
 const useLocalStorage = (key, initialValue, options = {}) => {
     const { deleteKeyIfValueIs = null } = options;
     const [storedValue, setStoredValue] = useState(() => {
-        if (typeof localStorage !== `undefined`) {
-            document.addEventListener(`localStorage:${key}Change`, event =>
-                setStoredValue(event.detail)
-            );
+        if (typeof localStorage !== 'undefined') {
+            document.addEventListener(`localStorage:${key}Change`, (event) => setStoredValue(event.detail));
 
             const item = localStorage[key];
 
@@ -15,12 +13,12 @@ const useLocalStorage = (key, initialValue, options = {}) => {
             }
 
             return item ? JSON.parse(item) : initialValue;
-        } else {
-            return initialValue;
         }
+
+        return initialValue;
     });
 
-    const setValue = value => {
+    const setValue = (value) => {
         const valueToStore = value instanceof Function ? value(storedValue) : value;
 
         setStoredValue(valueToStore);

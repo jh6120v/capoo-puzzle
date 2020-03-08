@@ -1,5 +1,5 @@
-import { PERSONAL_DEFAULT_SETTING, PERSONAL_SETTING } from '../constants';
 import { call } from 'redux-saga/effects';
+import { PERSONAL_DEFAULT_SETTING, PERSONAL_SETTING } from '../constants';
 
 export function* setPersonalSetting({ payload }) {
     try {
