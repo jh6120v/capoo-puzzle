@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
-import { RadioBoxContent, RadioBoxGroup, RadioBoxItem, RadioBoxTitle } from "../../styles";
-import { setPlayer } from "../../modules/competition";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    RadioBoxContent, RadioBoxGroup, RadioBoxItem, RadioBoxTitle
+} from '../../styles';
+import { setPlayer } from '../../modules/competition';
 
 const RadioBoxPlayer = () => {
     const dispatch = useDispatch();
@@ -10,7 +12,7 @@ const RadioBoxPlayer = () => {
     const radioPlayerList = [2, 3, 4];
     const selectPlayers = useCallback((val) => {
         dispatch(setPlayer(val));
-    }, []);
+    }, [dispatch]);
 
     return (
         <RadioBoxGroup>
@@ -23,7 +25,9 @@ const RadioBoxPlayer = () => {
                             selected={val === player}
                             onClick={() => selectPlayers(val)}
                         >
-                            {val} players
+                            {val}
+                            {' '}
+players
                         </RadioBoxItem>
                     ))
                 }

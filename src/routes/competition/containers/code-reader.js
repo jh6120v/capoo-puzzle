@@ -1,13 +1,15 @@
-import React, { useCallback, useState, useEffect, useRef } from 'react';
-import { QRCodeReaderContent, ReaderDescription } from '../styles';
+import React, {
+    useCallback, useState, useEffect, useRef
+} from 'react';
 import { Animated } from 'react-animated-css';
 import QrReader from 'react-qr-reader';
-import { useDispatch, useSelector } from "react-redux";
-import Navigation from "../../../components/navigation";
-import LinkClose from "../../../components/navigation-items/link-close";
+import { useDispatch, useSelector } from 'react-redux';
 import * as firebase from 'firebase';
-import { setRoomId } from "../modules/competition";
-import { history } from "../../../store";
+import Navigation from '../../../components/navigation';
+import LinkClose from '../../../components/navigation-items/link-close';
+import { QRCodeReaderContent, ReaderDescription } from '../styles';
+import { setRoomId } from '../modules/competition';
+import { history } from '../../../store';
 
 const CodeReader = ({ isVisible, toggle }) => {
     const dispatch = useDispatch();
@@ -62,7 +64,7 @@ const CodeReader = ({ isVisible, toggle }) => {
                 }
 
                 await dispatch(setRoomId({
-                    roomId: roomId
+                    roomId
                 }));
 
                 console.log(val);
@@ -96,20 +98,23 @@ const CodeReader = ({ isVisible, toggle }) => {
             <QRCodeReaderContent legacyMode={!webRTCEnabled}>
                 <Navigation
                     prev={<LinkClose func={hideScanner} />}
-                    bgHide={true}
+                    bgHide
                 />
-                <div style={{ width: '100%' }} onClick={() => {
-                    if (!webRTCEnabled) {
-                        ref.current.openImageDialog();
-                    }
-                }}>
+                <div
+                    style={{ width: '100%' }}
+                    onClick={() => {
+                        if (!webRTCEnabled) {
+                            ref.current.openImageDialog();
+                        }
+                    }}
+                >
                     <QrReader
                         ref={ref}
                         onError={handleError}
                         onScan={handleScan}
-                        facingMode={'environment'}
+                        facingMode="environment"
                         style={{ width: '100%' }}
-                        className={'reader'}
+                        className="reader"
                         legacyMode={!webRTCEnabled}
                     />
                 </div>

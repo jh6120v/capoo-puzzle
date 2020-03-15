@@ -1,7 +1,7 @@
 import styled, { keyframes, css } from 'styled-components';
-import { ContainerInner } from "../../../styles/layout-style";
-import googleIcon from '../../../../src/assets/images/google-logo.svg';
-import fbIcon from '../../../../src/assets/images/facebook-logo.svg';
+import { ContainerInner } from '../../../styles/layout-style';
+import googleIcon from '../../../assets/images/google-logo.svg';
+import fbIcon from '../../../assets/images/facebook-logo.svg';
 
 const itemBackgroundShow = (props) => keyframes`
   from {
@@ -13,7 +13,7 @@ const itemBackgroundShow = (props) => keyframes`
 `;
 
 const SettingInner = styled(ContainerInner)`
-  background-color: ${props => props.theme.settingBg};
+  background-color: ${(props) => props.theme.settingBg};
 `;
 
 const SettingItem = styled.div`
@@ -28,7 +28,7 @@ const SettingItem = styled.div`
   cursor: pointer;
   flex-wrap: wrap;
   & path {
-    fill: ${props => props.theme.settingItemIconColor};
+    fill: ${(props) => props.theme.settingItemIconColor};
   }
   ${(props) => (props.alignItemsCenter ? css`align-items: center;` : '')}
   ${(props) => {
@@ -95,9 +95,9 @@ const SignButton = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   ${(props) => {
-      return props.provider === 'google' ? 
-        css`background-image: url(${googleIcon})` : 
-        css`background-image: url(${fbIcon})`;
+      return props.provider === 'google'
+        ? css`background-image: url(${googleIcon})`
+        : css`background-image: url(${fbIcon})`;
   }};
 `;
 

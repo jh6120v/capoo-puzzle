@@ -1,13 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Wrapper } from "../../../../../styles/layout-style";
-import Navigation from "../../../../../components/navigation";
-import { GameInner, PlayerAvatar, PlayerGamePercent, PlayerItem, PlayerList, PlayerName } from "../styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import * as firebase from 'firebase';
-import LinkGoBack from "../../../../../components/navigation-items/link-go-back";
-import { setCompetition } from "../../../modules/competition";
-import { identity, times } from "ramda";
-import MdPerson from "react-ionicons/lib/MdPerson";
+import { identity, times } from 'ramda';
+import MdPerson from 'react-ionicons/lib/MdPerson';
+import QRCode from 'qrcode.react';
+import { Wrapper } from '../../../../../styles/layout-style';
+import Navigation from '../../../../../components/navigation';
+import {
+    GameInner, PlayerAvatar, PlayerGamePercent, PlayerItem, PlayerList, PlayerName
+} from '../styles';
+import LinkGoBack from '../../../../../components/navigation-items/link-go-back';
+import { setCompetition } from '../../../modules/competition';
 import {
     CountDownTips,
     FunctionButton,
@@ -15,18 +18,19 @@ import {
     PuzzleBack,
     PuzzleContainer,
     PuzzleFront
-} from "../../../../puzzle/styles/puzzle-style";
-import useTimer from "../../../../../commons/hooks/useTimer";
-import QRCode from 'qrcode.react';
-import PuzzleGrids from "../../../../puzzle/components/puzzle-grids";
-import { completePercent, getPosition, getSpacePosition } from "../../../../../commons/utils";
-import useModel from "../../../../../commons/hooks/useModel";
-import Model from "../../../../../components/model";
+} from '../../../../puzzle/styles/puzzle-style';
+import useTimer from '../../../../../commons/hooks/useTimer';
+import PuzzleGrids from '../../../../puzzle/components/puzzle-grids';
+import { completePercent, getPosition, getSpacePosition } from '../../../../../commons/utils';
+import useModel from '../../../../../commons/hooks/useModel';
+import Model from '../../../../../components/model';
 import { history } from '../../../../../store';
 
 const Game = () => {
     const dispatch = useDispatch();
-    const { roomId, player, cols, image, tips, users, layoutPositionList } = useSelector((state) => state.competition);
+    const {
+        roomId, player, cols, image, tips, users, layoutPositionList
+    } = useSelector((state) => state.competition);
 
     // 登入狀態
     const { loggedIn } = useSelector((state) => state.auth);
@@ -103,7 +107,7 @@ const Game = () => {
     }, [prepared, loggedIn]);
 
     const ready = useCallback(() => {
-        let updates = {};
+        const updates = {};
         updates[`/competition/${roomId}/users/${loggedIn.uid}/ready`] = true;
 
         firebase.database().ref().update(updates);
@@ -120,8 +124,8 @@ const Game = () => {
         const spacePos = getSpacePosition(grids, cols);
         // 檢查是否為相鄰方塊
         if (
-            (elemPos.x === spacePos.x && Math.abs(elemPos.y - spacePos.y) === 1) ||
-            (elemPos.y === spacePos.y && Math.abs(elemPos.x - spacePos.x) === 1)
+            (elemPos.x === spacePos.x && Math.abs(elemPos.y - spacePos.y) === 1)
+            || (elemPos.y === spacePos.y && Math.abs(elemPos.x - spacePos.x) === 1)
         ) {
             console.log('can move');
 
@@ -152,7 +156,7 @@ const Game = () => {
     return (
         <Wrapper>
             <Navigation
-                title={'Multi Player Game'}
+                title="Multi Player Game"
                 prev={<LinkGoBack />}
             />
             <GameInner>
@@ -161,28 +165,29 @@ const Game = () => {
                         <>
                             <PlayerList>
                                 {
-                                    Object.keys(users).map((val) => {
-                                        return (
-                                            <PlayerItem key={val}>
-                                                <PlayerAvatar avatar={users[val].avatar} ready={users[val].ready} />
-                                                <PlayerName>{users[val].name}</PlayerName>
-                                                <PlayerGamePercent>{users[val].percent}%</PlayerGamePercent>
-                                            </PlayerItem>
-                                        );
-                                    })
+                                    Object.keys(users).map((val) => (
+                                        <PlayerItem key={val}>
+                                            <PlayerAvatar avatar={users[val].avatar} ready={users[val].ready} />
+                                            <PlayerName>{users[val].name}</PlayerName>
+                                            <PlayerGamePercent>
+                                                {
+                                                    users[val].percent
+                                                }
+                                                %
+                                            </PlayerGamePercent>
+                                        </PlayerItem>
+                                    ))
                                 }
                                 {
-                                    times(identity, player - Object.keys(users).length).map((val) => {
-                                        return (
-                                            <PlayerItem key={val}>
-                                                <PlayerAvatar>
-                                                    <MdPerson color="#cccccc" />
-                                                </PlayerAvatar>
-                                                <PlayerName>wait...</PlayerName>
-                                                <PlayerGamePercent>-%</PlayerGamePercent>
-                                            </PlayerItem>
-                                        );
-                                    })
+                                    times(identity, player - Object.keys(users).length).map((val) => (
+                                        <PlayerItem key={val}>
+                                            <PlayerAvatar>
+                                                <MdPerson color="#cccccc" />
+                                            </PlayerAvatar>
+                                            <PlayerName>wait...</PlayerName>
+                                            <PlayerGamePercent>-%</PlayerGamePercent>
+                                        </PlayerItem>
+                                    ))
                                 }
                             </PlayerList>
                             <PuzzleContainer
@@ -194,7 +199,7 @@ const Game = () => {
                                     <QRCode
                                         value={`cp::${roomId}`}
                                         size={300}
-                                        includeMargin={true}
+                                        includeMargin
                                     />
                                 </PuzzleFront>
                                 <PuzzleBack>
@@ -222,8 +227,8 @@ const Game = () => {
                 }
             </GameInner>
             {
-                countDownTimer.timerState === 'started' ?
-                    <CountDownTips>{countDownTimer.seconds === 0 ? 'GO' : countDownTimer.seconds}</CountDownTips> : null
+                countDownTimer.timerState === 'started'
+                    ? <CountDownTips>{countDownTimer.seconds === 0 ? 'GO' : countDownTimer.seconds}</CountDownTips> : null
             }
             <Model isShow={isShown}>
                 <ModelBox />

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { ContainerInner } from "../../../../../styles/layout-style";
+import styled from 'styled-components';
+import { ContainerInner } from '../../../../../styles/layout-style';
 
 const GameInner = styled(ContainerInner)`
   display: flex;
@@ -33,13 +33,13 @@ const PlayerAvatar = styled.div`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-image: url(${(props => props.avatar)});
+  background-image: url(${(props) => props.avatar});
   background-repeat: no-repeat;
   background-size: cover;
   margin-right: 5px;
   border-width: 2px;
   border-style: solid;
-  border-color: ${(props) => props.ready ? '#23ff4f' : '#cccccc'};
+  border-color: ${(props) => (props.ready ? '#23ff4f' : '#cccccc')};
 `;
 
 const PlayerName = styled.div`
@@ -63,4 +63,4 @@ export {
     PlayerAvatar,
     PlayerName,
     PlayerGamePercent
-}
+};

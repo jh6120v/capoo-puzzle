@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { CompetitionInner, FunctionButton } from '../styles';
+import { useDispatch, useSelector } from 'react-redux';
 import * as firebase from 'firebase/app';
+import { CompetitionInner, FunctionButton } from '../styles';
 import { resetCompetition, setRoomId } from '../modules/competition';
 import { history } from '../../../store';
-import CodeReader from "./code-reader";
-import { Wrapper } from "../../../styles/layout-style";
-import Navigation from "../../../components/navigation";
-import LinkClose from "../../../components/navigation-items/link-close";
-import LinkScanner from "../../../components/navigation-items/link-scanner";
-import RadioBoxPlayer from "./radio-box/RadioBoxPlayer";
-import RadioBoxLevel from "./radio-box/RadioBoxLevel";
-import RadioBoxTips from "./radio-box/RadioBoxTips";
-import RadioBoxImage from "./radio-box/RadioBoxImage";
+import CodeReader from './code-reader';
+import { Wrapper } from '../../../styles/layout-style';
+import Navigation from '../../../components/navigation';
+import LinkClose from '../../../components/navigation-items/link-close';
+import LinkScanner from '../../../components/navigation-items/link-scanner';
+import RadioBoxPlayer from './radio-box/RadioBoxPlayer';
+import RadioBoxLevel from './radio-box/RadioBoxLevel';
+import RadioBoxTips from './radio-box/RadioBoxTips';
+import RadioBoxImage from './radio-box/RadioBoxImage';
 
 const Competition = () => {
     const dispatch = useDispatch();
@@ -24,21 +24,23 @@ const Competition = () => {
     const { loggedIn } = useSelector((state) => state.auth);
 
     // 比賽設定
-    const { player, level, tips, image } = useSelector((state) => state.competition);
+    const {
+        player, level, tips, image
+    } = useSelector((state) => state.competition);
 
     useEffect(() => {
         // 先清除 room id
         dispatch(resetCompetition());
-    }, []);
+    }, [dispatch]);
 
-    const newGame = useCallback(async (loggedIn ,player, level, image, tips) => {
+    const newGame = useCallback(async (loggedIn, player, level, image, tips) => {
         // const grids = getGrids(LEVEL_MAP[level]);
         const roomId = firebase.database().ref().push().key;
         await firebase.database().ref(`/competition/${roomId}`).set({
-            player: player,
-            level: level,
-            image: image,
-            tips: tips,
+            player,
+            level,
+            image,
+            tips,
             users: {
                 [loggedIn.uid]: {
                     name: loggedIn.displayName,
@@ -50,13 +52,13 @@ const Competition = () => {
             allReady: false
         }).then(() => {
             dispatch(setRoomId({
-                roomId: roomId
+                roomId
             }));
         });
 
         //
         await history.replace('/competition/game');
-    }, []);
+    }, [dispatch]);
 
     const openScanner = useCallback(() => {
         setIsLoaded(true);
@@ -66,7 +68,7 @@ const Competition = () => {
     return (
         <Wrapper>
             <Navigation
-                title={'Competition'}
+                title="Competition"
                 prev={<LinkClose func={() => history.push('/')} />}
                 next={<LinkScanner func={() => openScanner()} />}
             />

@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
-import { RadioBoxContent, RadioBoxGroup, RadioBoxItem, RadioBoxTitle } from "../../styles";
-import { setTips } from "../../modules/competition";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    RadioBoxContent, RadioBoxGroup, RadioBoxItem, RadioBoxTitle
+} from '../../styles';
+import { setTips } from '../../modules/competition';
 
 const RadioBoxTips = () => {
     const dispatch = useDispatch();
@@ -10,7 +12,7 @@ const RadioBoxTips = () => {
     const tipsList = ['yes', 'no'];
     const selectTips = useCallback((val) => {
         dispatch(setTips(val === 'yes'));
-    }, []);
+    }, [dispatch]);
 
     return (
         <RadioBoxGroup>

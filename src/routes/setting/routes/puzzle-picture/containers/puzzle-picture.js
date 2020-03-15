@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SettingItem, SettingItemImage, SettingInner } from '../../../styles';
-import { personalSettingImageSet } from '../../../../../modules/personal-setting';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
 import { identity, times } from 'ramda';
 import * as firebase from 'firebase/app';
-import { Wrapper } from "../../../../../styles/layout-style";
-import LinkGoBack from "../../../../../components/navigation-items/link-go-back";
-import Navigation from "../../../../../components/navigation";
+import { personalSettingImageSet } from '../../../../../modules/personal-setting';
+import { SettingItem, SettingItemImage, SettingInner } from '../../../styles';
+import { Wrapper } from '../../../../../styles/layout-style';
+import LinkGoBack from '../../../../../components/navigation-items/link-go-back';
+import Navigation from '../../../../../components/navigation';
 
 const PuzzlePicture = () => {
     const dispatch = useDispatch();
@@ -16,21 +16,21 @@ const PuzzlePicture = () => {
 
     const setPuzzlePicture = useCallback((image) => {
         if (loggedIn && loggedIn !== 'loading') {
-            const setting = firebase.database().ref('/users/' + loggedIn.uid);
+            const setting = firebase.database().ref(`/users/${loggedIn.uid}`);
             setting.child('image').set(image.toString());
         }
 
         dispatch(personalSettingImageSet({
             image: image.toString()
         }));
-    }, [loggedIn]);
+    }, [dispatch, loggedIn]);
 
-    const pictureList = times(identity, 10);
+    const pictureList = times(identity, 11);
 
     return (
         <Wrapper>
             <Navigation
-                title={'Puzzle Picture'}
+                title="Puzzle Picture"
                 prev={<LinkGoBack />}
             />
             <SettingInner>

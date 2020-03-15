@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
-import { RadioBoxContent, RadioBoxGroup, RadioBoxItem, RadioBoxTitle } from "../../styles";
-import { setLevel } from "../../modules/competition";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    RadioBoxContent, RadioBoxGroup, RadioBoxItem, RadioBoxTitle
+} from '../../styles';
+import { setLevel } from '../../modules/competition';
 
 const RadioBoxLevel = () => {
     const dispatch = useDispatch();
@@ -10,7 +12,7 @@ const RadioBoxLevel = () => {
     const radioLevelList = ['easy', 'medium', 'hard'];
     const selectLevel = useCallback((val) => {
         dispatch(setLevel(val));
-    }, []);
+    }, [dispatch]);
 
     return (
         <RadioBoxGroup>

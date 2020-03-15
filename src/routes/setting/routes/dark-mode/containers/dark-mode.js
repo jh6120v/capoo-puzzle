@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SettingItem, SettingInner } from '../../../styles';
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark';
+import { SettingItem, SettingInner } from '../../../styles';
 import { colorModeSet } from '../../../../../modules/theme';
-import { Wrapper } from "../../../../../styles/layout-style";
-import LinkGoBack from "../../../../../components/navigation-items/link-go-back";
-import Navigation from "../../../../../components/navigation";
+import { Wrapper } from '../../../../../styles/layout-style';
+import LinkGoBack from '../../../../../components/navigation-items/link-go-back';
+import Navigation from '../../../../../components/navigation';
 
 const DarkMode = () => {
     const dispatch = useDispatch();
@@ -17,12 +17,12 @@ const DarkMode = () => {
         dispatch(colorModeSet({
             colorMode: type
         }));
-    }, [toggle]);
+    }, [dispatch, toggle]);
 
     return (
         <Wrapper>
             <Navigation
-                title={'Dark Mode'}
+                title="Dark Mode"
                 prev={<LinkGoBack />}
             />
             <SettingInner>

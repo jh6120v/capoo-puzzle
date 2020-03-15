@@ -9,7 +9,9 @@ const gridsSet = actionCreator('GRIDS_SET');
 const totalWithSet = actionCreator('TOTAL_WIDTH_SET');
 const layoutPositionListSet = actionCreator('LAYOUT_POSITION_LIST_SET');
 
-export { preparedOn, preparedOff, gridsSet, totalWithSet, layoutPositionListSet };
+export {
+    preparedOn, preparedOff, gridsSet, totalWithSet, layoutPositionListSet
+};
 
 
 // Reducers
@@ -33,18 +35,14 @@ const handlers = {
         ...state,
         grids
     }),
-    [totalWithSet.type]: (state, {payload}) => ({
+    [totalWithSet.type]: (state, { payload }) => ({
         ...state,
         width: payload
     }),
-    [layoutPositionListSet.type]: (state, {payload}) => {
-        // console.log(payload);
-
-        return {
-            ...state,
-            layoutPositionList: payload
-        };
-    }
+    [layoutPositionListSet.type]: (state, { payload }) => ({
+        ...state,
+        layoutPositionList: payload
+    })
 };
 
 const reducers = createReducer(initialState, handlers);

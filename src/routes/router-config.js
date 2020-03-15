@@ -1,10 +1,10 @@
 import React, { lazy } from 'react';
 import { Redirect } from 'react-router-dom';
-import Puzzle from './puzzle';
-import PuzzlePicture from './setting/routes/puzzle-picture';
-import { waitingRouteComponent } from "../commons/utils";
 import { Route } from 'react-router';
 import { useSelector } from 'react-redux';
+import Puzzle from './puzzle';
+import PuzzlePicture from './setting/routes/puzzle-picture';
+import { waitingRouteComponent } from '../commons/utils';
 
 // const Puzzle = lazy(() => import('./puzzle'));
 // const Setting = lazy(() => import('./setting'));
@@ -96,10 +96,13 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     const auth = useSelector((state) => state.auth);
 
     return (
-        <Route {...rest} render={props => (
-            auth.loggedIn && auth.loggedIn !== 'loading' ?
-                <Component {...props} />
-                : <Redirect to="/" />
-        )} />
+        <Route
+            {...rest}
+            render={(props) => (
+                auth.loggedIn && auth.loggedIn !== 'loading' ?
+                    <Component {...props} />
+                    : <Redirect to="/" />
+            )}
+        />
     );
 };

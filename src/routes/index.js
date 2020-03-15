@@ -1,11 +1,13 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { RouterConfig, PrivateRouterConfig, getSceneConfig, PrivateRoute } from './router-config';
+import {
+    RouterConfig, PrivateRouterConfig, getSceneConfig, PrivateRoute
+} from './router-config';
 import { RouterAnimation, RouteAnimateContent } from '../styles/router-animation';
 
 let oldLocation = null;
-const Routes = withRouter(({ location, history, loggedIn }) => {
+const Routes = withRouter(({ location, history }) => {
     let classNames = '';
     if (history.action === 'PUSH') {
         classNames = `page ${getSceneConfig(location).enter}`;

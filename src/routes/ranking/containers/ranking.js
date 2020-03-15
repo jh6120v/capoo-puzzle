@@ -1,14 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useList } from 'react-firebase-hooks/database';
-import { RankingInner } from "../styles";
-import RankingInfo from "../components/ranking-info";
 import * as firebase from 'firebase/app';
 import moment from 'moment';
-import { Wrapper } from "../../../styles/layout-style";
-import Navigation from "../../../components/navigation";
-import LinkClose from "../../../components/navigation-items/link-close";
-import { history } from '../../../store'
+import { RankingInner } from '../styles';
+import RankingInfo from '../components/ranking-info';
+import { Wrapper } from '../../../styles/layout-style';
+import Navigation from '../../../components/navigation';
+import LinkClose from '../../../components/navigation-items/link-close';
+import { history } from '../../../store';
 
 const Ranking = () => {
     const { loggedIn } = useSelector((state) => state.auth);

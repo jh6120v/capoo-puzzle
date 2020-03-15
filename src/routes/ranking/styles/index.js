@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { ContainerInner } from "../../../styles/layout-style";
+import { ContainerInner } from '../../../styles/layout-style';
 import medal from '../../../assets/images/medal.svg';
 
 const medalColor = {
@@ -13,7 +13,7 @@ const RankingInner = styled(ContainerInner)`
   display: flex;
   align-content: flex-start;
   flex-wrap: wrap;
-  background-color: ${props => props.theme.rankingBg};
+  background-color: ${(props) => props.theme.rankingBg};
 `;
 
 const RankingTitle = styled.div`
@@ -68,7 +68,7 @@ const RankingItemRanking = styled.div`
   width: 30px;
   height: 30px;
   ${(props) => {
-    if ([1,2,3].includes(props.medal)) {
+    if ([1, 2, 3].includes(props.medal)) {
       return css`
         mask-image: url(${medal});
         background-repeat: no-repeat;
@@ -76,7 +76,7 @@ const RankingItemRanking = styled.div`
         background-color: ${(props) => medalColor[props.medal]};
       `;
     }
-  }};
+  }}
 `;
 
 const RankingItemAvatar = styled.div`

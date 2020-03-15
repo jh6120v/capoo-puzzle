@@ -7,7 +7,7 @@ export const FUNC_CLOSE = 'CLOSE';
 export const FUNC_SETTING = 'SETTING';
 export const PERSONAL_DEFAULT_SETTING = {
     level: 'easy',
-    image: '0',
+    image: '10',
     tips: false
 };
 

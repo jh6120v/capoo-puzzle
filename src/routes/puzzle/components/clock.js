@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Times } from "../styles/puzzle-style";
+import { Times } from '../styles/puzzle-style';
 
-const Clock = ({ timer }) => {
+const Clock = (props) => {
+    const { timer } = props;
     if (timer.timerState === 'reset') {
         return '-- : --';
     }
@@ -15,10 +16,6 @@ const Clock = ({ timer }) => {
     const restSeconds = (timer.seconds - restMinutes * 60) % 60;
 
     return (<Times>{~~(restMinutes / 10)}{restMinutes % 10} : {~~(restSeconds / 10)}{restSeconds % 10}</Times>);
-};
-
-Clock.propTypes = {
-    seconds: PropTypes.number
 };
 
 export default Clock;

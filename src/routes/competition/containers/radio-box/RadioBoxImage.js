@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
-import { RadioBoxContent, RadioBoxGroup, RadioBoxItem, RadioBoxItemImg, RadioBoxTitle } from "../../styles";
-import { identity, times } from "ramda";
-import { setImage } from "../../modules/competition";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
+import { identity, times } from 'ramda';
+import {
+    RadioBoxContent, RadioBoxGroup, RadioBoxItem, RadioBoxItemImg, RadioBoxTitle
+} from '../../styles';
+import { setImage } from '../../modules/competition';
 
 const RadioBoxImage = () => {
     const dispatch = useDispatch();
@@ -11,12 +13,12 @@ const RadioBoxImage = () => {
     const imageList = times(identity, 10);
     const selectImage = useCallback((val) => {
         dispatch(setImage(val.toString()));
-    }, []);
+    }, [dispatch]);
 
     return (
         <RadioBoxGroup>
             <RadioBoxTitle>Picture</RadioBoxTitle>
-            <RadioBoxContent scroll={true}>
+            <RadioBoxContent scroll>
                 {
                     imageList.map((val) => (
                         <RadioBoxItem

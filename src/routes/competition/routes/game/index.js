@@ -1,6 +1,6 @@
 import { history, store } from '../../../../store';
 import Game from './containers/game';
-import { injectReducer } from "../../../../store/reducers";
+import { injectReducer } from '../../../../store/reducers';
 import competitionReducer from '../../modules/competition';
 
 // reducer

@@ -5,7 +5,7 @@ const CompetitionInner = styled(ContainerInner)`
   display: flex;
   align-content: flex-start;
   flex-wrap: wrap;
-  background-color: ${props => props.theme.rankingBg};
+  background-color: ${(props) => props.theme.rankingBg};
 `;
 
 const RadioBoxGroup = styled.div`
@@ -40,7 +40,7 @@ const RadioBoxContent = styled.div`
       }
   }}
   > div {
-    width: ${(props) => props.total ? 100 / props.total + '%' : 'auto'};
+    width: ${(props) => (props.total ? `${100 / props.total}%` : 'auto')};
     ${(props) => {
       if (props.scroll) {
         return css`
@@ -115,7 +115,7 @@ const QRCodeReaderContent = styled.div`
               content: 'Click to open the camera and take a QR code.';
               position: absolute;
             }
-          `;  
+          `;
         }
       }};
       img {
