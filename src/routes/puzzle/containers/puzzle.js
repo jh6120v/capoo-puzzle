@@ -274,11 +274,11 @@ const Puzzle = () => {
                             : (
                                 <>
                                     <FunctionButton onClick={play}>PLAY</FunctionButton>
-                                    <FunctionButton
-                                        onClick={() => (loggedIn && loggedIn !== 'loading' ? history.push('/competition') : model.showModal())}
-                                    >
-                                        PLAY WITH YOUR FRIEND
-                                    </FunctionButton>
+                                    {/*<FunctionButton*/}
+                                    {/*    onClick={() => (loggedIn && loggedIn !== 'loading' ? history.push('/competition') : model.showModal())}*/}
+                                    {/*>*/}
+                                    {/*    PLAY WITH YOUR FRIEND*/}
+                                    {/*</FunctionButton>*/}
                                 </>
                             )
                     }

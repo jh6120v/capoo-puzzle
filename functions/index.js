@@ -116,10 +116,11 @@ exports.addRanking = functions.database
         const yearMonth = moment().format('YYYYMM');
         const { uid, name, avatar, secs, moves, level, time } = snapshot.val();
 
-        const data = await admin.database().ref(`/ranking/${yearMonth}/${level}/${uid}`).once('value');
-        if (data !== null) {
-            const record = data.val();
+        console.log(snapshot.val());
 
+        const data = await admin.database().ref(`/ranking/${yearMonth}/${level}/${uid}`).once('value');
+        const record = await data.val();
+        if (record !== null) {
             if (
                 moment(time).isAfter(record.time) &&
                 (
